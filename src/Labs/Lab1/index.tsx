@@ -94,15 +94,71 @@ export default function Lab1() {
                             <td>2/17/21</td>
                             <td>95</td>
                         </tr>
+                        <tr>
+                            <td>Q4</td>
+                            <td>Node.js</td>
+                            <td>2/24/21</td>
+                            <td>90</td>
+                        </tr>
+                        <tr>
+                            <td>Q5</td>
+                            <td>Python</td>
+                            <td>2/28/21</td>
+                            <td>95</td>
+                        </tr>
+                        <tr>
+                            <td>Q6</td>
+                            <td>Java</td>
+                            <td>3/10/21</td>
+                            <td>85</td>
+                        </tr>
+                        <tr>
+                            <td>Q7</td>
+                            <td>Spring Boot</td>
+                            <td>3/15/21</td>
+                            <td>95</td>
+                        </tr>
+                        <tr>
+                            <td>Q8</td>
+                            <td>React</td>
+                            <td>3/20/21</td>
+                            <td>95</td>
+                        </tr>
+                        <tr>
+                            <td>Q9</td>
+                            <td>Git</td>
+                            <td>3/25/21</td>
+                            <td>85</td>
+                        </tr>
+                        <tr>
+                            <td>Q10</td>
+                            <td>C++</td>
+                            <td>3/30/21</td>
+                            <td>95</td>
+                        </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colSpan={3}>Average</td>
-                            <td>90</td>
+                            <td>92</td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
+            <div id="wd-images">
+                <h4>Image tag</h4>
+                Loading an image from the internet:
+                <br />
+                <img id="wd-starship"
+                    width="400px"
+                    src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg"
+                />
+                <br />
+                Loading a local image:
+                <br />
+                <img id="wd-teslabot" src="images/teslabot.jpg" height="200px" />
+            </div>
+
             <div id="wd-forms">
                 <h4>Form Elements</h4>
                 <form id="wd-text-fields">
@@ -122,7 +178,24 @@ export default function Lab1() {
                     {/* copy rest of form elements here  */}
                 </form>
             </div>
+            <br></br>
+            <div id="wd-text-area">
+                <textarea cols={20} rows={25} placeholder="Biography"
+                    title="tooltip">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </textarea>
+            </div>
 
+            <div id="wd-buttons">
+                <h5 id="wd-buttons">Buttons</h5>
+                <button id="wd-all-good" onClick={() => alert("Life is Good!")} type="button">
+                    Hello World!
+                </button>
+
+            </div>
+            <div id="wd-file-upload">
+                <h5>File upload</h5>
+                <input id="wd-upload" type="file" />
+            </div>
             <div id="wd-radio-buttons">
                 <h5 id="wd-radio-buttons">Radio buttons</h5>
 
@@ -159,7 +232,62 @@ export default function Lab1() {
                 <label htmlFor="wd-chkbox-fantasy">Fantasy</label>
 
             </div>
+            <div id="wd-drop-down">
+                <h4 id="wd-dropdowns">Dropdowns</h4>
 
+                <h5>Select one</h5>
+                <label htmlFor="wd-select-one-genre"> Favorite movie genre: </label><br />
+                <select id="wd-select-one-genre">
+                    <option value="COMEDY">Comedy</option>
+                    <option value="DRAMA">Drama</option>
+                    <option selected value="SCIFI">
+                        Science Fiction</option>
+                    <option value="FANTASY">Fantasy</option>
+                </select>
+
+                <h5>Select many</h5>
+                <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label><br />
+                <select id="wd-select-many-genre" multiple>
+                    <option selected value="COMEDY">Comedy</option>
+                    <option value="DRAMA">Drama</option>
+                    <option selected value="SCIFI">
+                        Science Fiction</option>
+                    <option value="FANTASY">Fantasy</option>
+                </select>
+
+            </div>
+            <div id="wd-other-html-field-types">
+                <h4>Other HTML field types</h4>
+
+                <label htmlFor="wd-text-fields-email"> Email: </label>
+                <input type="email"
+                    placeholder="jdoe@somewhere.com"
+                    id="wd-text-fields-email" /><br />
+
+                <label htmlFor="wd-text-fields-salary-start"> Starting salary:
+                </label>
+                <input type="number"
+                    id="wd-text-fields-salary-start"
+                    placeholder="1000"
+                    value="100000" /><br />
+
+                <label htmlFor="wd-text-fields-rating"> Rating: </label>
+                <input type="range" id="wd-text-fields-rating"
+                    placeholder="Doe"
+                    max="5"
+                    value="4" /><br />
+
+                <label htmlFor="wd-text-fields-dob"> Date of birth: </label>
+                <input type="date"
+                    id="wd-text-fields-dob"
+                    value="2000-01-21" /><br />
+            </div>
+            <div id="wd-anchor">
+                <h4>Anchor tag</h4>
+                Please
+                <a id="wd-lipsum" href="https://www.lipsum.com">click here</a>
+                to get dummy text<br />
+            </div>
 
         </div>
     );

@@ -107,7 +107,6 @@ export default function Editor() {
                             <input id="wd-available-until" type="date"></input>
                         </td>
                     </tr>
-                    {/* Complete on your own */}
                 </table>
                 <hr />
                 <table align="right">

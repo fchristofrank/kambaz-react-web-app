@@ -6,7 +6,6 @@ export default function CourseStatus() {
             <br />
             <div></div>
             <br />
-            {/* Complete on your own */}
             <button>Import Existing Content</button>
             <br />
             <button>Import from Commons</button>

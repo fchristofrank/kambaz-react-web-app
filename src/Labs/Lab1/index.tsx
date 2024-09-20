@@ -180,7 +180,6 @@ export default function Lab1() {
                     <label htmlFor="wd-text-fields-last-name">Last name:</label>
                     <input type="text" id="wd-text-fields-last-name" placeholder="Doe"
                         value="Wonderland" title="The last name" />
-                    {/* copy rest of form elements here  */}
                 </form>
             </div>
             <br></br>

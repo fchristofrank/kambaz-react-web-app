@@ -37,3 +37,17 @@ body * {
 .wd-lesson {
     border-left: 3px solid green !important;
 }
+
+.wd-disabled-link{
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.wd-assignment-modules-text{
+    color: red;
+}
+
+.wd-assignment-subtext{
+    color: gray;
+}

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 export default function CoursesNavigation() {
   return (
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
+      <div className="wd-sem-title mb-3 ms-3 me-3">202510_2 Fall 2024 Semester...</div>
       <Link to="/Kanbas/Courses/1234/Home" id="wd-course-home-link"
         className="list-group-item active border border-0"> Home </Link>
       <Link to="/Kanbas/Courses/1234/Modules" id="wd-course-modules-link"

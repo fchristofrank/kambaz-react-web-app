@@ -5,6 +5,7 @@ import KanbasNavigation from "./Navigation";
 import Courses from "./Courses";
 import "./styles.css";
 import { Link } from "react-router-dom";
+import Labs from "../Labs";
 
 export default function Kanbas() {
   return (
@@ -12,7 +13,7 @@ export default function Kanbas() {
       <div className="d-none d-md-block">
         <KanbasNavigation />
       </div>
-      <div className="wd-main-content-offset p-3">
+      <div className="wd-main-content-offset p-3 flex-grow-1 me-4">
         <Routes>
           <Route path="/" element={<Navigate to="Dashboard" />} />
           <Route path="/Account/*" element={<Account />} />
@@ -25,19 +26,4 @@ export default function Kanbas() {
       </div>
     </div>
   )
-}
-
-function Labs() {
-  return (
-    <div>
-      <h1>Labs</h1>
-      <ul>
-        <li><Link to="/Labs">Labs</Link></li>
-        <li><Link to="/Kanbas">Kanbas</Link></li>
-        <li><a id="wd-github" href="https://github.com/vicky16898/kanbas-react-web-app">Github Source Code</a></li>
-        <li><a id="wd-my-github" href="https://github.com/vicky16898">My Github</a></li>
-        <li><Link to="/">Landing Page</Link></li>
-      </ul>
-    </div>
-  );
 }

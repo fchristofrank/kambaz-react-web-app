@@ -10,7 +10,7 @@ export default function Account() {
         <div className="d-none d-md-block">
           <AccountNavigation />
         </div>
-        <div className="flex-fill">
+        <div className="flex-wrap">
           <Routes>
             <Route path="/"
               element={<Navigate to="Signin" />} />

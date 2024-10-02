@@ -7,6 +7,9 @@ export default function Labs() {
     return (
         <div id="wd=-labs">
             <h1>Labs</h1>
+            <h2>Vicky Daniel Amalan</h2>
+            <h3>Section: 02</h3>
+            <hr></hr>
             <TOC />
             <Routes>
                 <Route path="/" element={<Navigate to="Lab1" />} />

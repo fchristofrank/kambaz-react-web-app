@@ -12,7 +12,7 @@ export default function Dashboard() {
                     <div className="wd-dashboard-course" style={{ width: "270px" }}>
                         <div className="card rounded-3 overflow-hidden">
                             <Link className="wd-dashboard-course-link text-decoration-none text-dark" to="/Kanbas/Courses/1234/Home">
-                                <img src="/images/react.png" width="100%" height={160} />
+                                <img src="/images/react.jpg" width="100%" height={160} />
                                 <div className="card-body">
                                     <h5 className="wd-dashboard-course-title card-title">CS1234 <br /> React JS</h5>
                                     <p className="wd-dashboard-course-description card-text">Full Stack software developer</p>
@@ -25,7 +25,7 @@ export default function Dashboard() {
                     <div className="wd-dashboard-course" style={{ width: "270px" }}>
                         <div className="card rounded-3 overflow-hidden">
                             <Link className="wd-dashboard-course-link text-decoration-none text-dark" to="/Kanbas/Courses/1235/Home">
-                                <img src="/images/springboot.png" width="100%" height={160} />
+                                <img src="/images/springboot.jpg" width="100%" height={160} />
                                 <div className="card-body">
                                     <h5 className="wd-dashboard-course-title card-title">CS1235 <br /> Spring Boot</h5>
                                     <p className="wd-dashboard-course-description card-text">Backend Development</p>
@@ -51,7 +51,7 @@ export default function Dashboard() {
                     <div className="wd-dashboard-course" style={{ width: "270px" }}>
                         <div className="card rounded-3 overflow-hidden">
                             <Link className="wd-dashboard-course-link text-decoration-none text-dark" to="/Kanbas/Courses/1237/Home">
-                                <img src="/images/oops.jpg" width="100%" height={160} />
+                                <img src="/images/oops.png" width="100%" height={160} />
                                 <div className="card-body">
                                     <h5 className="wd-dashboard-course-title card-title">CS1237 <br /> PDP</h5>
                                     <p className="wd-dashboard-course-description card-text">Full Stack software developer</p>

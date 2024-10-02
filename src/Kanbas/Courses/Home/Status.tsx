@@ -10,7 +10,7 @@ import { CiCalendarDate } from "react-icons/ci";
 {/* Find more icons */ }
 export default function CourseStatus() {
     return (
-        <div id="wd-course-status" style={{ width: "300px" }}>
+        <div id="wd-course-status">
             <h2>Course Status</h2>
             <div className="d-flex">
                 <div className="w-50 pe-1">

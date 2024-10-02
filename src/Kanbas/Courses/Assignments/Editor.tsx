@@ -5,10 +5,11 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import GreenCheckmark from "./GreenCheckmark";
 import AssignmentControlButtons from "./AssignmentControlButtons";
+import { IoCloseOutline } from "react-icons/io5";
 
 export default function Editor() {
     return (
-        <div id="wd-assignments-editor" className="p-4">
+        <div id="wd-assignments-editor" className="ms-5 mt-3">
 
             <div className="row mb-3">
                 <div className="col-sm-12">
@@ -19,21 +20,27 @@ export default function Editor() {
 
             <div className="row mb-3">
                 <div className="col-12">
-                    <textarea id="wd-description" className="form-control mt-2" cols={50} rows={5}>
-                        The assignment is available online.
-
-                        Links to an external site.
-
-                        Submit a link to the landing page of your Web application running on Netlify.
-
-                        The landing page should include the following:
-
-                        Your full name and section
-                        Links to each of the lab assignments
-                        Link to the Kanbas application
-                        Links to all relevant source code repositories
-                        The Kanbas application should include a link to navigate back to the landing page.
-                    </textarea>
+                    <div id="wd-description-container" className="wd-assignment-editor-desc-container">
+                        <textarea id="wd-description" className="form-control mt-2" cols={50} rows={15}>
+                        </textarea>
+                        <div className="wd-assignment-editor-textarea-content">
+                            The assignment is <p className="text-danger d-inline">available online</p>
+                            <br></br><br></br>
+                            
+                            Submit a link to the landing page of your Web application running on Netlify.
+                            <br></br><br></br>
+                            The landing page should include the following:
+                            <br></br><br></br>
+                            <ul>
+                                <li>Your full name and section</li>
+                                <li>Links to each of the lab assignments</li>
+                                <li>Link to the Kanbas application</li>
+                                <li>Links to all relevant source code repositories</li>
+                            </ul>
+                            <br></br>
+                            The Kanbas application should include a link to navigate back to the landing page.
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -107,18 +114,21 @@ export default function Editor() {
                 </div>
                 <div className="col-sm-7">
                     <fieldset className="border p-2">
-                        <label htmlFor="wd-assign-to" className="col-form-label"><b>Assign to</b></label>
-                        <input id="wd-assign-to" className="form-control" placeholder="Everyone" />
+                        <div className="wd-assign-to-input-wrapper">
+                            <div className="wd-assign-to-input-content">Everyone <IoCloseOutline></IoCloseOutline></div>
+                            <label htmlFor="wd-assign-to" className="col-form-label"><b>Assign to</b></label>
+                            <input id="wd-assign-to" className="form-control" placeholder="" />
+                        </div>
                         <label htmlFor="wd-due-date" className="col-form-label">Due</label>
                         <input id="wd-due-date" className="form-control" type="date" />
                         <div className="d-flex">
                             <div className="me-2">
                                 <label htmlFor="wd-available-from" className="col-form-label"><b>Available from</b></label>
-                                <input id="wd-available-from" className="form-control" type="date" style={{ width: '110px' }}/>
+                                <input id="wd-available-from" className="form-control" type="date" style={{ width: '110px' }} />
                             </div>
                             <div className="float-end">
                                 <label htmlFor="wd-available-until" className="col-form-label"><b>Until</b></label>
-                                <input id="wd-available-until" className="form-control" type="date" style={{ width: '110px' }}/>
+                                <input id="wd-available-until" className="form-control" type="date" style={{ width: '110px' }} />
                             </div>
                         </div>
                     </fieldset>

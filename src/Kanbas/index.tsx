@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 export default function Kanbas() {
   return (
     <div id="wd-kanbas" className="d-flex">
-      <KanbasNavigation />
+      <div className="d-none d-md-block">
+        <KanbasNavigation />
+      </div>
       <div className="wd-main-content-offset p-3">
         <Routes>
           <Route path="/" element={<Navigate to="Dashboard" />} />

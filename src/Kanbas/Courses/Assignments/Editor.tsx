@@ -6,15 +6,37 @@ import { FaPlus } from "react-icons/fa";
 import GreenCheckmark from "./GreenCheckmark";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { IoCloseOutline } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router";
+import * as db from "../../Database"
 
 export default function Editor() {
+    const assignments = db.assignments;
+    const { aid } = useParams();
+    const navigate = useNavigate();
+
+    const handleCancel = () => {
+        navigate(-1);
+    };
+
+    const handleSave = () => {
+        navigate(-1);
+    };
+    const defaultAssignment = {
+        "_id": "00",
+        "title": "Untitled Assignment",
+        "course": "00000",
+        "availableAfterDate": "",
+        "dueDate": "",
+        "points": "100"
+    };
+    const assignment = assignments.find((assignment) => assignment._id === aid) || defaultAssignment;
     return (
         <div id="wd-assignments-editor" className="ms-5 mt-3">
 
             <div className="row mb-3">
                 <div className="col-sm-12">
                     <label htmlFor="wd-name"><b>Assignment Name</b></label>
-                    <input id="wd-name" className="form-control mt-2" value="A1" />
+                    <input id="wd-name" className="form-control mt-2" value={assignment.title} />
                 </div>
             </div>
 
@@ -26,7 +48,7 @@ export default function Editor() {
                         <div className="wd-assignment-editor-textarea-content">
                             The assignment is <p className="text-danger d-inline">available online</p>
                             <br></br><br></br>
-                            
+
                             Submit a link to the landing page of your Web application running on Netlify.
                             <br></br><br></br>
                             The landing page should include the following:
@@ -46,7 +68,7 @@ export default function Editor() {
 
             <div className="row mb-3">
                 <div className="col-sm-5">
-                    <label htmlFor="wd-points" className="col-form-label float-end">Points</label>
+                    <label htmlFor="wd-points" className="col-form-label float-end">{assignment.points}</label>
                 </div>
                 <div className="col-sm-7">
                     <input id="wd-points" className="form-control" placeholder="100" />
@@ -124,11 +146,11 @@ export default function Editor() {
                         <div className="d-flex">
                             <div className="me-2">
                                 <label htmlFor="wd-available-from" className="col-form-label"><b>Available from</b></label>
-                                <input id="wd-available-from" className="form-control" type="date" style={{ width: '110px' }} />
+                                <input id="wd-available-from" className="form-control" type="date" style={{ width: '110px' }} value={assignment.availableAfterDate}/>
                             </div>
                             <div className="float-end">
                                 <label htmlFor="wd-available-until" className="col-form-label"><b>Until</b></label>
-                                <input id="wd-available-until" className="form-control" type="date" style={{ width: '110px' }} />
+                                <input id="wd-available-until" className="form-control" type="date" style={{ width: '110px' }} value={assignment.dueDate}/>
                             </div>
                         </div>
                     </fieldset>
@@ -138,8 +160,8 @@ export default function Editor() {
 
             <div className="row mt-4">
                 <div className="col-12 d-flex justify-content-end">
-                    <button id="wd-cancel" className="btn btn-secondary me-1">Cancel</button>
-                    <button id="wd-save" className="btn btn-primary btn-danger">Save</button>
+                    <button id="wd-cancel" className="btn btn-secondary me-1" onClick={handleCancel}>Cancel</button>
+                    <button id="wd-save" className="btn btn-primary btn-danger" onClick={handleSave}>Save</button>
                 </div>
             </div>
         </div>

@@ -73,7 +73,7 @@
         "endDate": "2023-05-15",
         "department": "Languages",
         "credits": 3,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/ancientlanguages.jpg",
         "description": "This course offers an exploration of the ancient languages and scripts found throughout Middle-earth, including Elvish (Sindarin and Quenya), Dwarvish (Khuzdul), and the Black Speech of Mordor. Students will learn the historical and cultural contexts of these languages, their linguistic structures, and their usage in various inscriptions and texts. Emphasis is on understanding the philological aspects and the role of language in shaping Middle-earth's history and lore.",
         "author": "654f9ec2ea7ead465908d1e3"
     },
@@ -85,7 +85,7 @@
         "endDate": "2023-05-15",
         "department": "Political Studies",
         "credits": 4,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/wizelv.jpg",
         "description": "This course explores the complex relationships and diplomatic interactions among the different races of Middle-earth: Elves, Men, Dwarves, and Wizards. Topics include the study of historical alliances, conflicts, and the role of leadership and wisdom in maintaining peace. Students will engage in discussions and case studies on key events in Middle-earth's history, such as the Council of Elrond and the War of the Ring, to understand the principles of diplomacy and conflict resolution in a multi-species context.",
         "author": "654f9ec2ea7ead465908d1e3"
     },
@@ -97,7 +97,7 @@
         "endDate": "2023-05-15",
         "department": "Mystical Studies",
         "credits": 4,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/middleearthmagic.jpg",
         "description": "This course delves into the mystical and magical aspects of Middle-earth, examining the sources, practitioners, and manifestations of magic. Covering a range of magical beings, including Wizards, Elves, and Ents, as well as artifacts like the Rings of Power and Palantíri, students will learn about the philosophical and ethical dimensions of magic use. The course combines theoretical study with practical insights, offering a unique perspective on the magical forces that shape the events and destinies in the world of Middle-earth.",
         "author": "654f9ec2ea7ead465908d1e3"
     },
@@ -109,7 +109,7 @@
         "endDate": "2023-05-15",
         "department": "Education",
         "credits": 3,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/democracyprinciples.png",
         "description": "This course examines the foundations of democratic education, emphasizing the role of education in fostering civic responsibility, critical thinking, and social equality. It explores historical and contemporary models of democratic schooling, the importance of participatory learning, and the development of educational systems that reflect democratic values. Students will engage in discussions on the challenges and opportunities of implementing democratic principles in diverse educational settings."
     },
     {
@@ -120,7 +120,7 @@
         "endDate": "2023-05-15",
         "department": "History",
         "credits": 4,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/philindeplib.jpg",
         "description": "This course provides an in-depth analysis of the philosophical underpinnings of independence and liberation movements, with a focus on Latin American history. It covers the ideologies that fueled the fight for independence, the impact of Enlightenment thought, and the contributions of key figures like Simón Bolívar. The course encourages students to critically examine the concepts of freedom, autonomy, and nation-building in the context of historical and contemporary struggles for liberation."
     },
     {
@@ -131,7 +131,7 @@
         "endDate": "2023-05-15",
         "department": "Education",
         "credits": 3,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/19thcentearlyinnovation.jpg",
         "description": "Focusing on the early 19th century, this course explores innovative educational practices and theories of the time. It highlights the work of leading educational reformers, including Simon Rodríguez, and their contributions to modern pedagogy. Students will study the evolution of educational methods, the integration of practical and theoretical knowledge, and the role of education in social change. The course includes a critical assessment of the lasting impacts of these early innovations on contemporary education systems."
     },
     {
@@ -142,7 +142,7 @@
         "endDate": "2023-05-15",
         "department": "Theology",
         "credits": 3,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/christianethics.jpg",
         "description": "This course explores the core principles of Christian ethics as derived from biblical texts and theological traditions. It covers topics such as moral decision-making, virtues and vices, and the role of faith in ethical living. Students will examine contemporary moral issues through the lens of Christian ethics, learning to apply these principles in various real-life contexts. The course encourages critical thinking and compassionate action guided by Christian values.",
         "author": "65500111ea7ead465908d1fa"
     },
@@ -236,7 +236,7 @@
         "endDate": "2023-05-15",
         "department": "Engineering",
         "credits": 4,
-        "imgSource": "/images/aerodynamics.jpg",
+        "imgSource": "/images/hydeng.jpg",
         "description": "This engineering course offers an in-depth study of hydraulic projects in ancient civilizations, with a special focus on Yu the Great's flood control systems. Covering the design, construction, and impact of ancient dams, canals, and irrigation systems, the course provides insights into early engineering marvels. Comparative studies of hydraulic engineering in other ancient civilizations, such as Mesopotamia and the Indus Valley, are also included to provide a broader historical and technological context."
     }
 ]

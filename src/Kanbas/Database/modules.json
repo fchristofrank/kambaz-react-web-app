@@ -466,5 +466,447 @@
                 "module": "M603"
             }
         ]
+    },
+    {
+        "_id": "M701",
+        "name": "Elvish Languages",
+        "description": "Study of Sindarin and Quenya languages",
+        "course": "RS107",
+        "lessons": [
+            {
+                "_id": "L2101",
+                "name": "Sindarin Basics",
+                "description": "Introduction to Sindarin grammar and vocabulary",
+                "module": "M701"
+            },
+            {
+                "_id": "L2102",
+                "name": "Quenya Fundamentals",
+                "description": "Overview of Quenya language structure and usage",
+                "module": "M701"
+            },
+            {
+                "_id": "L2103",
+                "name": "Elvish Writing Systems",
+                "description": "Study of Tengwar and other Elvish scripts",
+                "module": "M701"
+            }
+        ]
+    },
+    {
+        "_id": "M702",
+        "name": "Dwarvish and Orcish Languages",
+        "description": "Exploration of Khuzdul and Black Speech",
+        "course": "RS107",
+        "lessons": [
+            {
+                "_id": "L2201",
+                "name": "Khuzdul Basics",
+                "description": "Introduction to Dwarvish language and culture",
+                "module": "M702"
+            },
+            {
+                "_id": "L2202",
+                "name": "Black Speech Origins",
+                "description": "Study of the artificial language of Mordor",
+                "module": "M702"
+            },
+            {
+                "_id": "L2203",
+                "name": "Comparative Linguistics in Middle-earth",
+                "description": "Analyzing relationships between Middle-earth languages",
+                "module": "M702"
+            }
+        ]
+    },
+    {
+        "_id": "M703",
+        "name": "Ancient Scripts and Inscriptions",
+        "description": "Study of various writing systems in Middle-earth",
+        "course": "RS107",
+        "lessons": [
+            {
+                "_id": "L2301",
+                "name": "Runes of Middle-earth",
+                "description": "Overview of Cirth and other runic systems",
+                "module": "M703"
+            },
+            {
+                "_id": "L2302",
+                "name": "Deciphering Ancient Texts",
+                "description": "Techniques for translating and interpreting ancient inscriptions",
+                "module": "M703"
+            },
+            {
+                "_id": "L2303",
+                "name": "Linguistic Archaeology in Middle-earth",
+                "description": "Exploring the history of languages through artifacts",
+                "module": "M703"
+            }
+        ]
+    },
+    {
+        "_id": "M801",
+        "name": "Foundations of Middle-earth Diplomacy",
+        "description": "Overview of diplomatic relations in Middle-earth",
+        "course": "RS108",
+        "lessons": [
+            {
+                "_id": "L2401",
+                "name": "History of Alliances",
+                "description": "Study of major alliances throughout Middle-earth history",
+                "module": "M801"
+            },
+            {
+                "_id": "L2402",
+                "name": "Cultural Differences and Communication",
+                "description": "Understanding inter-species cultural dynamics",
+                "module": "M801"
+            },
+            {
+                "_id": "L2403",
+                "name": "Diplomatic Protocols in Middle-earth",
+                "description": "Exploration of formal diplomatic practices",
+                "module": "M801"
+            }
+        ]
+    },
+    {
+        "_id": "M802",
+        "name": "Case Studies in Middle-earth Diplomacy",
+        "description": "Analysis of significant diplomatic events",
+        "course": "RS108",
+        "lessons": [
+            {
+                "_id": "L2501",
+                "name": "The Council of Elrond",
+                "description": "Detailed study of the historic council and its implications",
+                "module": "M802"
+            },
+            {
+                "_id": "L2502",
+                "name": "Rohan and Gondor Relations",
+                "description": "Examination of the alliance between Men of Rohan and Gondor",
+                "module": "M802"
+            },
+            {
+                "_id": "L2503",
+                "name": "Elven Diplomacy in the Third Age",
+                "description": "Analysis of Elven diplomatic strategies and interventions",
+                "module": "M802"
+            }
+        ]
+    },
+    {
+        "_id": "M803",
+        "name": "Conflict Resolution in Middle-earth",
+        "description": "Strategies for managing inter-species conflicts",
+        "course": "RS108",
+        "lessons": [
+            {
+                "_id": "L2601",
+                "name": "Mediation Techniques",
+                "description": "Study of conflict mediation methods used by Wizards and leaders",
+                "module": "M803"
+            },
+            {
+                "_id": "L2602",
+                "name": "War and Peace Negotiations",
+                "description": "Analysis of peace treaties and war prevention strategies",
+                "module": "M803"
+            },
+            {
+                "_id": "L2603",
+                "name": "The Role of Magic in Diplomacy",
+                "description": "Exploration of how magical abilities influence diplomatic relations",
+                "module": "M803"
+            }
+        ]
+    },
+    {
+        "_id": "M901",
+        "name": "Foundations of Middle-earth Magic",
+        "description": "Introduction to magical concepts and sources in Middle-earth",
+        "course": "RS109",
+        "lessons": [
+            {
+                "_id": "L2701",
+                "name": "Origins of Magic in Arda",
+                "description": "Study of the creation of Arda and the source of magical powers",
+                "module": "M901"
+            },
+            {
+                "_id": "L2702",
+                "name": "Types of Magic Users",
+                "description": "Overview of Wizards, Elves, and other magical beings",
+                "module": "M901"
+            },
+            {
+                "_id": "L2703",
+                "name": "Magical Artifacts and Their Creation",
+                "description": "Exploration of powerful magical items in Middle-earth",
+                "module": "M901"
+            }
+        ]
+    },
+    {
+        "_id": "M902",
+        "name": "Practical Applications of Magic",
+        "description": "Study of how magic is used in Middle-earth",
+        "course": "RS109",
+        "lessons": [
+            {
+                "_id": "L2801",
+                "name": "Healing and Protection Spells",
+                "description": "Examination of magical healing and defensive techniques",
+                "module": "M902"
+            },
+            {
+                "_id": "L2802",
+                "name": "Elemental Magic",
+                "description": "Study of magic involving natural elements",
+                "module": "M902"
+            },
+            {
+                "_id": "L2803",
+                "name": "Divination and Foresight",
+                "description": "Exploration of prophetic abilities and scrying techniques",
+                "module": "M902"
+            }
+        ]
+    },
+    {
+        "_id": "M903",
+        "name": "Ethics and Consequences of Magic Use",
+        "description": "Examination of the moral and practical implications of magic",
+        "course": "RS109",
+        "lessons": [
+            {
+                "_id": "L2901",
+                "name": "The Corruption of Power",
+                "description": "Study of the dangers of magical power, focusing on examples like the Rings of Power",
+                "module": "M903"
+            },
+            {
+                "_id": "L2902",
+                "name": "Balance and Harmony in Magic",
+                "description": "Exploration of responsible magic use and its effects on Middle-earth",
+                "module": "M903"
+            },
+            {
+                "_id": "L2903",
+                "name": "Legacy of Magic in Middle-earth",
+                "description": "Analysis of how magic shaped the history and future of Middle-earth",
+                "module": "M903"
+            }
+        ]
+    },
+    {
+        "_id": "M1001",
+        "name": "Foundations of Democratic Education",
+        "description": "Introduction to democratic principles in education",
+        "course": "RS110",
+        "lessons": [
+            {
+                "_id": "L3001",
+                "name": "Historical Perspectives on Democratic Education",
+                "description": "Overview of the development of democratic education",
+                "module": "M1001"
+            },
+            {
+                "_id": "L3002",
+                "name": "Core Principles of Democratic Education",
+                "description": "Examination of key concepts in democratic education",
+                "module": "M1001"
+            },
+            {
+                "_id": "L3003",
+                "name": "Democratic Education in Practice",
+                "description": "Case studies of democratic education implementation",
+                "module": "M1001"
+            }
+        ]
+    },
+    {
+        "_id": "M1002",
+        "name": "Curriculum Design for Democratic Education",
+        "description": "Strategies for creating democratic learning environments",
+        "course": "RS110",
+        "lessons": [
+            {
+                "_id": "L3101",
+                "name": "Participatory Learning Methods",
+                "description": "Techniques for engaging students in democratic learning processes",
+                "module": "M1002"
+            },
+            {
+                "_id": "L3102",
+                "name": "Inclusive Curriculum Development",
+                "description": "Creating curricula that represent diverse perspectives",
+                "module": "M1002"
+            },
+            {
+                "_id": "L3103",
+                "name": "Assessment in Democratic Education",
+                "description": "Evaluating student progress in democratic learning environments",
+                "module": "M1002"
+            }
+        ]
+    },
+    {
+        "_id": "M1003",
+        "name": "Challenges and Future of Democratic Education",
+        "description": "Examining obstacles and opportunities in democratic education",
+        "course": "RS110",
+        "lessons": [
+            {
+                "_id": "L3201",
+                "name": "Overcoming Barriers to Implementation",
+                "description": "Strategies for addressing challenges in democratic education",
+                "module": "M1003"
+            },
+            {
+                "_id": "L3202",
+                "name": "Technology and Democratic Education",
+                "description": "Exploring the role of technology in enhancing democratic learning",
+                "module": "M1003"
+            },
+            {
+                "_id": "L3203",
+                "name": "Global Perspectives on Democratic Education",
+                "description": "Comparative study of democratic education worldwide",
+                "module": "M1003"
+            }
+        ]
+    },
+    {
+        "_id": "M1101",
+        "name": "Philosophical Foundations of Independence",
+        "description": "Exploration of key philosophical concepts in independence movements",
+        "course": "RS111",
+        "lessons": [
+            {
+                "_id": "L3301",
+                "name": "Enlightenment Thought and Independence",
+                "description": "Examining the influence of Enlightenment ideas on independence movements",
+                "module": "M1101"
+            },
+            {
+                "_id": "L3302",
+                "name": "Concepts of Freedom and Autonomy",
+                "description": "Analysis of different interpretations of freedom in independence philosophy",
+                "module": "M1101"
+            },
+            {
+                "_id": "L3303",
+                "name": "Social Contract Theory and Independence",
+                "description": "Exploring the role of social contract theory in independence movements",
+                "module": "M1101"
+            }
+        ]
+    },
+    {
+        "_id": "M1102",
+        "name": "Liberation Movements in Latin America",
+        "description": "Study of key liberation movements in Latin American history",
+        "course": "RS111",
+        "lessons": [
+            {
+                "_id": "L3401",
+                "name": "Simón Bolívar and the Bolivarian Revolution",
+                "description": "Examination of Bolívar's role in Latin American independence",
+                "module": "M1102"
+            },
+            {
+                "_id": "L3402",
+                "name": "Indigenous Liberation Movements",
+                "description": "Analysis of indigenous struggles for independence and rights",
+                "module": "M1102"
+            },
+            {
+                "_id": "L3403",
+                "name": "20th Century Liberation Theology",
+                "description": "Exploring the intersection of religion and liberation movements",
+                "module": "M1102"
+            }
+        ]
+    },
+    {
+        "_id": "M1103",
+        "name": "Contemporary Issues in Independence and Liberation",
+        "description": "Examination of modern independence and liberation challenges",
+        "course": "RS111",
+        "lessons": [
+            {
+                "_id": "L3501",
+                "name": "Economic Independence in a Globalized World",
+                "description": "Analyzing challenges to economic sovereignty in the 21st century",
+                "module": "M1103"
+            },
+            {
+                "_id": "L3502",
+                "name": "Digital Liberation and Cyber Independence",
+                "description": "Exploring concepts of freedom and independence in the digital age",
+                "module": "M1103"
+            },
+            {
+                "_id": "L3503",
+                "name": "Environmental Liberation Movements",
+                "description": "Examining the intersection of environmental and independence movements",
+                "module": "M1103"
+            }
+        ]
+    },
+    {
+        "_id": "M1201",
+        "name": "Early 19th Century Educational Reforms",
+        "description": "Overview of major educational reforms in the early 1800s",
+        "course": "RS112",
+        "lessons": [
+            {
+                "_id": "L3601",
+                "name": "Pestalozzian Method",
+                "description": "Examination of Johann Heinrich Pestalozzi's educational approach",
+                "module": "M1201"
+            },
+            {
+                "_id": "L3602",
+                "name": "Lancasterian System",
+                "description": "Study of Joseph Lancaster's monitorial system of education",
+                "module": "M1201"
+            },
+            {
+                "_id": "L3603",
+                "name": "Froebel's Kindergarten Movement",
+                "description": "Analysis of Friedrich Froebel's early childhood education philosophy",
+                "module": "M1201"
+            }
+        ]
+    },
+    {
+        "_id": "M1202",
+        "name": "Simon Rodríguez and Latin American Education",
+        "description": "Focus on the educational philosophy of Simon Rodríguez",
+        "course": "RS112",
+        "lessons": [
+            {
+                "_id": "L3701",
+                "name": "Rodríguez's Educational Philosophy",
+                "description": "Exploration of Rodríguez's key educational ideas and principles",
+                "module": "M1202"
+            },
+            {
+                "_id": "L3702",
+                "name": "Practical Education and Social Reform",
+                "description": "Examining Rodríguez's approach to linking education and social change",
+                "module": "M1202"
+            },
+            {
+                "_id": "L3703",
+                "name": "Influence on Latin American Education Systems",
+                "description": "Assessing the impact of Rodríguez's ideas on education in Latin America",
+                "module": "M1202"
+            }
+        ]
     }
 ]

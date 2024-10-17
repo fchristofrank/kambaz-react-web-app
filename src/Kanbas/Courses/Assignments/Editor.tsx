@@ -25,8 +25,10 @@ export default function Editor() {
         "_id": "00",
         "title": "Untitled Assignment",
         "course": "00000",
+        "description": "",
         "availableAfterDate": "",
         "dueDate": "",
+        "availableUntilDate": "",
         "points": "100"
     };
     const assignment = assignments.find((assignment) => assignment._id === aid) || defaultAssignment;
@@ -44,24 +46,8 @@ export default function Editor() {
                 <div className="col-12">
                     <div id="wd-description-container" className="wd-assignment-editor-desc-container">
                         <textarea id="wd-description" className="form-control mt-2" cols={50} rows={15}>
+                            {assignment.description}
                         </textarea>
-                        <div className="wd-assignment-editor-textarea-content">
-                            The assignment is <p className="text-danger d-inline">available online</p>
-                            <br></br><br></br>
-
-                            Submit a link to the landing page of your Web application running on Netlify.
-                            <br></br><br></br>
-                            The landing page should include the following:
-                            <br></br><br></br>
-                            <ul>
-                                <li>Your full name and section</li>
-                                <li>Links to each of the lab assignments</li>
-                                <li>Link to the Kanbas application</li>
-                                <li>Links to all relevant source code repositories</li>
-                            </ul>
-                            <br></br>
-                            The Kanbas application should include a link to navigate back to the landing page.
-                        </div>
                     </div>
                 </div>
             </div>
@@ -142,7 +128,7 @@ export default function Editor() {
                             <input id="wd-assign-to" className="form-control" placeholder="" />
                         </div>
                         <label htmlFor="wd-due-date" className="col-form-label">Due</label>
-                        <input id="wd-due-date" className="form-control" type="date" />
+                        <input id="wd-due-date" className="form-control" type="date" value={assignment.dueDate}/>
                         <div className="d-flex">
                             <div className="me-2">
                                 <label htmlFor="wd-available-from" className="col-form-label"><b>Available from</b></label>
@@ -150,7 +136,7 @@ export default function Editor() {
                             </div>
                             <div className="float-end">
                                 <label htmlFor="wd-available-until" className="col-form-label"><b>Until</b></label>
-                                <input id="wd-available-until" className="form-control" type="date" style={{ width: '110px' }} value={assignment.dueDate}/>
+                                <input id="wd-available-until" className="form-control" type="date" style={{ width: '110px' }} value={assignment.availableUntilDate}/>
                             </div>
                         </div>
                     </fieldset>

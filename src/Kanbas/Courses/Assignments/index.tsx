@@ -27,7 +27,7 @@ export default function Assignments() {
                   <div>
                     <a className="wd-assignment-link wd-disabled-link"
                       href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>{assignment.title}</a>
-                    <p><span className="wd-assignment-modules-text">Multiple Modules</span> <span className="wd-assignment-subtext">| <b>Not available until</b> {assignment.availableAfterDate} | <br /> <b>Due</b> {assignment.dueDate} | {assignment.points} pts</span></p>
+                    <p><span className="wd-assignment-modules-text">Multiple Modules</span> <span className="wd-assignment-subtext">| <b>Not available until</b> {formatDate(assignment.availableAfterDate)} at 12:00am | <br /> <b>Due</b> {formatDate(assignment.dueDate)} at 11:59pm | {assignment.points} pts</span></p>
                   </div>
                   <AssignmentCOntrolButtons />
                 </li>
@@ -38,4 +38,16 @@ export default function Assignments() {
       </ul>
     </div>
   );
+}
+
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const month = monthNames[date.getMonth()];
+  const day = date.getDate();
+
+  return `${month} ${day}`;
 }

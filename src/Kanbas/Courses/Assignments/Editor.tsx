@@ -21,6 +21,21 @@ export default function Editor() {
     const handleSave = () => {
         navigate(-1);
     };
+
+    const formatDateTime = (dateString: string | undefined | null): string => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+    
+        // Format date as YYYY-MM-DDTHH:mm
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+    
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };
+
     const defaultAssignment = {
         "_id": "00",
         "title": "Untitled Assignment",
@@ -128,15 +143,15 @@ export default function Editor() {
                             <input id="wd-assign-to" className="form-control" placeholder="" />
                         </div>
                         <label htmlFor="wd-due-date" className="col-form-label">Due</label>
-                        <input id="wd-due-date" className="form-control" type="date" value={assignment.dueDate}/>
+                        <input id="wd-due-date" className="form-control" type="datetime-local" value={formatDateTime(assignment.dueDate)} />
                         <div className="d-flex">
                             <div className="me-2">
                                 <label htmlFor="wd-available-from" className="col-form-label"><b>Available from</b></label>
-                                <input id="wd-available-from" className="form-control" type="date" style={{ width: '110px' }} value={assignment.availableAfterDate}/>
+                                <input id="wd-available-from" className="form-control" type="datetime-local" style={{ width: '155px' }} value={formatDateTime(assignment.availableAfterDate)} />
                             </div>
                             <div className="float-end">
                                 <label htmlFor="wd-available-until" className="col-form-label"><b>Until</b></label>
-                                <input id="wd-available-until" className="form-control" type="date" style={{ width: '110px' }} value={assignment.availableUntilDate}/>
+                                <input id="wd-available-until" className="form-control" type="datetime-local" style={{ width: '155px' }} value={formatDateTime(assignment.availableUntilDate)} />
                             </div>
                         </div>
                     </fieldset>

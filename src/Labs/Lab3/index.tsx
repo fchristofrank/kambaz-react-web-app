@@ -29,8 +29,10 @@ import TodoList from "./todo/TodoList";
 import VariablesAndConstants from "./VariablesAndConstants";
 import VariableTypes from "./VariableTypes";
 import PathParameters from "./PathParameters";
+import { useSelector } from "react-redux";
 
 export default function Lab3() {
+    const { todos } = useSelector((state: any) => state.todosReducer);
     console.log('Hello World!')
     return (
         <div id="wd-lab3" className="container">
@@ -69,6 +71,13 @@ export default function Lab3() {
                 vel nihil repellat nemo explicabo excepturi consectetur. Modi omnis minus sequi maiores, provident voluptates.
             </Highlight>
             <PathParameters />
+            <ul className="list-group">
+                {todos.map((todo: any) => (
+                    <li className="list-group-item" key={todo.id}>
+                        {todo.title}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

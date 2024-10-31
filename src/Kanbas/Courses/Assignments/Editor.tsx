@@ -8,59 +8,67 @@ import AssignmentControlButtons from "./AssignmentControlButtons";
 import { IoCloseOutline } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router";
 import * as db from "../../Database"
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function Editor() {
-    const assignments = db.assignments;
-    const { aid } = useParams();
+    const { cid, aid } = useParams();
     const navigate = useNavigate();
-
-    const handleCancel = () => {
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+    const [assignment, setAssignment] = useState(() => {
+        const existingAssignment = assignments.find((assignment: any) => assignment._id === aid);
+        return existingAssignment ? { ...existingAssignment } : { course: cid, title: '', description: '', points: '', dueDate: '', availableAfterDate: '', availableUntilDate: '' };
+    });
+    const dispatch = useDispatch();
+    const handleEdit = () => {
         navigate(-1);
     };
-
     const handleSave = () => {
-        navigate(-1);
+        if (assignment._id) {
+            // Dispatch an action to update the existing assignment
+            dispatch(updateAssignment(assignment));
+        } else {
+            // Dispatch the addAssignment action for a new assignment
+            dispatch(addAssignment(assignment));
+        }
+        handleEdit();
     };
+    const handleCancel = () => {
+        handleEdit();
+    }
+
+
 
     const formatDateTime = (dateString: string | undefined | null): string => {
         if (!dateString) return '';
         const date = new Date(dateString);
-    
+
         // Format date as YYYY-MM-DDTHH:mm
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
-    
+
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     };
 
-    const defaultAssignment = {
-        "_id": "00",
-        "title": "Untitled Assignment",
-        "course": "00000",
-        "description": "",
-        "availableAfterDate": "",
-        "dueDate": "",
-        "availableUntilDate": "",
-        "points": "100"
-    };
-    const assignment = assignments.find((assignment) => assignment._id === aid) || defaultAssignment;
     return (
         <div id="wd-assignments-editor" className="ms-5 mt-3">
 
             <div className="row mb-3">
                 <div className="col-sm-12">
                     <label htmlFor="wd-name"><b>Assignment Name</b></label>
-                    <input id="wd-name" className="form-control mt-2" value={assignment.title} />
+                    <input id="wd-name" className="form-control mt-2" value={assignment.title}
+                        onChange={(e) => { setAssignment({ ...assignment, title: e.target.value }) }} />
                 </div>
             </div>
 
             <div className="row mb-3">
                 <div className="col-12">
                     <div id="wd-description-container" className="wd-assignment-editor-desc-container">
-                        <textarea id="wd-description" className="form-control mt-2" cols={50} rows={15}>
+                        <textarea id="wd-description" className="form-control mt-2" cols={50} rows={15} onChange={(e) => { setAssignment({ ...assignment, description: e.target.value }) }}>
                             {assignment.description}
                         </textarea>
                     </div>
@@ -69,10 +77,10 @@ export default function Editor() {
 
             <div className="row mb-3">
                 <div className="col-sm-5">
-                    <label htmlFor="wd-points" className="col-form-label float-end">{assignment.points}</label>
+                    <label htmlFor="wd-points" className="col-form-label float-end" >Points</label>
                 </div>
                 <div className="col-sm-7">
-                    <input id="wd-points" className="form-control" placeholder="100" />
+                    <input id="wd-points" className="form-control" placeholder="100" onChange={(e) => { setAssignment({ ...assignment, points: e.target.value }) }} />
                 </div>
             </div>
 
@@ -143,15 +151,18 @@ export default function Editor() {
                             <input id="wd-assign-to" className="form-control" placeholder="" />
                         </div>
                         <label htmlFor="wd-due-date" className="col-form-label">Due</label>
-                        <input id="wd-due-date" className="form-control" type="datetime-local" value={formatDateTime(assignment.dueDate)} />
+                        <input id="wd-due-date" className="form-control" type="datetime-local" value={formatDateTime(assignment.dueDate)}
+                            onChange={(e) => { setAssignment({ ...assignment, dueDate: e.target.value }) }} />
                         <div className="d-flex">
                             <div className="me-2">
                                 <label htmlFor="wd-available-from" className="col-form-label"><b>Available from</b></label>
-                                <input id="wd-available-from" className="form-control" type="datetime-local" style={{ width: '155px' }} value={formatDateTime(assignment.availableAfterDate)} />
+                                <input id="wd-available-from" className="form-control" type="datetime-local" style={{ width: '155px' }} value={formatDateTime(assignment.availableAfterDate)}
+                                    onChange={(e) => { setAssignment({ ...assignment, availableAfterDate: e.target.value }) }} />
                             </div>
                             <div className="float-end">
                                 <label htmlFor="wd-available-until" className="col-form-label"><b>Until</b></label>
-                                <input id="wd-available-until" className="form-control" type="datetime-local" style={{ width: '155px' }} value={formatDateTime(assignment.availableUntilDate)} />
+                                <input id="wd-available-until" className="form-control" type="datetime-local" style={{ width: '155px' }} value={formatDateTime(assignment.availableUntilDate)}
+                                    onChange={(e) => { setAssignment({ ...assignment, availableUntilDate: e.target.value }) }} />
                             </div>
                         </div>
                     </fieldset>
@@ -161,8 +172,8 @@ export default function Editor() {
 
             <div className="row mt-4">
                 <div className="col-12 d-flex justify-content-end">
-                    <button id="wd-cancel" className="btn btn-secondary me-1" onClick={handleCancel}>Cancel</button>
-                    <button id="wd-save" className="btn btn-primary btn-danger" onClick={handleSave}>Save</button>
+                    <button id="wd-cancel" className="btn btn-secondary me-1" onClick={() => { handleCancel() }}>Cancel</button>
+                    <button id="wd-save" className="btn btn-primary btn-danger" onClick={() => { handleSave() }}>Save</button>
                 </div>
             </div>
         </div>

@@ -5,13 +5,14 @@ import { IoEllipsisVertical } from "react-icons/io5";
 import AssignmentCOntrolButtons from "./AssignmentControlButtons";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import * as db from "../../Database";
 import { useParams } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAssignment } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
-  
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const dispatch = useDispatch();
   return (
     <div id="wd-assignments" className="ms-5">
       <AssignmentControls /><br /><br />
@@ -19,7 +20,7 @@ export default function Assignments() {
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-2 bg-secondary">
             <BsGripVertical className="me-0.5 fs-3" />
-            <IoMdArrowDropdown className="fs-4" /> 
+            <IoMdArrowDropdown className="fs-4" />
             <b>ASSIGNMENTS</b>
             <IoEllipsisVertical className="fs-4 float-end mt-1" />
             <AiOutlinePlus className="float-end fs-5 mt-1 me-4" />
@@ -30,23 +31,23 @@ export default function Assignments() {
               .filter((assignment: any) => assignment.course === cid)
               .map((assignment: any) => (
                 <li className="wd-lesson list-group-item p-3 ps-1 d-flex justify-content-between align-items-start" key={assignment._id}>
-                  <BsGripVertical className="fs-3 mt-4" />
-                  <FaRegPenToSquare className="fs-3 mt-4 text-success" />
-                  <div>
+                  <BsGripVertical className="fs-3 mt-4 me-3" />
+                  <FaRegPenToSquare className="fs-3 mt-4 text-success me-3" />
+                  <div className="wd-content-container flex-grow-1 mx-4">
                     <a className="wd-assignment-link wd-disabled-link"
                       href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
                       {assignment.title}
                     </a>
                     <p>
                       <span className="wd-assignment-modules-text">Multiple Modules</span>
-                      <span className="wd-assignment-subtext"> | 
-                        <b> Not available until</b> {formatDate(assignment.availableAfterDate)} | 
-                        <br /> 
+                      <span className="wd-assignment-subtext"> |
+                        <b> Not available until</b> {formatDate(assignment.availableAfterDate)} |
+                        <br />
                         <b> Due</b> {formatDate(assignment.dueDate)} | {assignment.points} pts
                       </span>
                     </p>
                   </div>
-                  <AssignmentCOntrolButtons />
+                  <AssignmentCOntrolButtons assignmentID={assignment._id} deleteAssignment={(assignmentID) =>dispatch(deleteAssignment(assignment._id))}/>
                 </li>
               ))}
           </ul>

@@ -81,3 +81,14 @@ body * {
     padding: 10px;
     top: 10px;
 }
+
+.wd-dashboard-course-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    text-overflow: ellipsis;
+    max-height: 3em;
+    line-height: 1.5em;
+}

@@ -95,7 +95,7 @@ export default function Dashboard({
             )}
 
             <h2 id="wd-dashboard-published">
-                {showAllCourses ? "All Courses" : "Published Courses"} ({displayedCourses.length})
+                {"Published Courses"} ({displayedCourses.length})
             </h2>
             <hr />
             <div id="wd-dashboard-courses" className="row">
@@ -111,7 +111,7 @@ export default function Dashboard({
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                                 <div className="card h-100 rounded-3 overflow-hidden">
                                     <Link
-                                        to={`/Kanbas/Courses/${course._id}/Home`}
+                                        to={isEnrolled ? `/Kanbas/Courses/${course._id}/Home` : '#'}
                                         className="wd-dashboard-course-link text-decoration-none text-dark"
                                     >
                                         <img src={course.imgSource} width="100%" height={160} />

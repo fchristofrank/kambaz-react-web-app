@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router";
+import { Navigate, Route, Routes, useParams } from "react-router";
 import Account from "./Account";
 import Dashboard from "./Dashboard";
 import KanbasNavigation from "./Navigation";
@@ -40,7 +40,7 @@ export default function Kanbas() {
       })
     );
   };
-
+  const { cid } = useParams();
   return (
     <div id="wd-kanbas" className="d-flex">
       <div className="d-none d-md-block">

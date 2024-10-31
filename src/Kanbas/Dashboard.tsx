@@ -32,7 +32,7 @@ export default function Dashboard({
     );
 
 
-    const displayedCourses = showAllCourses ? courses : enrolledCourses;
+    const displayedCourses = isFaculty ? courses : (showAllCourses ? courses : enrolledCourses);
 
     const handleUnenroll = (courseId: string) => {
         const enrollment = enrollments.find(

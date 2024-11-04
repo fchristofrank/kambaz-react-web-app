@@ -169,7 +169,7 @@ export default function Editor() {
                 </div>
             </div>
             <hr />
-
+            
             <div className="row mt-4">
                 <div className="col-12 d-flex justify-content-end">
                     <button id="wd-cancel" className="btn btn-secondary me-1" onClick={() => { handleCancel() }}>Cancel</button>

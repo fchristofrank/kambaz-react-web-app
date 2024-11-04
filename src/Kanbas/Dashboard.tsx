@@ -56,7 +56,7 @@ export default function Dashboard({
                     className="btn btn-primary float-end"
                     onClick={() => setShowAllCourses(!showAllCourses)}
                 >
-                    {showAllCourses ? "My Enrollments" : "Enrollments"}
+                    Enrollments
                 </button>}
 
             {isFaculty && (

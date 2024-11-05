@@ -12,6 +12,8 @@ import { deleteAssignment } from "./reducer";
 export default function Assignments() {
   const { cid } = useParams();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const isFaculty = currentUser.role === 'FACULTY';
   const dispatch = useDispatch();
   return (
     <div id="wd-assignments" className="ms-5">
@@ -35,7 +37,9 @@ export default function Assignments() {
                   <FaRegPenToSquare className="fs-3 mt-4 text-success me-3" />
                   <div className="wd-content-container flex-grow-1 mx-4">
                     <a className="wd-assignment-link wd-disabled-link"
-                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
+                      href={isFaculty
+                        ? `#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`
+                        : `#/Kanbas/Courses/${cid}/Assignments`}>
                       {assignment.title}
                     </a>
                     <p>
@@ -47,7 +51,7 @@ export default function Assignments() {
                       </span>
                     </p>
                   </div>
-                  <AssignmentCOntrolButtons assignmentID={assignment._id} deleteAssignment={(assignmentID) =>dispatch(deleteAssignment(assignment._id))}/>
+                  <AssignmentCOntrolButtons assignmentID={assignment._id} deleteAssignment={(assignmentID) => dispatch(deleteAssignment(assignment._id))} />
                 </li>
               ))}
           </ul>

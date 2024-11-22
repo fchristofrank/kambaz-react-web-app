@@ -2,17 +2,24 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setCurrentUser } from "./reducer";
-import * as db from "../Database";
+import * as client from "./client";
 export default function Signin() {
   const [credentials, setCredentials] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const signin = () => {
-    const user = db.users.find(
-      (u: any) => u.username === credentials.username && u.password === credentials.password);
-    if (!user) alert("Incorrect username or password.");
-    dispatch(setCurrentUser(user));
-    navigate("/Kanbas/Dashboard");
+  const signin = async () => {
+    try {
+      const user = await client.signin(credentials);
+      dispatch(setCurrentUser(user));
+      navigate("/Kanbas/Dashboard");
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        alert("Incorrect username or password.");
+      } else {
+        console.error("An unexpected error occurred:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
+    }
   };
 
   return (

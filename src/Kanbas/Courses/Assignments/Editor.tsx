@@ -7,10 +7,11 @@ import GreenCheckmark from "./GreenCheckmark";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { IoCloseOutline } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router";
-import * as db from "../../Database"
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addAssignment, updateAssignment } from "./reducer";
+import * as assignmentsClient from "./client";
+import * as coursesClient from ".././client";
 
 export default function Editor() {
     const { cid, aid } = useParams();
@@ -26,12 +27,14 @@ export default function Editor() {
     const handleEdit = () => {
         navigate(-1);
     };
-    const handleSave = () => {
+    const handleSave = async () => {
         if (assignment._id) {
-            // Dispatch an action to update the existing assignment
+            await assignmentsClient.updateAssignment(assignment);
             dispatch(updateAssignment(assignment));
         } else {
-            // Dispatch the addAssignment action for a new assignment
+            if (cid) {
+                await coursesClient.createAssignmentForCourse(cid, assignment);
+            }
             dispatch(addAssignment(assignment));
         }
         handleEdit();

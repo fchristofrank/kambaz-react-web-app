@@ -8,11 +8,28 @@ import { FaRegPenToSquare } from "react-icons/fa6";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAssignment } from "./reducer";
+import { setAssignments } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { useEffect } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const dispatch = useDispatch();
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
   return (
     <div id="wd-assignments" className="ms-5">
       <AssignmentControls /><br /><br />
@@ -47,7 +64,7 @@ export default function Assignments() {
                       </span>
                     </p>
                   </div>
-                  <AssignmentCOntrolButtons assignmentID={assignment._id} deleteAssignment={(assignmentID) => dispatch(deleteAssignment(assignment._id))} />
+                  <AssignmentCOntrolButtons assignmentID={assignment._id} deleteAssignment={(assignmentID) => removeAssignment(assignmentID)} />
                 </li>
               ))}
           </ul>

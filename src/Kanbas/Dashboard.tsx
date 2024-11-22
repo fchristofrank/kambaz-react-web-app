@@ -1,7 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { enroll, unenroll } from "./Account/Enrollments/reducer"; // Assuming you have an enroll action
-import { useState } from "react";
+import { enroll, unenroll } from "./Account/Enrollments/reducer";
+import * as enrollmentsClient from "./Account/Enrollments/client";
+import { useEffect, useState } from "react";
+
 export default function Dashboard({
     courses,
     course,
@@ -22,7 +24,6 @@ export default function Dashboard({
     const dispatch = useDispatch();
     const isFaculty = currentUser.role === 'FACULTY';
     const [showAllCourses, setShowAllCourses] = useState(false);
-
     const enrolledCourses = courses.filter((course) =>
         enrollments.some(
             (enrollment: any) =>
@@ -31,21 +32,22 @@ export default function Dashboard({
         )
     );
 
+    const displayedCourses = showAllCourses ? courses : enrolledCourses;
 
-    const displayedCourses = isFaculty ? courses : (showAllCourses ? courses : enrolledCourses);
-
-    const handleUnenroll = (courseId: string) => {
+    const handleUnenroll = async (courseId: string) => {
         const enrollment = enrollments.find(
             (enrollment: any) =>
                 enrollment.user === currentUser._id && enrollment.course === courseId
         );
         if (enrollment) {
             dispatch(unenroll(enrollment._id));
+            await enrollmentsClient.unEnrollUser(courseId);
         }
     };
 
-    const handleEnroll = (courseId: string) => {
+    const handleEnroll = async (courseId: string) => {
         dispatch(enroll({ user: currentUser._id, course: courseId }));
+        await enrollmentsClient.enrollUser(courseId);
     };
 
     return (
@@ -95,12 +97,12 @@ export default function Dashboard({
             )}
 
             <h2 id="wd-dashboard-published">
-                {"Published Courses"} ({displayedCourses.length})
+                {"Published Courses"} ({enrollments.length})
             </h2>
             <hr />
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {displayedCourses.map((course) => {
+                    {displayedCourses.map((course: any) => {
                         const isEnrolled = enrollments.some(
                             (enrollment: any) =>
                                 enrollment.user === currentUser._id &&
@@ -109,13 +111,13 @@ export default function Dashboard({
 
                         return (
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
-                                <div className="card h-100 rounded-3 overflow-hidden">
+                                <div className="card h-100 rounded-3 overflow-hidden d-flex flex-column">
                                     <Link
                                         to={isEnrolled ? `/Kanbas/Courses/${course._id}/Home` : '#'}
-                                        className="wd-dashboard-course-link text-decoration-none text-dark"
+                                        className="wd-dashboard-course-link text-decoration-none text-dark h-100 d-flex flex-column"
                                     >
                                         <img src={course.imgSource} width="100%" height={160} />
-                                        <div className="card-body">
+                                        <div className="card-body flex-grow-1">
                                             <h5 className="wd-dashboard-course-title card-title">
                                                 {course.name}
                                             </h5>
@@ -126,7 +128,7 @@ export default function Dashboard({
                                                 {course.description}
                                             </p>
                                         </div>
-                                        <div className="card-footer mb-0">
+                                        <div className="card-footer border-top">
                                             <button className="btn btn-primary">Go</button>
                                             {isFaculty && (
                                                 <>

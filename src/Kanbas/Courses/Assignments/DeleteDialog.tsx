@@ -1,4 +1,4 @@
-export default function DeleteDialog({ assignmentID, deleteAssignment }: { assignmentID: String, deleteAssignment: (assignmentID: String) => void; }) {
+export default function DeleteDialog({ assignmentID, deleteAssignment }: { assignmentID: string, deleteAssignment: (assignmentID: string) => void; }) {
     return (
         <div id="wd-delete-module-dialog" className="modal fade" data-bs-backdrop="static" data-bs-keyboard="false">
             <div className="modal-dialog">

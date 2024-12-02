@@ -29,7 +29,7 @@ export default function Kanbas() {
   const fetchCourses = async () => {
     let courses = [];
     try {
-      courses = await userClient.fetchAllCourses();
+      courses = await courseClient.fetchAllCourses();
     } catch (error) {
       console.error(error);
     }
@@ -53,7 +53,7 @@ export default function Kanbas() {
   }, [currentUser]);
 
   const addNewCourse = async () => {
-    const newCourse = await userClient.createCourse(course);
+    const newCourse = await courseClient.createCourse(course);
     setCourses([...courses, { ...course, ...newCourse }]);
     dispatch(addCourse(course));
     dispatch(enroll({ user: currentUser._id, course: newCourse._id }));

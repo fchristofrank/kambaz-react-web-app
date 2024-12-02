@@ -24,15 +24,6 @@ export default function Dashboard({
     const dispatch = useDispatch();
     const isFaculty = currentUser.role === 'FACULTY';
     const [showAllCourses, setShowAllCourses] = useState(false);
-    const enrolledCourses = courses.filter((course) =>
-        enrollments.some(
-            (enrollment: any) =>
-                enrollment.user === currentUser._id &&
-                enrollment.course === course._id
-        )
-    );
-
-    const displayedCourses = showAllCourses ? courses : enrolledCourses;
 
     const handleUnenroll = async (courseId: string) => {
         const enrollment = enrollments.find(
@@ -102,13 +93,8 @@ export default function Dashboard({
             <hr />
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {displayedCourses.map((course: any) => {
-                        const isEnrolled = enrollments.some(
-                            (enrollment: any) =>
-                                enrollment.user === currentUser._id &&
-                                enrollment.course === course._id
-                        );
-
+                    {courses.map((course: any) => {
+                        const isEnrolled = true;
                         return (
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                                 <div className="card h-100 rounded-3 overflow-hidden d-flex flex-column">

@@ -10,7 +10,10 @@ export default function Dashboard({
     setCourse,
     addNewCourse,
     deleteCourse,
-    updateCourse
+    updateCourse,
+    enrolling,
+    setEnrolling,
+    updateEnrollment
 }: {
     courses: any[];
     course: any;
@@ -18,38 +21,21 @@ export default function Dashboard({
     addNewCourse: () => void;
     deleteCourse: (course: any) => void;
     updateCourse: () => void;
+    enrolling: boolean;
+    setEnrolling: (enrolling: boolean) => void;
+    updateEnrollment: (courseId: string, enrolled: boolean) => void;
 }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
     const dispatch = useDispatch();
     const isFaculty = currentUser.role === 'FACULTY';
-    const [showAllCourses, setShowAllCourses] = useState(false);
 
-    const handleUnenroll = async (courseId: string) => {
-        const enrollment = enrollments.find(
-            (enrollment: any) =>
-                enrollment.user === currentUser._id && enrollment.course === courseId
-        );
-        if (enrollment) {
-            dispatch(unenroll(enrollment._id));
-            await enrollmentsClient.unEnrollUser(courseId);
-        }
-    };
-
-    const handleEnroll = async (courseId: string) => {
-        dispatch(enroll({ user: currentUser._id, course: courseId }));
-        await enrollmentsClient.enrollUser(courseId);
-    };
 
     return (
         <div id="wd-dashboard">
             <h1 id="wd-dashboard-title">Dashboard</h1>
             {!isFaculty &&
-                <button
-                    className="btn btn-primary float-end"
-                    onClick={() => setShowAllCourses(!showAllCourses)}
-                >
-                    Enrollments
+                <button onClick={() => setEnrolling(!enrolling)} className="float-end btn btn-primary" >
+                    {enrolling ? "My Courses" : "All Courses"}
                 </button>}
 
             {isFaculty && (
@@ -88,18 +74,17 @@ export default function Dashboard({
             )}
 
             <h2 id="wd-dashboard-published">
-                {"Published Courses"} ({enrollments.length})
+                {"Published Courses"} ({courses.length})
             </h2>
             <hr />
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
                     {courses.map((course: any) => {
-                        const isEnrolled = true;
                         return (
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                                 <div className="card h-100 rounded-3 overflow-hidden d-flex flex-column">
                                     <Link
-                                        to={isEnrolled ? `/Kanbas/Courses/${course._id}/Home` : '#'}
+                                        to={course.enrolled ? `/Kanbas/Courses/${course._id}/Home` : '#'}
                                         className="wd-dashboard-course-link text-decoration-none text-dark h-100 d-flex flex-column"
                                     >
                                         <img src={course.imgSource} width="100%" height={160} />
@@ -141,16 +126,14 @@ export default function Dashboard({
                                                 </>
                                             )}
                                             {!isFaculty && (
-                                                <button
-                                                    id={isEnrolled ? "wd-unenroll-course" : "wd-enroll-course"}
-                                                    className={`btn ${isEnrolled ? "btn-danger" : "btn-success"} float-end`}
-                                                    onClick={(event) => {
+                                                enrolling && (
+                                                    <button onClick={(event) => {
                                                         event.preventDefault();
-                                                        isEnrolled ? handleUnenroll(course._id) : handleEnroll(course._id);
-                                                    }}
-                                                >
-                                                    {isEnrolled ? "Unenroll" : "Enroll"}
-                                                </button>
+                                                        updateEnrollment(course._id, !course.enrolled);
+                                                    }} className={`btn ${course.enrolled ? "btn-danger" : "btn-success"} float-end`} >
+                                                        {course.enrolled ? "Unenroll" : "Enroll"}
+                                                    </button>
+                                                )
                                             )}
                                         </div>
                                     </Link>

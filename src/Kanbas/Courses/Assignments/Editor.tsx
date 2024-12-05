@@ -17,7 +17,7 @@ export default function Editor() {
     const { cid, aid } = useParams();
     const navigate = useNavigate();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const isFaculty = currentUser.role === 'FACULTY';
+    const isFaculty = currentUser.role === 'FACULTY' || currentUser.role === 'ADMIN';
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const [assignment, setAssignment] = useState(() => {
         const existingAssignment = assignments.find((assignment: any) => assignment._id === aid);

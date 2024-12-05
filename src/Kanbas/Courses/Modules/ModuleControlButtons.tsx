@@ -6,7 +6,7 @@ import { FaPencil } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 export default function ModuleControlButtons({ moduleId, deleteModule, editModule }: { moduleId: string; deleteModule: (moduleId: string) => void; editModule: (moduleId: string) => void; } ) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const isFaculty = currentUser.role === 'FACULTY';
+  const isFaculty = currentUser.role === 'FACULTY' || currentUser.role === 'ADMIN';
   return (
 
     <div id="wd-module-control-buttons" className="float-end">

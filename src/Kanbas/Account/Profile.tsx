@@ -15,7 +15,11 @@ export default function Profile() {
 
   const fetchProfile = () => {
     if (!currentUser) return navigate("/Kanbas/Account/Signin");
-    setProfile(currentUser);
+    const formattedProfile = {
+      ...currentUser,
+      dob: currentUser.dob ? new Date(currentUser.dob).toISOString().split("T")[0] : ""
+    };
+    setProfile(formattedProfile);
   };
   const signout = async () => {
     await client.signout();

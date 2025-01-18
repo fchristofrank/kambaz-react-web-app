@@ -2,7 +2,7 @@ export default function AssignmentEditor() {
     return (
         <div id="wd-assignments-editor">
             {/* Assignment Name */}
-            <label htmlFor="wd-name">Assignment Name</label>
+            <h4>Assignment Name</h4>
             <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
 
             {/* Description */}
@@ -15,6 +15,7 @@ export default function AssignmentEditor() {
                 The Kanbas application should include a link to navigate back to the landing page.
             </textarea>
             <br />
+            <br />
 
             <table>
                 {/* Points */}
@@ -26,6 +27,7 @@ export default function AssignmentEditor() {
                         <input id="wd-points" value={100} />
                     </td>
                 </tr>
+                <br />
 
                 {/* Assignment Group */}
                 <tr>
@@ -40,6 +42,7 @@ export default function AssignmentEditor() {
                         </select>
                     </td>
                 </tr>
+                <br />
 
                 {/* Display Grade As */}
                 <tr>
@@ -54,18 +57,22 @@ export default function AssignmentEditor() {
                         </select>
                     </td>
                 </tr>
+                <br />
 
                 {/* Submission Type */}
                 <tr>
                     <td align="right" valign="top">
                         <label htmlFor="wd-submission-type">Submission Type</label>
                     </td>
+                    
                     <td>
                         <select id="wd-submission-type">
                             <option>Online</option>
                             <option>On Paper</option>
                             <option>No Submission</option>
                         </select>
+                        <br />
+                        <br />
                         <div>
                             <input type="checkbox" id="wd-text-entry" />
                             <label htmlFor="wd-text-entry">Text Entry</label><br />
@@ -80,6 +87,7 @@ export default function AssignmentEditor() {
                         </div>
                     </td>
                 </tr>
+                <br />
 
                 {/* Assign To */}
                 <tr>
@@ -90,6 +98,7 @@ export default function AssignmentEditor() {
                         <input id="wd-assign-to" value="Everyone" />
                     </td>
                 </tr>
+                <br />
 
                 {/* Due Date */}
                 <tr>
@@ -100,32 +109,29 @@ export default function AssignmentEditor() {
                         <input type="date" id="wd-due-date" value="2024-05-13" />
                     </td>
                 </tr>
+                <br />
 
-                {/* Available From */}
                 <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-available-from">Available from</label>
-                    </td>
-                    <td>
-                        <input type="date" id="wd-available-from" value="2024-05-06" />
-                    </td>
-                </tr>
-
-                {/* Available Until */}
-                <tr>
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-available-until">Until</label>
-                    </td>
-                    <td>
-                        <input type="date" id="wd-available-until" value="2024-05-20" />
+                    <td colSpan={2} style={{ textAlign: 'right' }}>
+                        <div style={{ display: 'inline-block' }}>
+                            <div style={{ display: 'inline-block', marginRight: '10px', textAlign: 'left' }}>
+                                <label htmlFor="wd-available-from">Available from</label><br />
+                                <input type="date" id="wd-available-from" value="2024-05-06" />
+                            </div>
+                            <div style={{ display: 'inline-block', textAlign: 'left' }}>
+                                <label htmlFor="wd-until">Until</label><br />
+                                <input type="date" id="wd-until" value="2024-05-20" />
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </table>
-
-            {/* Save and Cancel Buttons */}
             <br />
-            <button>Cancel</button>
-            <button>Save</button>
-        </div>
+            <hr />
+            <div style={{ textAlign: 'right' }}>
+                <button style={{ marginRight: '10px' }}>Cancel</button>
+                <button>Save</button>
+            </div>
+        </div >
     );
 }

@@ -111,7 +111,7 @@ export default function Lab1() {
                             <td>Q5</td>
                             <td>HTML</td>
                             <td>2/16/21</td>
-                            <td>90</td>
+                            <td>95</td>
                         </tr>
                         <tr>
                             <td>Q6</td>
@@ -123,13 +123,13 @@ export default function Lab1() {
                             <td>Q7</td>
                             <td>test</td>
                             <td>2/7/21</td>
-                            <td>90</td>
+                            <td>92</td>
                         </tr>
                         <tr>
                             <td>Q8</td>
                             <td>Java</td>
                             <td>2/7/28</td>
-                            <td>90</td>
+                            <td>79</td>
                         </tr>
                         <tr>
                             <td>Q9</td>
@@ -141,13 +141,13 @@ export default function Lab1() {
                             <td>Q10</td>
                             <td>Django</td>
                             <td>2/11/21</td>
-                            <td>90</td>
+                            <td>89</td>
                         </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colSpan={3}>Average</td>
-                            <td>90</td>
+                            <td>86</td>
                         </tr>
                     </tfoot>
                 </table>

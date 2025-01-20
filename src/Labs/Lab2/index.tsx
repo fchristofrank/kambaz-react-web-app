@@ -10,6 +10,14 @@ import Positions from "./Positions";
 import Zindex from "./Zindex";
 import Float from "./Float";
 import GridLayout from "./GridLayout";
+import Flex from "./Flex";
+import ReactIconsSampler from "./ReactIcons";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BootstrapGrids from "./BootstrapGrids";
+import ScreenSizeLabel from "./ScreenSizeLabel";
+import BootstrapTables from "./BootstrapTables";
+import BootstrapLists from "./BootstrapLists";
+import BootstrapForms from "./BootstrapForms";
 
 export default function Lab2() {
   return (
@@ -23,8 +31,7 @@ export default function Lab2() {
         using the style attribute
       </p>
 
-      <
-        div id="wd-css-id-selectors">
+      <div id="wd-css-id-selectors">
         <h3>ID selectors</h3>
         <p id="wd-id-selector-1">
           Instead of changing the look and feel of all the
@@ -92,7 +99,7 @@ export default function Lab2() {
       <div>
         <Positions />
       </div>
-      <div> 
+      <div>
         <Zindex />
       </div>
       <div>
@@ -100,6 +107,27 @@ export default function Lab2() {
       </div>
       <div>
         <GridLayout />
+      </div>
+      <div>
+        <Flex />
+      </div>
+      <div>
+        <ReactIconsSampler />
+      </div>
+      <div>
+        <BootstrapGrids />
+      </div>
+      <div>
+        <ScreenSizeLabel />
+      </div>
+      <div>
+        <BootstrapTables />
+      </div>
+      <div>
+        <BootstrapLists />
+      </div>
+      <div>
+        <BootstrapForms />
       </div>
     </div>
   );

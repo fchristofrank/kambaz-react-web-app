@@ -18,6 +18,7 @@ import ScreenSizeLabel from "./ScreenSizeLabel";
 import BootstrapTables from "./BootstrapTables";
 import BootstrapLists from "./BootstrapLists";
 import BootstrapForms from "./BootstrapForms";
+import BootstrapForms1 from "./BootstrapForms1";
 
 export default function Lab2() {
   return (
@@ -128,6 +129,9 @@ export default function Lab2() {
       </div>
       <div>
         <BootstrapForms />
+      </div>
+      <div>
+        <BootstrapForms1 />
       </div>
     </div>
   );

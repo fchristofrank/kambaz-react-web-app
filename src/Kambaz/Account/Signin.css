@@ -1,0 +1,99 @@
+.signin-container {
+    display: flex;
+    align-items: flex-start;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    padding: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+}
+
+.sidebar .nav-link {
+    color: red;
+}
+
+.sidebar .active {
+    font-weight: bold;
+}
+
+.signin-form {
+    max-width: 300px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.signin-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #0066ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.bottom-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #0066ff;
+    text-decoration: none;
+}
+/*-----------------------------------*/
+#wd-account-navigation {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  #wd-account-navigation a {
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px 0;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Default styles for non-selected links */
+  #wd-account-navigation a:not(.active-link) {
+    color: red;
+  }
+  
+  /* Active link styles (selected option) */
+  .active-link {
+    font-weight: bold;
+    color: black;
+    position: relative;
+  }
+  
+  /* Add shadow effect for the active link */
+  .active-link::after {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: black;
+    box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.5);
+  }
+  

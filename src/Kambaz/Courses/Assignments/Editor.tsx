@@ -27,11 +27,11 @@ export default function Editor() {
                             <ul>
                                 <li>Your full name and section</li>
                                 <li>Links to each of the lab assignments</li>
-                                <li>Link to the Kanbas application</li>
+                                <li>Link to the Kambaz application</li>
                                 <li>Links to all relevant source code repositories</li>
                             </ul>
                             <br></br>
-                            The Kanbas application should include a link to navigate back to the landing page.
+                            The Kambaz application should include a link to navigate back to the landing page.
                         </div>
                     </div>
                 </div>

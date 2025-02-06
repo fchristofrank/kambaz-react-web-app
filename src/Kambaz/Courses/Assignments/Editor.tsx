@@ -1,10 +1,3 @@
-import { BsGripVertical } from "react-icons/bs";
-import { IoMdArrowDropdown } from "react-icons/io";
-import AssignmentControls from "./AssignmentControls";
-import { IoEllipsisVertical } from "react-icons/io5";
-import { FaPlus } from "react-icons/fa";
-import GreenCheckmark from "./GreenCheckmark";
-import AssignmentControlButtons from "./AssignmentControlButtons";
 import { IoCloseOutline } from "react-icons/io5";
 
 export default function Editor() {

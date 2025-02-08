@@ -17,9 +17,11 @@ const courses = [
 export default function Dashboard() {
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr />
-      <div id="wd-dashboard-courses">
+      <h1 id="wd-dashboard-title" style={{ marginBottom: "30px" }}>Dashboard</h1> 
+      <hr style={{ marginBottom: "20px" }} />
+      <h2 id="wd-dashboard-published" style={{ marginBottom: "40px" }}>Published Courses ({courses.length})</h2> 
+      <hr style={{ marginBottom: "20px" }} />
+      <div id="wd-dashboard-courses" style={{ marginTop: "80px" }}>
         <Row xs={1} md={5} className="g-4">
           {courses.map(course => (
             <Col key={course.id} className="wd-dashboard-course" style={{ width: "300px" }}>

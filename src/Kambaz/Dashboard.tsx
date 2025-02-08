@@ -24,17 +24,17 @@ export default function Dashboard() {
           {courses.map(course => (
             <Col key={course.id} className="wd-dashboard-course" style={{ width: "300px" }}>
               <Card style={{ width: "100%", height: "100%" }}>
-              <Link to={`/Kambaz/Courses/${course.id}/Home`}
+                <Link to={`/Kambaz/Courses/${course.id}/Home`}
                 className="wd-dashboard-course-link text-decoration-none text-dark">
                 <Card.Img variant="top" src={course.image} width="100%" height={160} />
-                <Card.Body>
+                <Card.Body style={{ borderBottom: "none" }}>
                 <Card.Title className="wd-dashboard-course-title">{course.title}</Card.Title>
                 <Card.Text className="wd-dashboard-course-description">{course.description}</Card.Text>
                 </Card.Body>
-              </Link>
-              <Card.Footer>
-                <Button variant="primary" className="w-20">Go</Button>
-              </Card.Footer>
+                </Link>
+                <Card.Footer style={{ backgroundColor: "white", display: "flex", border: "none" }}>
+                <Button variant="primary" className="w-20" style={{ border: "none" }}>Go</Button>
+                </Card.Footer>
               </Card>
             </Col>
           ))}

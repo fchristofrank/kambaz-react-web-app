@@ -37,7 +37,7 @@ export default function KambazNavigation() {
         className="list-group-item text-center border-0 bg-black text-white">
         <FaInbox className="fs-1 text-danger" /><br />
         Inbox </Link><br />
-      <Link to="Labs" id="wd-labs-link"
+      <Link to="/#/Labs/" id="wd-labs-link"
         className="list-group-item text-center border-0 bg-black text-white">
         <LiaCogSolid className="fs-1 text-danger" /><br />
         Labs </Link><br />

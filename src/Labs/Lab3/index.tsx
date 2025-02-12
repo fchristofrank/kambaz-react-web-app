@@ -23,36 +23,53 @@ import TodoItem from "./TodoItem";
 import Spreading from "./Spreading";
 import Destructing from "./Destructing";
 import FunctionDestructing from "./FunctionDestructing";
+import DynamicClasses from "./DynamicClass";
+import Classes from "./Classes";
+import Styles from "./Styles";
+import Add from "./Add";
+import Square from "./Square";
+import Highlight from "./Highlight";
 
 export default function Lab3() {
-  return(
+  return (
     <div id="wd-lab3">
       <h3>Lab 3</h3>
-      <VariablesAndConstants/>
-      <VariableTypes/>
-      <BooleanVariables/>
-      <IfElseComponent/>
-      <TernaryOperator/>
-      <ConditionalOutputIfElse/>
-      <ConditionalOutputInline/>
-      <LegacyFunctions/>
-      <ArrowFunctions/>
-      <ImpliedReturn/>
-      <TemplateLiterals/>
-      <SimpleArrays/>
-      <ArrayIndexAndLength/>
-      <AddingAndRemovingToFromArrays/>
-      <ForLoops/>
-      <MapFunction/>
-      <FindFunction/>
-      <FindIndex/>
-      <FilterFunction/>
-      <JsonStringify/>
-      <House/>
-      <TodoItem/>
-      <Spreading/>
-      <Destructing/>
-      <FunctionDestructing/>
+      <VariablesAndConstants />
+      <VariableTypes />
+      <BooleanVariables />
+      <IfElseComponent />
+      <TernaryOperator />
+      <ConditionalOutputIfElse />
+      <ConditionalOutputInline />
+      <LegacyFunctions />
+      <ArrowFunctions />
+      <ImpliedReturn />
+      <TemplateLiterals />
+      <SimpleArrays />
+      <ArrayIndexAndLength />
+      <AddingAndRemovingToFromArrays />
+      <ForLoops />
+      <MapFunction />
+      <FindFunction />
+      <FindIndex />
+      <FilterFunction />
+      <JsonStringify />
+      <House />
+      <TodoItem />
+      <Spreading />
+      <Destructing />
+      <FunctionDestructing />
+      <Classes />
+      <DynamicClasses />
+      <Styles />
+      <Add a={3} b={4} />
+      <h4>Square of 4</h4>
+      <Square>4</Square>
+      <hr />
+      <Highlight>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipitratione eaque illo minus cum, saepe totam
+        vel nihil repellat nemo explicabo excepturi consectetur. Modi omnis minus sequi maiores, provident voluptates.
+      </Highlight>
     </div>
   );
 }

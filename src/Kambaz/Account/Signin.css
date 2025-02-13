@@ -58,42 +58,38 @@ h2 {
     color: #0066ff;
     text-decoration: none;
 }
+
 /*-----------------------------------*/
 #wd-account-navigation {
     display: flex;
     flex-direction: column;
     padding: 10px;
     font-family: Arial, sans-serif;
-  }
-  
-  #wd-account-navigation a {
+}
+
+#wd-account-navigation a {
     text-decoration: none;
     font-size: 18px;
     padding: 5px 0;
     transition: all 0.3s ease-in-out;
-  }
-  
-  /* Default styles for non-selected links */
-  #wd-account-navigation a:not(.active-link) {
+}
+
+/* Default styles for non-selected links */
+#wd-account-navigation a:not(.active-link) {
     color: red;
-  }
-  
-  /* Active link styles (selected option) */
-  .active-link {
+}
+
+/* Active link styles (selected option) */
+.active-link {
     font-weight: bold;
     color: black;
-    position: relative;
-  }
-  
-  /* Add shadow effect for the active link */
-  .active-link::after {
-    content: "";
-    position: absolute;
-    left: -5px;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background-color: black;
-    box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.5);
-  }
-  
+    border-left: 5px solid black;
+    padding-left: 15px !important; /* Adjust padding to align text properly */
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}

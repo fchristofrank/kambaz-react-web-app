@@ -1,5 +1,5 @@
 import { Link, useLocation, useParams } from "react-router-dom";
-import "../Account/Signin.css"
+import "../Account/Signin.css";
 
 export default function CoursesNavigation() {
   const { cid } = useParams();

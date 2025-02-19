@@ -13,7 +13,7 @@ export default function Assignments() {
   const assignments = db.assignments;
   
   return (
-    <div id="wd-assignments" className="ms-5">
+    <div id="wd-assignments" className="ms-5 me-5">
       <AssignmentControls /><br /><br />
       <ul id="wd-assignment-list" className="list-group rounded-0">
         <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">

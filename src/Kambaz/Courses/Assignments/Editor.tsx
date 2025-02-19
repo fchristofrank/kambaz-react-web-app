@@ -41,7 +41,7 @@ export default function Editor() {
     };
     const assignment = assignments.find((assignment) => assignment._id === aid) || defaultAssignment;
     return (
-        <div id="wd-assignments-editor" className="ms-5 mt-3">
+        <div id="wd-assignments-editor" className="ms-5 mt-3 me-5">
 
             <div className="row mb-3">
                 <div className="col-sm-12">
@@ -62,10 +62,10 @@ export default function Editor() {
 
             <div className="row mb-3">
                 <div className="col-sm-5">
-                    <label htmlFor="wd-points" className="col-form-label float-end">{assignment.points}</label>
+                    <label htmlFor="wd-points" className="col-form-label float-end">Points</label>
                 </div>
                 <div className="col-sm-7">
-                    <input id="wd-points" className="form-control" placeholder="100" />
+                    <input id="wd-points" className="form-control" placeholder={assignment.points} />
                 </div>
             </div>
 

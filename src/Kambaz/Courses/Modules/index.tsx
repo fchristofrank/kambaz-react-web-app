@@ -12,7 +12,7 @@ export default function Modules() {
     <div id="wd-kanbas-modules">
       <ModulesControls />
       <div>
-        <ul id="wd-modules" className="list-group rounded-0 mt-5 ms-5">
+        <ul id="wd-modules" className="list-group rounded-0 mt-5 ms-5 me-5">
           {modules
             .filter((module: any) => module.course === cid)
             .map((module: any) => (

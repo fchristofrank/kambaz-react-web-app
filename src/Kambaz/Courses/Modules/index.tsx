@@ -9,7 +9,7 @@ export default function Modules() {
   const { cid } = useParams();
   const modules = db.modules;
   return (
-    <div id="wd-kanbas-modules" >
+    <div id="wd-kanbas-modules">
       <ModulesControls />
       <div>
         <ul id="wd-modules" className="list-group rounded-0 mt-5 ms-5">

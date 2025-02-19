@@ -14,7 +14,7 @@ export default function CoursesNavigation() {
           to={`/kambaz/Courses/${cid}/${link}`}
           id={`wd-course-${link}-link`}
           className={`list-group-item ${pathname.includes(link) ? "active-link" : "text-danger"}`}
-          style={pathname.includes(link) ? { borderLeft: "4px solid #000", borderTop: "4px solid #fff", borderBottom: "4px solid #fff", borderRight: "4px solid #fff" } : { border: "4px solid #fff" }}
+          style={pathname.includes(link) ? { borderLeft: "3px solid #000", borderTop: "none", borderRight: "none", borderBottom: "none" } : { border: "none" }}
         >
           {link}
         </Link>

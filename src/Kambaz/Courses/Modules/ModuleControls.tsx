@@ -10,7 +10,7 @@ export default function ModulesControls() {
     };
 
     return (
-        <div id="wd-modules-controls" className="d-flex justify-content-end align-items-end mt-4 ms-5">
+        <div id="wd-modules-controls" className="d-flex justify-content-end align-items-end mt-4 ms-5 me-5">
             <button id="wd-collapse-all" className="btn btn-md btn-secondary me-1 flex-shrink-0" style={{ whiteSpace: "nowrap" }}>
                 Collapse All
             </button>

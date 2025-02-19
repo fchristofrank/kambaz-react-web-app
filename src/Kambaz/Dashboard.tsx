@@ -18,7 +18,7 @@ export default function Dashboard() {
                   <Card.Img src={course.imgSource} variant="top" width="100%" height={160} />
                   <Card.Body className="card-body">
                     <Card.Title className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                      {course.name} </Card.Title>
+                      <b style={{"color":"darkblue"}}>{course.name}</b> </Card.Title>
                     <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                       {course.description} </Card.Text>
                     <Button variant="primary"> Go </Button>

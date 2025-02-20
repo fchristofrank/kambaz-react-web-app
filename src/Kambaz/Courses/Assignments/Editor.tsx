@@ -18,14 +18,14 @@ export default function Editor() {
     const formatDateTime = (dateString: string | undefined | null): string => {
         if (!dateString) return '';
         const date = new Date(dateString);
-    
+
         // Format date as YYYY-MM-DDTHH:mm
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         const hours = String(date.getHours()).padStart(2, '0');
         const minutes = String(date.getMinutes()).padStart(2, '0');
-    
+
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     };
 
@@ -133,7 +133,9 @@ export default function Editor() {
                         <div className="wd-assign-to-input-wrapper">
                             <div className="wd-assign-to-input-content">Everyone <IoCloseOutline></IoCloseOutline></div>
                             <label htmlFor="wd-assign-to" className="col-form-label"><b>Assign to</b></label>
-                            <input id="wd-assign-to" className="form-control" placeholder="" />
+                            <div className="input-group">
+                                <input id="wd-assign-to" className="form-control" placeholder="" />
+                            </div>
                         </div>
                         <label htmlFor="wd-due-date" className="col-form-label">Due</label>
                         <input id="wd-due-date" className="form-control" type="datetime-local" value={formatDateTime(assignment.dueDate)} />

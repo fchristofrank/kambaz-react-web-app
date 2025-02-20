@@ -23,9 +23,13 @@ export default function Signup() {
                     <Form.Control type="password" placeholder="Password" className="wd-password" />
                 </Form.Group>
 
-                <Button variant="primary" className="w-100" onClick={() => window.location.href = "/Kambaz/Account/Profile"}>
+                <Form.Group className="mb-3">
+                    <Form.Control type="password" placeholder="Verify Password" className="wd-password" />
+                </Form.Group>
+
+                <Link id="wd-signin-btn" to="/Kambaz/Account/Profile" className="btn btn-primary w-100">
                     Sign up
-                </Button>
+                </Link>
             </Form>
 
             <div className="text-center mt-3">

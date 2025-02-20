@@ -22,7 +22,7 @@ export default function Profile() {
             className="wd-username"
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3">
           <Form.Control
             defaultValue="123"
@@ -31,7 +31,7 @@ export default function Profile() {
             className="wd-password"
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3">
           <Form.Control
             defaultValue="Alice"
@@ -39,7 +39,7 @@ export default function Profile() {
             id="wd-firstname"
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3">
           <Form.Control
             defaultValue="Wonderland"
@@ -47,7 +47,7 @@ export default function Profile() {
             id="wd-lastname"
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3">
           <Form.Control
             defaultValue="2000-01-01"
@@ -55,7 +55,7 @@ export default function Profile() {
             id="wd-dob"
           />
         </Form.Group>
-        
+
         <Form.Group className="mb-3">
           <Form.Control
             defaultValue="alice@wonderland"
@@ -74,7 +74,7 @@ export default function Profile() {
         </Form.Group>
 
         <Button type="button" variant="danger" className="w-100">
-          <Link to="/Kambaz/Account/Signin" className="text-decoration-none text-white">Sign out</Link>
+          <Link to="/Kambaz/Account/Signin" className="btn btn-primary w-100 btn-danger">Sign out</Link>
         </Button>
       </Form>
     </Container>

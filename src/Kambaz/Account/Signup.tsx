@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 
 export default function Signup() {
     return (

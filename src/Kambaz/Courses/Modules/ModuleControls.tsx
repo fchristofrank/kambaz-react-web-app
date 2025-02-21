@@ -46,13 +46,13 @@ export default function ModulesControls() {
                     </li>
                     <li>
                         <a id="wd-unpublish-all-modules-and-item" className="dropdown-item">
-                            <FaBan />
+                            <FaBan />&nbsp;
                             Unpublish all modules and items
                         </a>
                     </li>
                     <li>
                         <a id="wd-unpublish-modules-only" className="dropdown-item">
-                            <FaBan />
+                            <FaBan />&nbsp;
                             Unpublish modules only
                         </a>
                     </li>

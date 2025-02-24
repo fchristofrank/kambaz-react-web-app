@@ -36,5 +36,6 @@ export default function Signup() {
                 <Link to="/Kambaz/Account/Signin" className="text-decoration-none">Sign in</Link>
             </div>
         </Container>
+        
     );
 }

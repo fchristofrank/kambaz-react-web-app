@@ -3,7 +3,7 @@ body * {  font-family: 'Lato Extended', 'Lato', 'Helvetica', sans-serif;  }
 
 @media (min-width: 768px) {
   #wd-kambaz .wd-main-content-offset {
-    padding-left: 140px !important;
+    padding-left: 150px !important;
   }
 }
 
@@ -25,12 +25,12 @@ body * {  font-family: 'Lato Extended', 'Lato', 'Helvetica', sans-serif;  }
 
 .wd-assign-to-input-wrapper > .wd-assign-to-input-content{
   position: relative;
-  top: 72px;
+  top: 88px;
   left: 5px;
   font-size: small;
   padding: 5px;
   background-color: lightgrey;
   border-radius: 5px;
   z-index: 100;
-  width: 84px;
+  width: 108px;
 }

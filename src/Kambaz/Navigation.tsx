@@ -15,7 +15,7 @@ export default function KambazNavigation() {
 
 
   return (
-    <div id="wd-Kambaz-navigation" style={{ width: 100, top: '0px' }}
+    <div id="wd-Kambaz-navigation" style={{ width: '125px', top: '0px' }}
       className="list-group rounded-0 position-fixed
          bottom-0 d-none d-md-block bg-black z-2">
       <a id="wd-neu-link" target="_blank"

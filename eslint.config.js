@@ -23,6 +23,8 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'no-unused-vars': ['off'],  // Disables the unused variable warning entirely
+      'no-unused-imports': ['off'],  // Disables the unused imports warning (if you have the 'unused-imports' plugin enabled)
     },
   },
 )

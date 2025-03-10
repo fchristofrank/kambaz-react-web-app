@@ -1,31 +1,37 @@
+import ArrayStateVariable from "./ArrayStateVariable";
+import BooleanStateVariables from "./BooleanStateVariables";
 import ClickEvent from "./ClickEvent";
+import Counter from "./Counter";
+import DateStateVariable from "./DateStateVariable";
+import EventObject from "./EventObject";
+import ObjectStateVariable from "./ObjectStateVariable";
+import ParentStateComponent from "./ParentStateComponent";
 import PassingDataOnEvent from "./PassingDataOnEvent";
 import PassingFunctions from "./PassingFunctions";
-import EventObject from "./EventObject";
-import Counter from "./Counter";
-import BooleanStateVariables from "./BooleanStateVariables";
+import ReduxExamples from "./ReduxExamples/Index";
+import TodoList from "./ReduxExamples/todos/TodoList";
 import StringStateVariables from "./StringStateVariables";
-import DateStateVariable from "./DateStateVariables";
-import ArrayStateVariable from "./ArrayStateVariable";
-import ParentStateCounter from "./ParentStateComponent";
-
-function sayHello() {
-    alert("Hello");
-}
 
 export default function Lab4() {
+    function sayHello() {
+        alert("Hello");
+      }
+    
     return (
         <div>
             <ClickEvent />
             <PassingDataOnEvent />
-            <PassingFunctions theFunction={sayHello} />
+            <PassingFunctions theFunction={sayHello}/>
             <EventObject />
-            <Counter/>
-            <BooleanStateVariables/>
-            <StringStateVariables/>
-            <DateStateVariable/>
-            <ArrayStateVariable/>
-            <ParentStateCounter/>
+            <Counter />
+            <BooleanStateVariables />
+            <StringStateVariables />
+            <DateStateVariable />
+            <ObjectStateVariable />
+            <ArrayStateVariable />
+            <ParentStateComponent />
+            <ReduxExamples />
+            <TodoList />
         </div>
-    );
+    )
 }

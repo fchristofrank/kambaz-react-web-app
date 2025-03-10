@@ -1,5 +1,5 @@
-import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { add } from "./addReducer";
 export default function AddRedux() {
     const [a, setA] = useState(12);

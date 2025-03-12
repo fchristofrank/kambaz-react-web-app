@@ -1,13 +1,13 @@
 import { AiOutlineDashboard } from "react-icons/ai";
+import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
-import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
 export default function KambazNavigation() {
   const { pathname } = useLocation();
   const links = [
     { label: "Dashboard", path: "/Kambaz/Dashboard", icon: AiOutlineDashboard },
-    { label: "Courses", path: "/Kambaz/Dashboard", icon: LiaBookSolid },
+    { label: "Courses", path: "/Kambaz/Courses", icon: LiaBookSolid },
     { label: "Calendar", path: "/Kambaz/Calendar", icon: IoCalendarOutline },
     { label: "Inbox", path: "/Kambaz/Inbox", icon: FaInbox },
     { label: "Labs", path: "/Labs", icon: LiaCogSolid },
@@ -22,7 +22,8 @@ export default function KambazNavigation() {
         href="https://www.northeastern.edu/"
         className="list-group-item bg-black border-0 text-center">
         <img style= {{"padding": "12px" }}src="/images/NEU_logo.png" width="75px" /></a>
-      <Link to="/Kambaz/Account" className={`list-group-item text-center border-0 bg-black
+      <Link to="/Kambaz/Acc
+      ount" className={`list-group-item text-center border-0 bg-black
             ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}>
         <FaRegCircleUser className={`fs-1 ${pathname.includes("Account") ? "text-danger" : "text-white"}`} />
         <br />

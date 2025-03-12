@@ -1,15 +1,15 @@
+import { BsGripVertical } from "react-icons/bs";
+import { useParams } from "react-router";
+import * as db from "../../Database";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import ModulesControls from "./ModuleControls";
-import { BsGripVertical } from "react-icons/bs";
-import * as db from "../../Database";
-import { useParams } from "react-router";
 
 export default function Modules() {
   const { cid } = useParams();
   const modules = db.modules;
   return (
-    <div id="wd-kanbas-modules">
+    <div id="wd-kambaz-modules">
       <ModulesControls />
       <div>
         <ul id="wd-modules" className="list-group rounded-0 mt-5 ms-5 me-5">

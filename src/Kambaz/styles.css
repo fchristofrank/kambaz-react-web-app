@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body * {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (min-width: 768px) {
+    #wd-kambaz .wd-main-content-offset {
+        padding-left: 120px !important;
+    }
+}
+
+.list-group.wd>.list-group-item.active {
+    color: black;
+    background-color: white;
+    border-left: 3px solid black !important;
+}
+
+.btn-secondary {
+    --bs-btn-color: #000 !important;
+    --bs-btn-bg: #c7cdd1 !important;
+    --bs-btn-border-color: #c7cdd1 !important;
+    --bs-btn-hover-color: #fff !important;
+}
+
+.bg-secondary {
+    --bs-secondary-rgb: 199, 205, 209;
+}
+
+.list-group-item {
+    --bs-list-group-border-color: gray;
+}
+
+.wd-lesson {
+    border-left: 3px solid green !important;
+}
+
+.wd-disabled-link{
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+}
+
+.wd-assignment-modules-text{
+    color: red;
+}
+
+.wd-assignment-subtext{
+    color: gray;
+}
+
+.wd-assign-to-input-wrapper{
+    position: relative;
+}
+
+.wd-assign-to-input-wrapper > .wd-assign-to-input-content{
+    position: absolute;
+    top: 42px;
+    left: 5px;
+    font-size: small;
+    padding: 5px;
+    background-color: lightgrey;
+    border-radius: 5px;
+}
+
+.wd-sem-title{
+    display: inline-block;
+    text-wrap: nowrap;
+    font-size: x-small;
+}
+
+.wd-assignment-editor-desc-container{
+    position: relative;
+}
+
+.wd-assignment-editor-desc-container > .wd-assignment-editor-textarea-content{
+    position: absolute;
+    padding: 10px;
+    top: 10px;
+}
+
+.wd-dashboard-course-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    text-overflow: ellipsis;
+    max-height: 3em;
+    line-height: 1.5em;
+}

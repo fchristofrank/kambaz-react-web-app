@@ -40,7 +40,7 @@ export default function kambaz() {
       })
     );
   };
-  const { cid } = useParams();
+  useParams();
   return (
     <div id="wd-kambaz" className="d-flex">
       <div className="d-none d-md-block">

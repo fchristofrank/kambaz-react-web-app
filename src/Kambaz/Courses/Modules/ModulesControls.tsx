@@ -1,7 +1,8 @@
+import { FaBan } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 import GreenCheckmark from "./GreenCheckmark";
 import ModuleEditor from "./ModuleEditor";
-import { useSelector } from "react-redux";
 export default function ModulesControls(
     { moduleName, setModuleName, addModule }:
         { moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) {
@@ -30,13 +31,13 @@ export default function ModulesControls(
                     </li>
                     <li>
                         <a id="wd-unpublish-all-modules-and-item" className="dropdown-item" href="#">
-                            <GreenCheckmark />
+                            <FaBan className="me-2" />
                             Unpublish all modules and items
                         </a>
                     </li>
                     <li>
                         <a id="wd-unpublish-modules-only" className="dropdown-item" href="#">
-                            <GreenCheckmark />
+                            <FaBan className="me-2"/>
                             Unpublish modules only
                         </a>
                     </li>

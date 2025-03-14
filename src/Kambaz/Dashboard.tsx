@@ -111,7 +111,7 @@ export default function Dashboard({
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                                 <div className="card h-100 rounded-3 overflow-hidden">
                                     <Link
-                                        to={isEnrolled ? `/kambaz/Courses/${course._id}/Home` : '#'}
+                                        to={isFaculty ? `/kambaz/Courses/${course._id}/Home` : (!isFaculty && isEnrolled) ? `/kambaz/Courses/${course._id}/Home` : '#'}
                                         className="wd-dashboard-course-link text-decoration-none text-dark"
                                     >
                                         <img src={course.imgSource} width="100%" height={160} />

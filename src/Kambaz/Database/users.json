@@ -14,9 +14,37 @@
         "totalActivity": "10:21:32"
     },
     {
+        "_id": "123",
+        "username": "test",
+        "password": "test",
+        "firstName": "Tony",
+        "lastName": "Stark",
+        "email": "tony@stark.com",
+        "dob": "1970-05-29T00:00:00.000Z",
+        "role": "FACULTY",
+        "loginId": "001234561S",
+        "section": "S101",
+        "lastActivity": "2020-10-01",
+        "totalActivity": "10:21:32"
+    },
+    {
         "_id": "234",
         "username": "dark_knight",
         "password": "wayne123",
+        "firstName": "Bruce",
+        "lastName": "Wayne",
+        "email": "bruce@wayne.com",
+        "dob": "1972-02-19",
+        "role": "STUDENT",
+        "loginId": "001234562S",
+        "section": "S101",
+        "lastActivity": "2020-11-02",
+        "totalActivity": "15:32:43"
+    },
+    {
+        "_id": "234",
+        "username": "easy",
+        "password": "easy",
         "firstName": "Bruce",
         "lastName": "Wayne",
         "email": "bruce@wayne.com",

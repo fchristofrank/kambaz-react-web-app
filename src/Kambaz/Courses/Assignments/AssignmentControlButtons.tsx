@@ -1,8 +1,8 @@
-import { IoEllipsisVertical } from "react-icons/io5";
-import GreenCheckmark from "./GreenCheckmark";
 import { FaTrash } from "react-icons/fa";
-import DeleteDialog from "./DeleteDialog";
+import { IoEllipsisVertical } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import DeleteDialog from "./DeleteDialog";
+import GreenCheckmark from "./GreenCheckmark";
 export default function AssignmentCOntrolButtons({ assignmentID, deleteAssignment }: { assignmentID: String, deleteAssignment: (assignmentID: String) => void; }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const isFaculty = currentUser.role === 'FACULTY';

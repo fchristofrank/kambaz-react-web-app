@@ -5,7 +5,6 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { IoEllipsisVertical } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import AssignmentCOntrolButtons from "./AssignmentControlButtons";
 import AssignmentControls from "./AssignmentControls";
 import { deleteAssignment } from "./reducer";
 
@@ -49,7 +48,7 @@ export default function Assignments() {
                   </div>
                   <AssignmentCOntrolButtons assignmentID={assignment._id} deleteAssignment={(assignmentID) => {
                     console.log(assignmentID);
-                    dispatch(deleteAssignment(assignment._id));
+                      dispatch(deleteAssignment(assignment._id));
                   }} />
                 </li>
               ))}

@@ -11,11 +11,9 @@ export default function Labs() {
     return (
         <Provider store={store}>
             <div id="wd=-labs">
-                <h1>Labs</h1>
-                <h2>Vicky Daniel Amalan</h2>
-                <h3>Section: 02</h3>
-                <hr></hr>
+                <div style={{ padding: "10px", width: "100%" }}></div>
                 <TOC />
+                <hr />
                 <Routes>
                     <Route path="/" element={<Navigate to="Lab1" />} />
                     <Route path="Lab1" element={<Lab1 />} />

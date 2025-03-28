@@ -15,7 +15,7 @@ export default function Account() {
         <div className="flex-wrap">
           <Routes>
             <Route path="/"
-              element={<Navigate to={currentUser ? "/Kanbas/Account/Profile" : "/Kanbas/Account/Signin"} />} />
+              element={<Navigate to={currentUser ? "/Kambaz/Account/Profile" : "/Kambaz/Account/Signin"} />} />
             <Route path="/Signin" element={<Signin />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/Signup" element={<Signup />} />

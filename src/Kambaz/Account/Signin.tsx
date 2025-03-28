@@ -11,7 +11,7 @@ export default function Signin() {
     try {
       const user = await client.signin(credentials);
       dispatch(setCurrentUser(user));
-      navigate("/Kanbas/Dashboard");
+      navigate("/Kambaz/Dashboard");
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         alert("Incorrect username or password.");
@@ -30,7 +30,7 @@ export default function Signin() {
       <input defaultValue={credentials.password}
         onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} id="wd-password" placeholder="password" type="password" className="form-control mb-2" />
       <button onClick={signin} id="wd-signin-btn" className="btn btn-primary w-100" > Sign in </button>
-      <Link id="wd-signup-link" to="/Kanbas/Account/Signup">Sign up</Link>
+      <Link id="wd-signup-link" to="/Kambaz/Account/Signup">Sign up</Link>
     </div>
   );
 }

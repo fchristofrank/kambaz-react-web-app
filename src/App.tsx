@@ -1,9 +1,9 @@
 import { HashRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import './App.css';
 import Labs from './Labs';
-import Kanbas from "./Kanbas";
+import Kambaz from "./Kambaz";
 import { Provider } from "react-redux";
-import store from "./Kanbas/store";
+import store from "./Kambaz/store";
 
 function App() {
   return (
@@ -11,9 +11,9 @@ function App() {
       <Provider store={store}>
         <div>
           <Routes>
-            <Route path="/" element={<Navigate to="Kanbas" />} />
+            <Route path="/" element={<Navigate to="Kambaz" />} />
             <Route path="/Labs/*" element={<Labs />} />
-            <Route path="/Kanbas/*" element={<Kanbas />} />
+            <Route path="/Kambaz/*" element={<Kambaz />} />
           </Routes>
         </div>
       </Provider>

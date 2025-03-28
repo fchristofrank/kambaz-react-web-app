@@ -16,7 +16,7 @@ import { initializeCourses, addCourse } from "./Courses/reducer"
 import { enroll, unenroll } from "./Account/Enrollments/reducer";
 import * as enrollmentsClient from "./Account/Enrollments/client";
 
-export default function Kanbas() {
+export default function Kambaz() {
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "0", name: "New Course", number: "New Number",
@@ -86,7 +86,7 @@ export default function Kanbas() {
   };
   return (
     <Session>
-      <div id="wd-kanbas" className="d-flex">
+      <div id="wd-kambaz" className="d-flex">
         <div className="d-none d-md-block">
           <KanbasNavigation />
         </div>

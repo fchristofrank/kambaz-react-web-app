@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addAssignment, updateAssignment } from "./reducer";
 import * as assignmentsClient from "./client";
-import * as coursesClient from ".././client";
+import * as coursesClient from "../client";
 
 export default function Editor() {
     const { cid, aid } = useParams();

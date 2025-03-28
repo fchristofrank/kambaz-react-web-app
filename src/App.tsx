@@ -6,6 +6,9 @@ import { Provider } from "react-redux";
 import store from "./Kambaz/store";
 
 function App() {
+
+  const serverUrl = process.env.REACT_APP_REMOTE_SERVER;
+  console.warn(serverUrl);
   return (
     <HashRouter>
       <Provider store={store}>

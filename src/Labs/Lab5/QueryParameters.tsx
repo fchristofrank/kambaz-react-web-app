@@ -28,7 +28,7 @@ export default function QueryParameters() {
         </a>
         <a className="btn btn-success me-2" id="wd-query-parameter-divide"
             href={`${REMOTE_SERVER}/lab5/calculator?operation=divide&a=${a}&b=${b}`}>
-            Divide {a} * {b}
+            Divide {a} / {b}
         </a>
         <hr />
     </div>

@@ -14,7 +14,7 @@ export default function KanbasNavigation() {
   ];
 
   return (
-    <div id="wd-kambaz-navigation" style={{ width: 100, top: '0px' }}
+    <div id="wd-kambaz-navigation" style={{ width: 115, top: '0px' }}
       className="list-group rounded-0 position-fixed
          bottom-0 d-none d-md-block bg-black z-2">
       <a id="wd-neu-link" target="_blank"

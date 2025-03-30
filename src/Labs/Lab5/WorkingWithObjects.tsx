@@ -54,6 +54,9 @@ export default function WorkingWithObjects() {
                 defaultValue={assignment.score} onChange={(e) =>
                     setAssignment({ ...assignment, score: Number(e.target.value) })} />
 
+            <label htmlFor="wd-assignment-completed-status" className="form-label mt-3 ms-3">
+                Completed
+            </label>
             <a id="wd-update-assignment-completed-status"
                 className="btn btn-primary float-end mt-3 mb-3"
                 href={`${ASSIGNMENT_API_URL}/completed/${assignment.completed}`}>
@@ -61,9 +64,8 @@ export default function WorkingWithObjects() {
             </a>
             <input type="checkbox" className="mt-3 ms-3 mb-3" id="wd-assignment-completed-status"
                 defaultChecked={assignment.completed} onChange={(e) =>
-                    setAssignment({ ...assignment, completed: Boolean(e.target.value) })} />
+                    setAssignment({ ...assignment, completed: Boolean(e.target.checked) })} />
             <hr />
-
 
             <h4>Modifying Module Properties</h4>
             <a id="wd-update-module-name"

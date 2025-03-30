@@ -14,7 +14,7 @@ Navigate to the project directory: cd kambaz-react-web-app
 Install dependencies: npm install or yarn install
 Running the Application
 Start the development server: npm start
-Open your web browser and navigate to http://localhost:3000
+Open your web browser and navigate to http://localhost:5173
 Features
 --------
 Course management

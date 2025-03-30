@@ -10,14 +10,15 @@ export default function Session({ children }: { children: any }) {
       const currentUser = await client.profile();
       dispatch(setCurrentUser(currentUser));
     } catch (err: any) {
+      console.warn("Frank Not an Error");
       console.error(err);
     }
     setPending(false);
   };
   useEffect(() => {
-    fetchProfile();
+    //fetchProfile();
   }, []);
-  if (!pending) {
-    return children;
-  }
+  
+  return children;
+  
 }

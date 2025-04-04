@@ -102,36 +102,34 @@ export default function Dashboard({
             <hr />
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {courses.map((course: any) => {
+                    {displayedCourses.map((course: any) => {
                         const isEnrolled = enrollments.some(
                             (enrollment: any) =>
                                 enrollment.user === currentUser._id &&
                                 enrollment.course === course._id
                         );
 
-                        if (!isFaculty && !displayedCourses.includes(course)) {
-                            return null;
-                        }
-
                         return (
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                                 <div className="card h-100 rounded-3 overflow-hidden d-flex flex-column">
-                                    <Link
-                                        to={isEnrolled ? `/Kambaz/Courses/${course._id}/Home` : '#'}
-                                        className="wd-dashboard-course-link text-decoration-none text-dark h-100 d-flex flex-column"
-                                    >
-                                        <img src={course.imgSource} width="100%" height={160} />
-                                        <div className="card-body flex-grow-1">
-                                            <h5 className="wd-dashboard-course-title card-title">
-                                                {course.name}
-                                            </h5>
-                                            <p
-                                                className="wd-dashboard-course-title card-text overflow-y-hidden"
-                                                style={{ maxHeight: 100 }}
-                                            >
-                                                {course.description}
-                                            </p>
-                                        </div>
+                                    <div className="wd-dashboard-course-link text-decoration-none text-dark h-100 d-flex flex-column">
+                                        <Link
+                                            to={isEnrolled ? `/Kambaz/Courses/${course._id}/Home` : '#'}
+                                            className="text-decoration-none"
+                                        >
+                                            <img src={course.imgSource} width="100%" height={160} />
+                                            <div className="card-body flex-grow-1">
+                                                <h5 className="wd-dashboard-course-title card-title">
+                                                    {course.name}
+                                                </h5>
+                                            </div>
+                                        </Link>
+                                        <p
+                                            className="wd-dashboard-course-title card-text overflow-y-hidden"
+                                            style={{ maxHeight: 100 }}
+                                        >
+                                            {course.description}
+                                        </p>
                                         <div className="card-footer border-top">
                                             <button className="btn btn-primary">Go</button>
                                             {isFaculty && (
@@ -171,7 +169,7 @@ export default function Dashboard({
                                                 </button>
                                             )}
                                         </div>
-                                    </Link>
+                                    </div>
                                 </div>
                             </div>
                         );

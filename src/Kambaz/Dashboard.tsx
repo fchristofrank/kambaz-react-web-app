@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { enroll, unenroll } from "./Account/Enrollments/reducer";
 import * as enrollmentsClient from "./Account/Enrollments/client";
-import { useEffect, useState } from "react";
+import { enroll, unenroll } from "./Account/Enrollments/reducer";
 
 export default function Dashboard({
     courses,
@@ -102,12 +102,16 @@ export default function Dashboard({
             <hr />
             <div id="wd-dashboard-courses" className="row">
                 <div className="row row-cols-1 row-cols-md-5 g-4">
-                    {displayedCourses.map((course: any) => {
+                    {courses.map((course: any) => {
                         const isEnrolled = enrollments.some(
                             (enrollment: any) =>
                                 enrollment.user === currentUser._id &&
                                 enrollment.course === course._id
                         );
+
+                        if (!isFaculty && !displayedCourses.includes(course)) {
+                            return null;
+                        }
 
                         return (
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>

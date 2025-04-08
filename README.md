@@ -1,54 +1,36 @@
-# React + TypeScript + Vite
+# Kanbas - Learning Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Kanbas is a Learning Management System (LMS) inspired by [Canvas](w), the platform used at [Northeastern University](w). This project aims to replicate and enhance the core functionalities of Canvas, providing a seamless experience for students, faculty, and administrators.
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Kanbas is being developed through six major revisions, with the goal of mirroring the full range of features offered by Canvas. By the final iteration, Kanbas will provide a comprehensive LMS experience, supporting:
 
-## Expanding the ESLint configuration
+- **User Authentication & Roles:** Secure login for students, faculty, and administrators.
+- **Course Management:** Faculty can create, update, and manage courses, including syllabi and schedules.
+- **Enrollment System:** Students can browse available courses and enroll with ease.
+- **Content Delivery:** Faculty can upload and organize course materials such as lecture notes, assignments, and multimedia content.
+- **Assignments & Grading:** Submission of assignments, automated and manual grading, and feedback mechanisms.
+- **Announcements & Communication:** Course-wide announcements, messaging, and discussion forums for collaboration.
+- **Class Scheduling & Calendar:** Integration of due dates, events, and class schedules.
+- **Analytics & Reports:** Insights into student progress, performance tracking, and course analytics.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Roadmap
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+The project follows an iterative development process, with each major revision bringing Kanbas closer to feature parity with Canvas. Future updates will focus on:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Enhanced UI/UX** for a more intuitive user experience.
+- **Integration with External Tools** such as video conferencing, plagiarism detection, and third-party apps.
+- **Scalability & Performance Improvements** to support a growing user base.
+- **Mobile Compatibility** for on-the-go access.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Get Involved
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Kanbas is an evolving project, and contributions are welcome! If you're interested in collaborating, feel free to:
+
+- Fork the repository and submit pull requests.
+- Report bugs or suggest features via the issue tracker.
+- Join discussions on upcoming improvements.
+
+Stay tuned for further developments as we bring Kanbas to life! 🚀
+

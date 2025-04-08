@@ -7,13 +7,13 @@ import Lab3 from "./Lab3";
 import TOC from "./TOC";
 import Lab4 from "./Lab4";
 import Lab5 from "./Lab5";
+
 export default function Labs() {
+
     return (
         <Provider store={store}>
             <div id="wd=-labs">
-                <h1>Labs</h1>
-                <h2>Vicky Daniel Amalan</h2>
-                <h3>Section: 02</h3>
+                <h1 style={{ marginTop: "30px", textAlign: "left" }}>Labs</h1>
                 <hr></hr>
                 <TOC />
                 <Routes>

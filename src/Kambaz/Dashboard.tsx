@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { enroll, unenroll } from "./Account/Enrollments/reducer";
-import * as enrollmentsClient from "./Account/Enrollments/client";
-import { useEffect, useState } from "react";
 
 export default function Dashboard({
     courses,
@@ -84,12 +81,12 @@ export default function Dashboard({
                             <div className="wd-dashboard-course col" style={{ width: "300px" }} key={course._id}>
                                 <div className="card h-100 rounded-3 overflow-hidden d-flex flex-column">
                                     <Link
-                                        to={course.enrolled ? `/Kambaz/Courses/${course._id}/Home` : '#'}
+                                        to={`/Kambaz/Courses/${course._id}/Home`}
                                         className="wd-dashboard-course-link text-decoration-none text-dark h-100 d-flex flex-column"
                                     >
                                         <img src={course.imgSource} width="100%" height={160} />
                                         <div className="card-body flex-grow-1">
-                                            <h5 className="wd-dashboard-course-title card-title">
+                                                 <h5 className="wd-dashboard-course-title card-title">
                                                 {course.name}
                                             </h5>
                                             <p

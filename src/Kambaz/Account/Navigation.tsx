@@ -8,9 +8,9 @@ export default function AccountNavigation() {
  return (
    <div id="wd-account-navigation" className="list-group">
      {links.map((link) => (
-       <Link key={link} to={`/Kanbas/Account/${link}`} className={`list-group-item ${active(link)}`}> {link} </Link>
+       <Link key={link} to={`/Kambaz/Account/${link}`} className={`list-group-item ${active(link)}`}> {link} </Link>
      ))}
      {currentUser && currentUser.role === "ADMIN" && (
-       <Link to={`/Kanbas/Account/Users`} className={`list-group-item ${active("Users")}`}> Users </Link> )}
+       <Link to={`/Kambaz/Account/Users`} className={`list-group-item ${active("Users")}`}> Users </Link> )}
    </div>
 );}

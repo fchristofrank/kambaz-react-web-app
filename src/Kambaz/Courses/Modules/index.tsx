@@ -38,7 +38,7 @@ export default function Modules() {
   }, []);
 
   return (
-    <div id="wd-kanbas-modules" >
+    <div id="wd-kambaz-modules" >
       <ModulesControls moduleName={moduleName} addModule={createModuleForCourse} setModuleName={setModuleName} />
       <div>
         <ul id="wd-modules" className="list-group rounded-0 mt-5 ms-5">

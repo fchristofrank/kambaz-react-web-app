@@ -3,25 +3,25 @@ import { IoCalendar, IoCalendarOutline, IoSettingsOutline } from "react-icons/io
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { Link, useLocation } from "react-router-dom";
-export default function KanbasNavigation() {
+export default function KambazNavigation() {
   const { pathname } = useLocation();
   const links = [
-    { label: "Dashboard", path: "/Kanbas/Dashboard", icon: AiOutlineDashboard },
-    { label: "Courses", path: "/Kanbas/Courses", icon: LiaBookSolid },
-    { label: "Calendar", path: "/Kanbas/Calendar", icon: IoCalendarOutline },
-    { label: "Inbox", path: "/Kanbas/Inbox", icon: FaInbox },
+    { label: "Dashboard", path: "/Kambaz/Dashboard", icon: AiOutlineDashboard },
+    { label: "Courses", path: "/Kambaz/Courses", icon: LiaBookSolid },
+    { label: "Calendar", path: "/Kambaz/Calendar", icon: IoCalendarOutline },
+    { label: "Inbox", path: "/Kambaz/Inbox", icon: FaInbox },
     { label: "Labs", path: "/Labs", icon: LiaCogSolid },
   ];
 
   return (
-    <div id="wd-kanbas-navigation" style={{ width: 100, top: '0px' }}
+    <div id="wd-kambaz-navigation" style={{ width: 100, top: '0px' }}
       className="list-group rounded-0 position-fixed
          bottom-0 d-none d-md-block bg-black z-2">
       <a id="wd-neu-link" target="_blank"
         href="https://www.northeastern.edu/"
         className="list-group-item bg-black border-0 text-center">
         <img src="/images/NEU.png" width="75px" /></a>
-      <Link to="/Kanbas/Account" className={`list-group-item text-center border-0 bg-black
+      <Link to="/Kambaz/Account" className={`list-group-item text-center border-0 bg-black
             ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}>
         <FaRegCircleUser className={`fs-1 ${pathname.includes("Account") ? "text-danger" : "text-white"}`} />
         <br />

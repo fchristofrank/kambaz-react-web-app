@@ -1,5 +1,5 @@
 import axios from "axios";
-export const REMOTE_SERVER = import.meta.env.REACT_APP_REMOTE_SERVER;
+export const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
@@ -21,6 +21,7 @@ export const findUsersByPartialName = async (name: string) => {
 
 
 export const signin = async (credentials: any) => {
+    console.log("User API", USERS_API);
     const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
     return response.data;
 };

@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes, useParams } from "react-router";
 import Account from "./Account";
 import Dashboard from "./Dashboard";
-import KanbasNavigation from "./Navigation";
+import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
 import "./styles.css";
 import Labs from "../Labs";
@@ -16,7 +16,7 @@ import { initializeCourses, addCourse } from "./Courses/reducer"
 import { enroll, unenroll } from "./Account/Enrollments/reducer";
 import * as enrollmentsClient from "./Account/Enrollments/client";
 
-export default function Kanbas() {
+export default function Kambaz() {
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "0", name: "New Course", number: "New Number",
@@ -118,9 +118,9 @@ export default function Kanbas() {
   };
   return (
     <Session>
-      <div id="wd-kanbas" className="d-flex">
+      <div id="wd-kambaz" className="d-flex">
         <div className="d-none d-md-block">
-          <KanbasNavigation />
+          <KambazNavigation />
         </div>
         <div className="wd-main-content-offset p-3 flex-grow-1 me-4">
           <Routes>

@@ -14,7 +14,7 @@ export default function Profile() {
   };
 
   const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kanbas/Account/Signin");
+    if (!currentUser) return navigate("/Kambaz/Account/Signin");
     const formattedProfile = {
       ...currentUser,
       dob: currentUser.dob ? new Date(currentUser.dob).toISOString().split("T")[0] : ""
@@ -24,7 +24,7 @@ export default function Profile() {
   const signout = async () => {
     await client.signout();
     dispatch(setCurrentUser(null));
-    navigate("/Kanbas/Account/Signin");
+    navigate("/Kambaz/Account/Signin");
   };
   useEffect(() => { fetchProfile(); }, []);
   return (

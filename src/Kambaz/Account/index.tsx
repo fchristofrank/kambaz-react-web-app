@@ -1,18 +1,14 @@
-import { Navigate, Route, Routes } from "react-router";
-import Signin from "./Signin";
-import Profile from "./Profile";
-import Signup from "./Signup";
-import AccountNavigation from "./Navigation";
 import { useSelector } from "react-redux";
+import { Navigate, Route, Routes } from "react-router";
+import Profile from "./Profile";
+import Signin from "./Signin";
+import Signup from "./Signup";
 import Users from "./Users";
 export default function Account() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   return (
     <div id="wd-account-screen">
-      <div className="d-flex">
-        <div className="d-none d-md-block">
-          <AccountNavigation />
-        </div>
+      <div>
         <div className="flex-wrap">
           <Routes>
             <Route path="/"

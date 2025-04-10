@@ -1,13 +1,13 @@
+import { useEffect, useMemo, useState } from "react";
 import { FaAlignJustify } from "react-icons/fa";
+import { Navigate, Route, Routes, useLocation, useParams } from "react-router";
 import Assignments from "./Assignments";
 import Editor from "./Assignments/Editor";
-import Home from "./Home";
-import Modules from "./Modules";
-import CoursesNavigation from "./Navigation";
-import { Navigate, Route, Routes, useLocation, useParams } from "react-router";
-import PeopleTable from "./People/Table";
-import { useEffect, useMemo, useState } from "react";
 import * as courseClient from "./client";
+import Comments from "./Comments";
+import Home from "./Home";
+import CoursesNavigation from "./Navigation";
+import PeopleTable from "./People/Table";
 export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = useMemo(() =>
@@ -47,7 +47,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
           <Routes>
             <Route path="/" element={<Navigate to="Home" />} />
             <Route path="Home" element={<Home />} />
-            <Route path="Modules" element={<Modules />} />
+            <Route path="Comments" element={<Comments />} />
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<Editor />} />
             <Route path="People" element={<PeopleTable users={users} />} />

@@ -1,20 +1,18 @@
-import { Navigate, Route, Routes, useParams } from "react-router";
-import Account from "./Account";
-import Dashboard from "./Dashboard";
-import KambazNavigation from "./Navigation";
-import Courses from "./Courses";
-import "./styles.css";
-import Labs from "../Labs";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, Route, Routes } from "react-router";
+import Account from "./Account";
+import * as userClient from "./Account/client";
+import * as enrollmentsClient from "./Account/Enrollments/client";
+import { enroll, unenroll } from "./Account/Enrollments/reducer";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/session";
-import { useDispatch, useSelector } from "react-redux";
-import * as userClient from "./Account/client";
+import Courses from "./Courses";
 import * as courseClient from "./Courses/client";
-import { setEnrollments } from "./Account/Enrollments/reducer";
-import { initializeCourses, addCourse } from "./Courses/reducer"
-import { enroll, unenroll } from "./Account/Enrollments/reducer";
-import * as enrollmentsClient from "./Account/Enrollments/client";
+import { addCourse } from "./Courses/reducer";
+import Dashboard from "./Dashboard";
+import KambazNavigation from "./Navigation";
+import "./styles.css";
 
 export default function Kambaz() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -131,7 +129,6 @@ export default function Kambaz() {
             <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
             <Route path="/Inbox" element={<h1>Inbox</h1>} />
-            <Route path="/Labs" element={<Labs />} />
           </Routes>
         </div>
       </div>

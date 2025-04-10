@@ -1,8 +1,7 @@
-import { HashRouter, Route, Routes, Navigate, useLocation } from "react-router-dom";
-import './App.css';
-import Labs from './Labs';
-import Kambaz from "./Kambaz";
 import { Provider } from "react-redux";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import './App.css';
+import Kambaz from "./Kambaz";
 import store from "./Kambaz/store";
 
 function App() {
@@ -12,7 +11,6 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Navigate to="Kambaz" />} />
-            <Route path="/Labs/*" element={<Labs />} />
             <Route path="/Kambaz/*" element={<Kambaz />} />
           </Routes>
         </div>

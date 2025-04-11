@@ -59,50 +59,171 @@ export default function Profile() {
           {profile && (
         <div>
           {!isEditing ? (
-            <div className="profile-view">
+        <div className="profile-view">
           <div className="mb-3 p-3 border rounded shadow-sm bg-white">
-            <h5 className="text-secondary">Username</h5>
-            <p className="text-dark">{profile.username}</p>
+        <h5 className="text-secondary">Username</h5>
+        <p className="text-dark">{profile.username}</p>
           </div>
           <div className="mb-3 p-3 border rounded shadow-sm bg-white">
-            <h5 className="text-secondary">First Name</h5>
-            <p className="text-dark">{profile.firstName}</p>
+        <h5 className="text-secondary">First Name</h5>
+        <p className="text-dark">{profile.firstName}</p>
           </div>
           <div className="mb-3 p-3 border rounded shadow-sm bg-white">
-            <h5 className="text-secondary">Last Name</h5>
-            <p className="text-dark">{profile.lastName}</p>
+        <h5 className="text-secondary">Last Name</h5>
+        <p className="text-dark">{profile.lastName}</p>
           </div>
           <div className="mb-3 p-3 border rounded shadow-sm bg-white">
-            <h5 className="text-secondary">Email</h5>
-            <p className="text-dark">{profile.email}</p>
+        <h5 className="text-secondary">Email</h5>
+        <p className="text-dark">{profile.email}</p>
           </div>
           <div className="mb-3 p-3 border rounded shadow-sm bg-white">
-            <h5 className="text-secondary">Date of Birth</h5>
-            <p className="text-dark">{profile.dob}</p>
+        <h5 className="text-secondary">Date of Birth</h5>
+        <p className="text-dark">{profile.dob}</p>
           </div>
           <div className="mb-3 p-3 border rounded shadow-sm bg-white">
-            <h5 className="text-secondary">Role</h5>
-            <p className="text-dark">{profile.role}</p>
+        <h5 className="text-secondary">Role</h5>
+        <p className="text-dark">{profile.role}</p>
           </div>
-          <button
-            onClick={() => setIsEditing(true)}
-            className="btn btn-primary w-100 mb-3"
-          >
-            Edit Profile
-          </button>
-          <button
-            onClick={signout}
-            className="btn btn-danger w-100"
-            id="wd-signout-btn"
-          >
-            Sign Out
-          </button>
-            </div>
+          <div className="mb-3 p-3 border rounded shadow-sm bg-white">
+        <h5 className="text-secondary">Current Organization</h5>
+        <p className="text-dark">{profile.organization || "N/A"}</p>
+          </div>
+          <div className="mb-3 p-3 border rounded shadow-sm bg-white">
+        <h5 className="text-secondary">Years of Experience</h5>
+        <p className="text-dark">{profile.experience || "N/A"}</p>
+          </div>
+          <div className="mb-3 p-3 border rounded shadow-sm bg-white">
+        <h5 className="text-secondary">Title</h5>
+        <p className="text-dark">{profile.title || "N/A"}</p>
+          </div>
+          <div className="mb-3 p-3 border rounded shadow-sm bg-white">
+        <h5 className="text-secondary">Skills</h5>
+        <ul className="text-dark">
+          {profile.skills && profile.skills.length > 0 ? (
+            profile.skills.map((skill: string, index: number) => (
+          <li key={index}>{skill}</li>
+            ))
           ) : (
-            <div className="profile-edit">
-          {/* Edit Profile Form */}
-          {/* ... (same as before) */}
-            </div>
+            <li>N/A</li>
+          )}
+        </ul>
+          </div>
+          <button
+        onClick={() => setIsEditing(true)}
+        className="btn btn-primary w-100 mb-3"
+          >
+        Edit Profile
+          </button>
+          <button
+        onClick={signout}
+        className="btn btn-danger w-100"
+        id="wd-signout-btn"
+          >
+        Sign Out
+          </button>
+        </div>
+          ) : (
+        <div className="profile-edit">
+          <div className="mb-3">
+            <label className="form-label text-secondary">Username</label>
+            <input
+              type="text"
+              className="form-control"
+              value={profile.username}
+              onChange={(e) => setProfile({ ...profile, username: e.target.value })}
+              disabled
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">First Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={profile.firstName}
+              onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Last Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={profile.lastName}
+              onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              value={profile.email}
+              onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Date of Birth</label>
+            <input
+              type="date"
+              className="form-control"
+              value={profile.dob}
+              onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Role</label>
+            <input
+              type="text"
+              className="form-control"
+              value={profile.role}
+              onChange={(e) => setProfile({ ...profile, role: e.target.value })}
+              disabled
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Current Organization</label>
+            <input
+              type="text"
+              className="form-control"
+              value={profile.organization || ""}
+              onChange={(e) => setProfile({ ...profile, organization: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Years of Experience</label>
+            <input
+              type="number"
+              className="form-control"
+              value={profile.experience || ""}
+              onChange={(e) => setProfile({ ...profile, experience: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Title</label>
+            <input
+              type="text"
+              className="form-control"
+              value={profile.title || ""}
+              onChange={(e) => setProfile({ ...profile, title: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label text-secondary">Skills</label>
+            <textarea
+              className="form-control"
+              value={profile.skills ? profile.skills.join(", ") : ""}
+              onChange={(e) =>
+          setProfile({ ...profile, skills: e.target.value.split(",").map((skill) => skill.trim()) })
+              }
+            />
+          </div>
+          <button onClick={updateProfile} className="btn btn-success w-100 mb-3">
+            Save Changes
+          </button>
+          <button onClick={() => setIsEditing(false)} className="btn btn-secondary w-100">
+            Cancel
+          </button>
+        </div>
           )}
         </div>
           )}

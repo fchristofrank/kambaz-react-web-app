@@ -12,10 +12,6 @@ export default function KambazNavigation() {
     <div id="wd-kambaz-navigation" style={{ width: '100%', top: 0, left: 0 }}
       className="list-group rounded-0 position-fixed
        d-flex flex-row bg-black z-2 justify-content-center align-items-center">
-      <a id="wd-neu-link" target="_blank"
-      href="https://www.northeastern.edu/"
-      className="list-group-item bg-black border-0 text-center">
-      <img src="/images/NEU.png" height="40px" /></a>
       <Link to="/Kambaz/Account" className={`list-group-item text-center border-0 bg-black
       ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}>
       <FaRegCircleUser className={`fs-4 ${pathname.includes("Account") ? "text-danger" : "text-white"}`} />

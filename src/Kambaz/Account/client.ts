@@ -96,3 +96,8 @@ export const unenrollFromCourse = async (userId: string, courseId: string) => {
     return response.data;
 };
 
+export const updateLikesInPost = async (likes: Number, courseId: string) => {
+    const body = { "likes" : likes };
+    const response = await axiosWithCredentials.post(`${USERS_API}/courses/${courseId}`,body);
+    return response.data;
+};

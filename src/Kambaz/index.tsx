@@ -12,6 +12,7 @@ import * as courseClient from "./Courses/client";
 import { addCourse } from "./Courses/reducer";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
+import Search from "./Search";
 import "./styles.css";
 
 export default function Kambaz() {
@@ -27,7 +28,8 @@ export default function Kambaz() {
   const [enrolling, setEnrolling] = useState<boolean>(false);
   const findCoursesForUser = async () => {
     try {
-      const courses = await userClient.findCoursesForUser(currentUser._id);
+      const courses = await userClient.fetchAllCourses();
+      console.log(courses);
       const updatedCourses = courses.map((course: any) => ({
         ...course,
         enrolled: true
@@ -128,7 +130,7 @@ export default function Kambaz() {
             <Route path="/Courses" element={<ProtectedRoute><Dashboard courses={courses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} enrolling={enrolling} setEnrolling={setEnrolling} updateEnrollment={updateEnrollment}/></ProtectedRoute>} />
             <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
-            <Route path="/Inbox" element={<h1>Inbox</h1>} />
+            <Route path="/search" element={< Search />} />
           </Routes>
         </div>
       </div>

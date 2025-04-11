@@ -31,7 +31,7 @@ export default function Dashboard({
 
     return (
         <div id="wd-dashboard" className="container mt-4" style={{ marginTop: "200px !important" }}>
-            <h1 id="wd-dashboard-title" className="text-center mb-4">Dashboard</h1>
+            <h1 id="wd-dashboard-title" className="text-center mb-4" style={{ marginTop: "100px" }}>Dashboard</h1>
             {!isFacultyOrAdmin && (
                 <div className="d-flex justify-content-end mb-3">
                     <button onClick={() => setEnrolling(!enrolling)} className="btn btn-primary">
@@ -40,70 +40,97 @@ export default function Dashboard({
                 </div>
             )}
 
-            <div className="mb-4">
-                <h5 className="d-flex align-items-center">
-                    Create a Post
-                    <button
-                        className="btn btn-primary ms-auto"
-                        id="wd-add-new-post-click"
-                        onClick={addNewCourse}
-                    >
-                        {enrolling ? (
-                            <span
-                                className="spinner-border spinner-border-sm"
-                                role="status"
-                                aria-hidden="true"
-                            ></span>
-                        ) : (
-                            "Post"
-                        )}
-                    </button>
-                    <button
-                        className="btn btn-warning ms-2"
-                        onClick={updateCourse}
-                        id="wd-update-post-click"
-                    >
-                        Update
-                    </button>
-                </h5>
-                <input
-                    value={course.name}
-                    className="form-control mb-2 shadow-sm"
-                    placeholder="Job Title"
-                    onChange={(e) => setCourse({ ...course, name: e.target.value })}
-                    style={{
-                        transition: "box-shadow 0.3s ease-in-out",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    }}
-                    onFocus={(e) =>
-                        (e.target.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.2)")
-                    }
-                    onBlur={(e) =>
-                        (e.target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)")
-                    }
-                />
-                <textarea
-                    value={course.description}
-                    className="form-control shadow-sm"
-                    placeholder="Job Description"
-                    onChange={(e) =>
-                        setCourse({ ...course, description: e.target.value })
-                    }
-                    style={{
-                        transition: "box-shadow 0.3s ease-in-out",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    }}
-                    onFocus={(e) =>
-                        (e.target.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.2)")
-                    }
-                    onBlur={(e) =>
-                        (e.target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)")
-                    }
-                />
+            <div
+                style={{
+                    border: "2px solid #87CEEB",
+                    borderRadius: "50px",
+                    background: "linear-gradient(to bottom, #87CEEB, #FFFFFF)",
+                    padding: "20px",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                }}
+            >
+                <div className="mb-4">
+                    <h5 className="d-flex align-items-center">
+                        Create a Post
+                        <button
+                            className="btn btn-primary ms-auto"
+                            id="wd-add-new-post-click"
+                            onClick={addNewCourse}
+                        >
+                            {enrolling ? (
+                                <span
+                                    className="spinner-border spinner-border-sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                ></span>
+                            ) : (
+                                "Post"
+                            )}
+                        </button>
+                        <button
+                            className="btn btn-warning ms-2"
+                            onClick={updateCourse}
+                            id="wd-update-post-click"
+                        >
+                            Update
+                        </button>
+                    </h5>
+                    <input
+                        value={course.name}
+                        className="form-control mb-2 shadow-sm"
+                        placeholder="Job Title"
+                        onChange={(e) => setCourse({ ...course, name: e.target.value })}
+                        style={{
+                            transition: "box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out",
+                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                            border: "2px solid #87CEEB",
+                            borderRadius: "10px",
+                            padding: "10px",
+                            fontSize: "1rem",
+                        }}
+                        onFocus={(e) => {
+                            e.target.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.2)";
+                            e.target.style.borderColor = "#4682B4";
+                        }}
+                        onBlur={(e) => {
+                            e.target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+                            e.target.style.borderColor = "#87CEEB";
+                        }}
+                    />
+                    <textarea
+                        value={course.description}
+                        className="form-control shadow-sm"
+                        placeholder="Job Description"
+                        onChange={(e) =>
+                            setCourse({ ...course, description: e.target.value })
+                        }
+                        style={{
+                            transition: "box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out",
+                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                            border: "2px solid #87CEEB",
+                            borderRadius: "10px",
+                            padding: "10px",
+                            fontSize: "1rem",
+                            minHeight: "100px",
+                        }}
+                        onFocus={(e) => {
+                            e.target.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.2)";
+                            e.target.style.borderColor = "#4682B4";
+                        }}
+                        onBlur={(e) => {
+                            e.target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+                            e.target.style.borderColor = "#87CEEB";
+                        }}
+                    />
+                </div>
             </div>
 
-            <h2 id="wd-dashboard-published" className="mb-3">
-                {"Published Courses"} ({courses.length})
+            <h2 
+                id="wd-dashboard-published" 
+                className="mb-3" 
+                style={{ marginTop: "20px", marginBottom: "20px" }}
+            >
+                {"News Feeds!"} ({courses.length})
             </h2>
             <div id="wd-dashboard-courses" className="row">
                 {courses.map((course: any) => (

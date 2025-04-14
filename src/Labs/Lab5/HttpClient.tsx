@@ -5,6 +5,7 @@ const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 export default function HttpClient() {
     const [welcomeOnClick, setWelcomeOnClick] = useState("");
     const [welcomeOnLoad, setWelcomeOnLoad] = useState("");
+    console.log(REMOTE_SERVER)
 
     const fetchWelcomeOnClick = async () => {
         const message = await client.fetchWelcomeMessage();

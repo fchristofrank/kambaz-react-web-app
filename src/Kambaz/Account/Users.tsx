@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { useParams } from "react-router";
 import PeopleTable from "../Courses/People/Table";
 import * as client from "./client";
-import { FaPlus } from "react-icons/fa";
 export default function Users() {
   const [users, setUsers] = useState<any[]>([]);
   const { uid } = useParams();
   const [role, setRole] = useState("");
   const [name, setName] = useState("");
+  console.log(name);
   const filterUsersByName = async (name: string) => {
     setName(name);
     if (name) {

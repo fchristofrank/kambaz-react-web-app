@@ -1,16 +1,15 @@
+import { useEffect, useState } from "react";
+import { BsGripVertical } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import * as coursesClient from "../client";
+import * as modulesClient from "./client";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import ModulesControls from "./ModulesControls";
-import { BsGripVertical } from "react-icons/bs";
-import { useParams } from "react-router";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setModules, addModule, updateModule, deleteModule, editModule } from "./reducer";
-import * as coursesClient from "../client";
-import * as modulesClient from "./client";
+import { addModule, deleteModule, editModule, setModules, updateModule } from "./reducer";
 
 export default function Modules() {
-  
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
@@ -39,7 +38,7 @@ export default function Modules() {
   }, []);
 
   return (
-    <div id="wd-kambaz-modules" >
+    <div id="wd-kanbas-modules" >
       <ModulesControls moduleName={moduleName} addModule={createModuleForCourse} setModuleName={setModuleName} />
       <div>
         <ul id="wd-modules" className="list-group rounded-0 mt-5 ms-5">

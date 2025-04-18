@@ -16,7 +16,7 @@ body * {
 .list-group.wd>.list-group-item.active {
     color: black;
     background-color: white;
-    border-color: white !important;
+    border-color: white;
     border-left: 5px solid black !important;
 }
 
@@ -32,7 +32,7 @@ body * {
 }
 
 .list-group-item {
-    --bs-list-group-border-color: white
+    --bs-list-group-border-color: gray
 }
 
 .wd-lesson {

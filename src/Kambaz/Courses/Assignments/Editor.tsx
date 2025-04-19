@@ -1,17 +1,10 @@
-import { BsGripVertical } from "react-icons/bs";
-import { IoMdArrowDropdown } from "react-icons/io";
-import AssignmentControls from "./AssignmentControls";
-import { IoEllipsisVertical } from "react-icons/io5";
-import { FaPlus } from "react-icons/fa";
-import GreenCheckmark from "./GreenCheckmark";
-import AssignmentControlButtons from "./AssignmentControlButtons";
-import { IoCloseOutline } from "react-icons/io5";
-import { useNavigate, useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { addAssignment, updateAssignment } from "./reducer";
+import { IoCloseOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import * as coursesClient from "../client";
 import * as assignmentsClient from "./client";
-import * as coursesClient from ".././client";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function Editor() {
     const { cid, aid } = useParams();

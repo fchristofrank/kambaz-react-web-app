@@ -1,17 +1,16 @@
-import { BsGripVertical } from "react-icons/bs";
-import { IoMdArrowDropdown } from "react-icons/io";
-import AssignmentControls from "./AssignmentControls";
-import { IoEllipsisVertical } from "react-icons/io5";
-import AssignmentCOntrolButtons from "./AssignmentControlButtons";
-import { AiOutlinePlus } from "react-icons/ai";
-import { FaRegPenToSquare } from "react-icons/fa6";
-import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteAssignment } from "./reducer";
-import { setAssignments } from "./reducer";
-import * as coursesClient from "../client";
-import * as assignmentsClient from "./client";
 import { useEffect } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
+import { BsGripVertical } from "react-icons/bs";
+import { FaRegPenToSquare } from "react-icons/fa6";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { IoEllipsisVertical } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import * as coursesClient from "../client";
+import AssignmentCOntrolButtons from "./AssignmentControlButtons";
+import AssignmentControls from "./AssignmentControls";
+import * as assignmentsClient from "./client";
+import { deleteAssignment, setAssignments } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -52,7 +51,7 @@ export default function Assignments() {
                   <FaRegPenToSquare className="fs-3 mt-4 text-success me-3" />
                   <div className="wd-content-container flex-grow-1 mx-4">
                     <a className="wd-assignment-link wd-disabled-link"
-                      href={`#/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}>
+                      href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}>
                       {assignment.title}
                     </a>
                     <p>

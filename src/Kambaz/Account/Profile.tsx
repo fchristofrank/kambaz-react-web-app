@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setCurrentUser } from "./reducer";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import * as client from "./client";
+import { setCurrentUser } from "./reducer";
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function Profile() {
   };
 
   const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kanbas/Account/Signin");
+    if (!currentUser) return navigate("/Kambaz/Account/Signin");
     const formattedProfile = {
       ...currentUser,
       dob: currentUser.dob ? new Date(currentUser.dob).toISOString().split("T")[0] : ""
@@ -24,7 +24,7 @@ export default function Profile() {
   const signout = async () => {
     await client.signout();
     dispatch(setCurrentUser(null));
-    navigate("/Kanbas/Account/Signin");
+    navigate("/Kambaz/Account/Signin");
   };
   useEffect(() => { fetchProfile(); }, []);
   return (

@@ -5,5 +5,5 @@ export default function ProtectedRoute({ children }: { children: any }) {
   if (currentUser) {
     return children;
   } else {
-    return <Navigate to="/Kanbas/Account/Signin" />;
+    return <Navigate to="/Kambaz/Account/Signin" />;
 }}

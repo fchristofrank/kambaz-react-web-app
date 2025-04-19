@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# Kanbas
+# Kambaz
 A Web application inspired by a popular online learning management system.
 =======
 # Getting Started with Create React App
@@ -48,4 +48,4 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
->>>>>>> 71c8379 (Setup Kanbas Project)
+>>>>>>> 71c8379 (Setup Kambaz Project)

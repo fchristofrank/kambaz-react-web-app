@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 
 export default function TOC() {
@@ -41,17 +40,17 @@ export default function TOC() {
           </a>
         </li>
         <li className="nav-item">
-          <a id="wd-k" href="#/Kanbas" className="nav-link">
-            Kanbas
+          <a id="wd-k" href="#/Kambaz" className="nav-link">
+            Kambaz
           </a>
         </li>
         <li className="nav-item">
-          <a id="wd-github-source-code" href="https://github.com/vicky16898/kanbas-react-web-app" className="nav-link">
+          <a id="wd-github-source-code" href="https://github.com/vicky16898/kambaz-react-web-app" className="nav-link">
             React App
           </a>
         </li>
         <li className="nav-item">
-          <a id="wd-github-source-code" href="https://github.com/vicky16898/kanbas-node-server-app" className="nav-link">
+          <a id="wd-github-source-code" href="https://github.com/vicky16898/kambaz-node-server-app" className="nav-link">
             Node Server App
           </a>
         </li>

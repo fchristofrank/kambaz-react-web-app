@@ -14,6 +14,7 @@ import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Search from "./Search";
 import "./styles.css";
+import Home from "./Courses/Home";
 
 export default function Kambaz() {
   console.log("Kambaz loaded");
@@ -131,6 +132,7 @@ export default function Kambaz() {
             <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
             <Route path="/search" element={< Search />} />
+            <Route path="/home" element={< Home />} />
           </Routes>
         </div>
       </div>

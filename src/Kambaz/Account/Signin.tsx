@@ -10,6 +10,7 @@ export default function Signin() {
   const signin = async () => {
     try {
       const user = await client.signin(credentials);
+      localStorage.setItem('userToken', user.token);
       dispatch(setCurrentUser(user));
       navigate("/Kambaz/Dashboard");
     } catch (error: any) {

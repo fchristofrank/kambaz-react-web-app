@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 export default function KambazNavigation() {
   const { pathname } = useLocation();
   const links = [
+    { label: "Home", path: "/Kambaz/home", icon: FaInbox },
     { label: "Dashboard", path: "/Kambaz/Dashboard", icon: ImNewspaper },
     { label: "Search", path: "/Kambaz/Search", icon: FaInbox }
   ];

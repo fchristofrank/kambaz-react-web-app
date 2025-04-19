@@ -30,6 +30,7 @@ export default function Profile() {
   const signout = async () => {
     await client.signout();
     dispatch(setCurrentUser(null));
+    localStorage.setItem('userToken', '');
     navigate("/Kambaz/Account/Signin");
   };
 

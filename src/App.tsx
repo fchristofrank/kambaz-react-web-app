@@ -3,6 +3,7 @@ import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import './App.css';
 import Kambaz from "./Kambaz";
 import store from "./Kambaz/store";
+import LandingHome from "./Kambaz/LandingPage";
 
 function App() {
   return (
@@ -10,8 +11,9 @@ function App() {
       <Provider store={store}>
         <div>
           <Routes>
-            <Route path="/" element={<Navigate to="Kambaz" />} />
+            <Route path="/" element={<Navigate to="Home" />} />
             <Route path="/Kambaz/*" element={<Kambaz />} />
+            <Route path="/Home" element={<LandingHome />} />
           </Routes>
         </div>
       </Provider>

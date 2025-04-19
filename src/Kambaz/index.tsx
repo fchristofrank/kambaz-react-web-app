@@ -16,6 +16,7 @@ import Search from "./Search";
 import "./styles.css";
 
 export default function Kambaz() {
+  console.log("Kambaz loaded");
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "0", name: "Title of the Posts!", number: "New Number",
@@ -29,7 +30,6 @@ export default function Kambaz() {
   const findCoursesForUser = async () => {
     try {
       const courses = await userClient.fetchAllCourses();
-      console.log(courses);
       const updatedCourses = courses.map((course: any) => ({
         ...course,
         enrolled: true

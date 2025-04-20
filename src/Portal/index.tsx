@@ -9,15 +9,16 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/session";
 import Courses from "./Courses";
 import * as courseClient from "./Courses/client";
+import Home from "./Courses/Home";
 import { addCourse } from "./Courses/reducer";
 import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
-import Search from "./Search";
+import SearchBar from "./Search";
 import "./styles.css";
-import Home from "./Courses/Home";
+import ProfessionalProfile from "./View";
 
-export default function Kambaz() {
-  console.log("Kambaz loaded");
+export default function Portal() {
+  console.log("Portal loaded");
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "0", name: "Title of the Posts!", number: "New Number",
@@ -119,7 +120,7 @@ export default function Kambaz() {
   };
   return (
     <Session>
-      <div id="wd-kambaz" className="d-flex">
+      <div id="wd-portal" className="d-flex">
         <div className="d-none d-md-block">
           <KambazNavigation />
         </div>
@@ -131,8 +132,9 @@ export default function Kambaz() {
             <Route path="/Courses" element={<ProtectedRoute><Dashboard courses={courses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} enrolling={enrolling} setEnrolling={setEnrolling} updateEnrollment={updateEnrollment}/></ProtectedRoute>} />
             <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
-            <Route path="/search" element={< Search />} />
+            <Route path="/search" element={< SearchBar />} />
             <Route path="/home" element={< Home />} />
+            <Route path="/profile/:userID" element={< ProfessionalProfile />} /> 
           </Routes>
         </div>
       </div>

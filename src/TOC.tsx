@@ -5,7 +5,7 @@ export default function TOC() {
         <div>
             <div>
                 <ul>
-                    <li><Link to="#/Kambaz">Kambaz</Link></li>
+                    <li><Link to="#/Portal">Portal</Link></li>
                 </ul>
             </div>
 

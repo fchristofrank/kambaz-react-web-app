@@ -19,7 +19,7 @@ export default function Profile() {
   };
 
   const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kambaz/Account/Signin");
+    if (!currentUser) return navigate("/Portal/Account/Signin");
     const formattedProfile = {
       ...currentUser,
       dob: currentUser.dob ? new Date(currentUser.dob).toISOString().split("T")[0] : "",
@@ -31,7 +31,7 @@ export default function Profile() {
     await client.signout();
     dispatch(setCurrentUser(null));
     localStorage.setItem('userToken', '');
-    navigate("/Kambaz/Account/Signin");
+    navigate("/Portal/Account/Signin");
   };
 
   useEffect(() => {

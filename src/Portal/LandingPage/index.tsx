@@ -1,5 +1,5 @@
+import { Search, Star, Users } from 'lucide-react';
 import React from 'react';
-import { Search, Users, Star, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const LandingHome = () => {
@@ -284,7 +284,7 @@ const handleMouseOut = (e: MouseOutEvent, originalStyle: OriginalStyle) => {
               style={styles.secondaryButton}
               onMouseOver={(e) => handleMouseOver(e, styles.secondaryButtonHover)}
               onMouseOut={(e) => handleMouseOut(e, { backgroundColor: 'transparent' })}
-              onClick={() => window.location.href = '#/Kambaz/home'}
+              onClick={() => window.location.href = '#/Portal/home'}
             >
               Go to Home Page
             </button>

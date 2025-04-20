@@ -31,7 +31,7 @@ export default function Signup() {
   const signup = async () => {
     const currentUser = await client.signup(formData);
     dispatch(setCurrentUser(currentUser));
-    navigate("/Kambaz/Account/Profile");
+    navigate("/Portal/Account/Profile");
   };
 
   return (
@@ -155,7 +155,7 @@ export default function Signup() {
         {step > 3 && (
           <div className="text-center">
             <span className="fw-bold">Already have an account? </span>
-            <Link to="/Kambaz/Account/Signin" className="text-decoration-none fw-bold">Sign in</Link>
+            <Link to="/Portal/Account/Signin" className="text-decoration-none fw-bold">Sign in</Link>
           </div>
         )}
       </div>

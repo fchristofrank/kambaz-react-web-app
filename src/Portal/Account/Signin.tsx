@@ -12,7 +12,7 @@ export default function Signin() {
       const user = await client.signin(credentials);
       localStorage.setItem('userToken', user.token);
       dispatch(setCurrentUser(user));
-      navigate("/Kambaz/home");
+      navigate("/Portal/home");
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         alert("Incorrect username or password.");
@@ -117,7 +117,7 @@ export default function Signin() {
         <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
           <Link
             id="wd-signup-link"
-            to="/Kambaz/Account/Signup"
+            to="/Portal/Account/Signup"
             style={{
               color: "#0078d4",
               textDecoration: "none",

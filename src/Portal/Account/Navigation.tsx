@@ -10,7 +10,7 @@ export default function AccountNavigation() {
       {links.map((link) => (
         <Link
           key={link}
-          to={`/Kambaz/Account/${link}`}
+          to={`/Portal/Account/${link}`}
           className={`list-group-item ${active(link)}`}
         >
           {" "}
@@ -19,7 +19,7 @@ export default function AccountNavigation() {
       ))}
       {currentUser && currentUser.role === "ADMIN" && (
         <Link
-          to={`/Kambaz/Account/Users`}
+          to={`/Portal/Account/Users`}
           className={`list-group-item ${active("Users")}`}
         >
           {" "}

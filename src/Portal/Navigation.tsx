@@ -5,14 +5,14 @@ import { Link, useLocation } from "react-router-dom";
 export default function KambazNavigation() {
   const { pathname } = useLocation();
   const links = [
-    { label: "Home", path: "/Kambaz/home", icon: FaInbox },
-    { label: "Dashboard", path: "/Kambaz/Dashboard", icon: ImNewspaper },
-    { label: "Search", path: "/Kambaz/Search", icon: FaInbox }
+    { label: "Home", path: "/Portal/home", icon: FaInbox },
+    { label: "Dashboard", path: "/Portal/Dashboard", icon: ImNewspaper },
+    { label: "Search", path: "/Portal/Search", icon: FaInbox }
   ];
 
   return (
     <div
-      id="wd-kambaz-navigation"
+      id="wd-portal-navigation"
       style={{
       width: '100%',
       top: 0,
@@ -24,7 +24,7 @@ export default function KambazNavigation() {
        d-flex flex-row z-2 justify-content-center align-items-center"
     >
       <Link
-      to="/Kambaz/Account"
+      to="/Portal/Account"
       className={`list-group-item text-center border-0
       ${pathname.includes("Account") ? "bg-white text-danger" : "text-white"}`}
       style={{

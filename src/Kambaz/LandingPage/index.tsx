@@ -276,22 +276,17 @@ const handleMouseOut = (e: MouseOutEvent, originalStyle: OriginalStyle) => {
           <p style={styles.heroText}>
             Thousands of opportunities waiting for your talent. Your next career move is just a click away.
           </p>
+
+          <h3>Developed by Christo Frank Franklin</h3>
+          <p> Project for the coursework CS5610</p>
           <div style={styles.buttonContainer}>
-            <button 
-              style={styles.primaryButton}
-              onMouseOver={(e) => handleMouseOver(e, styles.primaryButtonHover)}
-              onMouseOut={(e) => handleMouseOut(e, { backgroundColor: '#3b82f6' })}
-              onClick={() => window.location.href = '#/Kambaz/Account/Signup'}
-            >
-              Sign Up <ArrowRight style={{ marginLeft: '0.5rem' }} size={18} />
-            </button>
             <button 
               style={styles.secondaryButton}
               onMouseOver={(e) => handleMouseOver(e, styles.secondaryButtonHover)}
               onMouseOut={(e) => handleMouseOut(e, { backgroundColor: 'transparent' })}
-              onClick={() => window.location.href = '#/Kambaz/Account/Signin'}
+              onClick={() => window.location.href = '#/Kambaz/home'}
             >
-              Sign In
+              Go to Home Page
             </button>
           </div>
         </div>
@@ -305,7 +300,7 @@ const handleMouseOut = (e: MouseOutEvent, originalStyle: OriginalStyle) => {
           <div style={styles.featuresGrid}>
             <div style={styles.featureCard}>
               <Search size={48} style={styles.featureIcon} />
-              <h3 style={styles.featureTitle}>Smart Job Matching</h3>
+              <h3 style={styles.featureTitle}>Smart Job Searching</h3>
               <p style={styles.featureText}>Our AI algorithm matches your skills and preferences to the perfect opportunities.</p>
             </div>
             

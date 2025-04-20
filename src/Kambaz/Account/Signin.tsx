@@ -12,7 +12,7 @@ export default function Signin() {
       const user = await client.signin(credentials);
       localStorage.setItem('userToken', user.token);
       dispatch(setCurrentUser(user));
-      navigate("/Kambaz/Dashboard");
+      navigate("/Kambaz/home");
     } catch (error: any) {
       if (error.response && error.response.status === 401) {
         alert("Incorrect username or password.");

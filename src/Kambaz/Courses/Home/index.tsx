@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
+import JobMarketTrends from './Trends'
 
 // Mock data to use until real API is implemented
 const mockJobListings = [
@@ -432,111 +433,118 @@ const Home = () => {
         {/* Card container */}
         <div style={styles.cardContainer}>
           {courses.map((job, index) => {
-            let cardStyle = {...styles.card};
-            
-            if (index === activeIndex) {
-              cardStyle = {...cardStyle, ...styles.cardActive};
-            } else if (index < activeIndex) {
-              cardStyle = {...cardStyle, ...styles.cardBefore};
-            } else {
-              cardStyle = {...cardStyle, ...styles.cardAfter};
-            }
-            
-            const isExpanded = expandedCard === job.id;
-            
-            return (
-              <div key={job.id || index} style={cardStyle}>
-                <div style={styles.cardContent}>
-                  <div style={styles.cardHeader}>
-                  <h2 style={styles.jobTitle}>{job.title}</h2>
-                  <span style={styles.jobType}>
-                    {job.type || 'Full-time'}
-                  </span>
-                  </div>
-                  
-                  <div style={styles.companyInfo}>
-                  <div style={styles.logoContainer}>
-                    <span style={styles.logoInitial}>
-                    {job.company ? job.company.charAt(0) : 'J'}
-                    </span>
-                  </div>
-                  <div style={styles.companyDetails}>
-                    <h3 style={styles.companyName}>{job.company || 'Company Name'}</h3>
-                    <p style={styles.location}>{job.location || 'Remote'}</p>
-                  </div>
-                  </div>
-                  
-                  <p style={styles.description}>
-                  {job.description || 'No description available for this position.'}
-                  </p>
-                  
-                  {isExpanded && (
-                  <div style={styles.expandedSection}>
-                    <h4 style={styles.expandedTitle}>Ideal Candidate</h4>
-                    <p style={styles.expandedContent}>
-                    {job.idealCandidate || 'Information about the ideal candidate will be available soon.'}
-                    </p>
-                  </div>
-                  )}
-                  
-                  <div style={styles.skillsContainer}>
-                  {(job.skills || ['JavaScript', 'React']).map((skill, i) => (
-                    <span key={i} style={styles.skill}>
-                    {skill}
-                    </span>
-                  ))}
-                  </div>
-                  
-                  <div style={styles.footer}>
-                  <p style={styles.salary}>
-                    {job.salary || '$70K - $100K'}
-                  </p>
-                  </div>
-                  
-                  {isLoggedIn && (
-                  isExpanded ? (
-                    <button 
-                    style={styles.closeButton}
-                    onMouseOver={(e) => e.target.style.backgroundColor = '#5a6268'}
-                    onMouseOut={(e) => e.target.style.backgroundColor = '#6c757d'}
-                    onClick={() => setExpandedCard(null)}
-                    >
-                    Close
-                    </button>
-                  ) : (
-                    <button 
-                    style={styles.learnMoreButton}
-                    onMouseOver={(e) => e.target.style.backgroundColor = '#0b5ed7'}
-                    onMouseOut={(e) => e.target.style.backgroundColor = '#0d6efd'}
-                    onClick={() => setExpandedCard(job.id)}
-                    >
-                    Learn More
-                    </button>
-                  )
-                  )}
-                </div>
-              </div>
-            );
+        let cardStyle = { ...styles.card };
+
+        if (index === activeIndex) {
+          cardStyle = { ...cardStyle, ...styles.cardActive };
+        } else if (index < activeIndex) {
+          cardStyle = { ...cardStyle, ...styles.cardBefore };
+        } else {
+          cardStyle = { ...cardStyle, ...styles.cardAfter };
+        }
+
+        const isExpanded = expandedCard === job.id;
+
+        return (
+          <div key={job.id || index} style={cardStyle}>
+            <div style={styles.cardContent}>
+          <div style={styles.cardHeader}>
+            <h2 style={styles.jobTitle}>{job.title}</h2>
+            <span style={styles.jobType}>
+              {job.type || 'Full-time'}
+            </span>
+          </div>
+
+          <div style={styles.companyInfo}>
+            <div style={styles.logoContainer}>
+              <span style={styles.logoInitial}>
+            {job.company ? job.company.charAt(0) : 'J'}
+              </span>
+            </div>
+            <div style={styles.companyDetails}>
+              <h3 style={styles.companyName}>{job.company || 'Company Name'}</h3>
+              <p style={styles.location}>{job.location || 'Remote'}</p>
+            </div>
+          </div>
+
+          <p style={styles.description}>
+            {job.description || 'No description available for this position.'}
+          </p>
+
+          {isExpanded && (
+            <div style={styles.expandedSection}>
+              <h4 style={styles.expandedTitle}>Ideal Candidate</h4>
+              <p style={styles.expandedContent}>
+            {job.idealCandidate || 'Information about the ideal candidate will be available soon.'}
+              </p>
+            </div>
+          )}
+
+          <div style={styles.skillsContainer}>
+            {(job.skills || ['JavaScript', 'React']).map((skill, i) => (
+              <span key={i} style={styles.skill}>
+            {skill}
+              </span>
+            ))}
+          </div>
+
+          <div style={styles.footer}>
+            <p style={styles.salary}>
+              {job.salary || '$70K - $100K'}
+            </p>
+          </div>
+
+          {isLoggedIn && (
+            isExpanded ? (
+              <button
+            style={styles.closeButton}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#5a6268'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#6c757d'}
+            onClick={() => setExpandedCard(null)}
+              >
+            Close
+              </button>
+            ) : (
+              <button
+            style={styles.learnMoreButton}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#0b5ed7'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#0d6efd'}
+            onClick={() => setExpandedCard(job.id)}
+              >
+            Learn More
+              </button>
+            )
+          )}
+            </div>
+          </div>
+        );
           })}
         </div>
-        
+
         {/* Navigation dots (only show when not expanded) */}
         {expandedCard === null && (
           <div style={styles.dots}>
-            {courses.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveIndex(index)}
-                style={{
-                  ...styles.dot,
-                  ...(index === activeIndex ? styles.activeDot : {})
-                }}
-                aria-label={`View job listing ${index + 1}`}
-              />
-            ))}
+        {courses.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setActiveIndex(index)}
+            style={{
+          ...styles.dot,
+          ...(index === activeIndex ? styles.activeDot : {})
+            }}
+            aria-label={`View job listing ${index + 1}`}
+          />
+        ))}
           </div>
         )}
       </div>
+
+      {/* Additional section below the cards */}
+      {isLoggedIn && (
+        <div>
+          <JobMarketTrends />
+        </div>
+      )}
     </div>
   );
 };

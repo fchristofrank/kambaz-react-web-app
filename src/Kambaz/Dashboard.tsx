@@ -183,7 +183,7 @@ export default function Dashboard({
                                         <span>{course.likes || 0}</span>
                                     </button>
                                     <Link
-                                        to={`/Kambaz/Courses/${course._id}/Home`}
+                                        to={`/Kambaz/Courses/${course._id}/Apply`}
                                         className="btn btn-primary d-flex align-items-center"
                                     >
                                         Know More!

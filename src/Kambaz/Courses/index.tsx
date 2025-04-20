@@ -8,6 +8,8 @@ import Comments from "./Comments";
 import Home from "./Home";
 import CoursesNavigation from "./Navigation";
 import PeopleTable from "./People/Table";
+import JobDescriptionPage from "./Descriptions";
+
 export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const course = useMemo(() =>
@@ -48,6 +50,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
             <Route path="/" element={<Navigate to="Home" />} />
             <Route path="Home" element={<Home />} />
             <Route path="Comments" element={<Comments />} />
+            <Route path="Description" element={<JobDescriptionPage />} />
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<Editor />} />
             <Route path="People" element={<PeopleTable users={users} />} />

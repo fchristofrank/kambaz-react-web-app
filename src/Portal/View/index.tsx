@@ -6,24 +6,22 @@ function ProfessionalProfile() {
     // Tabs for different sections
     const [activeTab, setActiveTab] = useState('overview');
     const [userData, setUserData] = useState<any>(null);
+    const [sampleConnections, setSampleConnections] = useState<any[]>([]);
 
-    // Sample connections data for display
-    const sampleConnections = [
-        { id: "1", name: "Steve Rogers", username: "captain_america", role: "UI/UX Designer", company: "Shield Design" },
-        { id: "2", name: "Natasha Romanoff", username: "black_widow", role: "Security Specialist", company: "Avengers Corp" },
-        { id: "3", name: "Bruce Banner", username: "hulk", role: "Research Scientist", company: "Stark Industries" }
-    ];
+    // Get userID from URL
+    const hashPath = window.location.hash;
+    const lastSegment = hashPath.split('/').pop();
+    console.log(hashPath);
+    console.log(lastSegment);
+    const userID = lastSegment || '';
 
     useEffect(() => {
-        // Get userID from URL
-        const lastSegment = window.location.pathname.split('/').pop();
-        const userID = lastSegment || '';
 
         // Fetch user data
         findUserById(userID)
             .then(data => {
                 setUserData(data);
-                console.log(data);
+                console.log(data)
             })
             .catch(error => {
                 console.error("Error fetching user data:", error);

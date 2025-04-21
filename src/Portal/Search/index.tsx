@@ -288,17 +288,24 @@ const SearchBar = () => {
                         justifyContent: 'flex-end',
                         marginTop: '12px'
                       }}>
-                        <button style={{
-                          padding: '6px 12px',
-                          backgroundColor: '#2563EB',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontSize: '14px'
-                        }}>
+                        <Link
+                          to={`/Portal/Courses/${result._id}/Apply`}
+                          style={{
+                            padding: '6px 12px',
+                            backgroundColor: '#2563EB',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            textDecoration: 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
                           View Details
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   ) : (

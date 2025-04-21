@@ -133,7 +133,7 @@ export default function Portal() {
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
             <Route path="/search" element={< SearchBar />} />
             <Route path="/home" element={< Home />} />
-            <Route path="/profile/:userID" element={< ProfessionalProfile/>} /> 
+            <Route path="/profile/:userID" element={< ProfessionalProfile />} /> 
           </Routes>
         </div>
       </div>

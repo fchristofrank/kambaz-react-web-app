@@ -34,15 +34,13 @@ const SearchBar = () => {
     };
 
     fetchResults().then((results) => {
-        console.log(results);
         setSearchResults(results);
         setIsLoading(false);
     }).catch((error) => {
-        console.error('Error fetching results:', error);
+        console.log('Error fetching results:', error);
         setError('Failed to perform search. Please try again.');
         setIsLoading(false);
     });
-    console.log('Search results:', searchResults);
   };
 
   return (

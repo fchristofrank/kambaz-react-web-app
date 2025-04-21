@@ -5,7 +5,6 @@ import Signin from "./Signin";
 import Signup from "./Signup";
 import Users from "./Users";
 export default function Account() {
-  console.log("Account loaded");
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   return (
     <div id="wd-account-screen">

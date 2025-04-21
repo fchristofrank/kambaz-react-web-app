@@ -21,7 +21,6 @@ export const findUsersByPartialName = async (name: string) => {
 
 
 export const signin = async (credentials: any) => {
-    console.log("User API", USERS_API);
     const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
     return response.data;
 };

@@ -18,7 +18,6 @@ import "./styles.css";
 import ProfessionalProfile from "./View";
 
 export default function Portal() {
-  console.log("Portal loaded");
   const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "0", name: "Title of the Posts!", number: "New Number",
@@ -134,7 +133,7 @@ export default function Portal() {
             <Route path="/Calendar" element={<h1>Calendar</h1>} />
             <Route path="/search" element={< SearchBar />} />
             <Route path="/home" element={< Home />} />
-            <Route path="/profile/:userID" element={< ProfessionalProfile />} /> 
+            <Route path="/profile/:userID" element={< ProfessionalProfile userID={userID} />} /> 
           </Routes>
         </div>
       </div>

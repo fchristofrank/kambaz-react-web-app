@@ -1,15 +1,73 @@
 import { Search } from 'lucide-react';
-import { FormEvent, useState } from 'react';
-import { Link } from 'react-router';
+import { FormEvent, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router';
 import { searchJobs, searchPeople } from '../Account/client';
 
+// Define types for search results and search state
+type SearchState = {
+  searchType: 'posts' | 'people';
+  searchQuery: string;
+  searchResults: any[];
+  isLoading: boolean;
+  error: string | null;
+};
+
 const SearchBar = () => {
-  const [searchType, setSearchType] = useState('posts');
-  const [searchQuery, setSearchQuery] = useState('');
+  const location = useLocation();
+  
+  // Initialize state with values from localStorage if available
+  const [searchType, setSearchType] = useState<'posts' | 'people'>(() => {
+    const savedState = localStorage.getItem('searchState');
+    return savedState ? JSON.parse(savedState).searchType : 'posts';
+  });
+  
+  const [searchQuery, setSearchQuery] = useState(() => {
+    const savedState = localStorage.getItem('searchState');
+    return savedState ? JSON.parse(savedState).searchQuery : '';
+  });
+  
   const [isButtonHovered, setIsButtonHovered] = useState(false);
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  
+  const [searchResults, setSearchResults] = useState<any[]>(() => {
+    const savedState = localStorage.getItem('searchState');
+    return savedState ? JSON.parse(savedState).searchResults : [];
+  });
+  
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  
+  const [error, setError] = useState<string | null>(() => {
+    const savedState = localStorage.getItem('searchState');
+    return savedState ? JSON.parse(savedState).error : null;
+  });
+
+  // Effect to save search state to localStorage whenever relevant state changes
+  useEffect(() => {
+    const searchState: SearchState = {
+      searchType,
+      searchQuery,
+      searchResults,
+      isLoading,
+      error
+    };
+    localStorage.setItem('searchState', JSON.stringify(searchState));
+  }, [searchType, searchQuery, searchResults, isLoading, error]);
+
+  // Effect to restore search results when navigating back to this page
+  useEffect(() => {
+    // Check if we're coming back to this page
+    const savedState = localStorage.getItem('searchState');
+    if (savedState) {
+      const parsedState = JSON.parse(savedState);
+      
+      // Only update if there were previous results
+      if (parsedState.searchResults && parsedState.searchResults.length > 0) {
+        setSearchType(parsedState.searchType);
+        setSearchQuery(parsedState.searchQuery);
+        setSearchResults(parsedState.searchResults);
+        setError(parsedState.error);
+      }
+    }
+  }, [location]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +79,8 @@ const SearchBar = () => {
 
     setIsLoading(true);
     setError(null);
-    setSearchResults([]);
+    // Don't clear search results here to maintain previous results until new ones arrive
+    // setSearchResults([]);
 
     const fetchResults = async () => {
         let results = [];
@@ -43,6 +102,14 @@ const SearchBar = () => {
     });
   };
 
+  // Clear search function
+  const clearSearch = () => {
+    setSearchQuery('');
+    setSearchResults([]);
+    setError(null);
+    localStorage.removeItem('searchState');
+  };
+
   return (
     <div style={{
       width: '100%',
@@ -61,6 +128,7 @@ const SearchBar = () => {
         <div style={{
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'space-between',
           gap: '8px',
           marginBottom: '4px'
         }}>
@@ -69,6 +137,23 @@ const SearchBar = () => {
             fontWeight: 'bold',
             color: '#1E3A8A'
           }}>Search</h2>
+          
+          {searchResults.length > 0 && (
+            <button
+              type="button"
+              onClick={clearSearch}
+              style={{
+                padding: '4px 8px',
+                backgroundColor: 'transparent',
+                color: '#4B5563',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Clear Results
+            </button>
+          )}
         </div>
         
         <div style={{

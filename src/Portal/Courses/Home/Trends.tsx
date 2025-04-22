@@ -1,16 +1,15 @@
-import React from 'react';
 
 const JobMarketTrends = () => {
   // Mock data for job market trends
   const jobMarketTrends = {
     applicantsPerDay: {
-      value: 1247,
+      value: 3,
       change: "+12%",
       positive: true,
       description: "Average daily applications"
     },
     newJobsAdded: {
-      value: 387,
+      value: 6,
       change: "+5%",
       positive: true,
       description: "New jobs this week"
@@ -31,12 +30,10 @@ const JobMarketTrends = () => {
 
   // Monthly application data for chart
   const monthlyApplicationData = [
-    { month: 'Jan', count: 32500 },
-    { month: 'Feb', count: 29800 },
-    { month: 'Mar', count: 34200 },
-    { month: 'Apr', count: 37800 },
-    { month: 'May', count: 33400 },
-    { month: 'Jun', count: 39500 },
+    { month: 'Jan', count: 1 },
+    { month: 'Feb', count: 5 },
+    { month: 'Mar', count: 3 },
+    { month: 'Apr', count: 6 }
   ];
 
   // Max value for scaling the chart
@@ -330,7 +327,7 @@ const JobMarketTrends = () => {
               color: '#212529',
               marginBottom: '0.25rem'
             }}>Views</div>
-            <div>12,456 this week</div>
+            <div>12 this week</div>
           </div>
         </div>
         
@@ -362,7 +359,7 @@ const JobMarketTrends = () => {
               color: '#212529',
               marginBottom: '0.25rem'
             }}>Applications</div>
-            <div>8,732 this week</div>
+            <div>16 this week</div>
           </div>
         </div>
         
@@ -394,7 +391,7 @@ const JobMarketTrends = () => {
               color: '#212529',
               marginBottom: '0.25rem'
             }}>Saved Jobs</div>
-            <div>5,321 this week</div>
+            <div>5 this week</div>
           </div>
         </div>
         
@@ -425,8 +422,8 @@ const JobMarketTrends = () => {
               fontWeight: 'bold',
               color: '#212529',
               marginBottom: '0.25rem'
-            }}>Messages</div>
-            <div>2,891 this week</div>
+            }}>New connections</div>
+            <div>2 this week</div>
           </div>
         </div>
       </div>

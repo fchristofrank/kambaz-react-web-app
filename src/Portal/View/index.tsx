@@ -1,8 +1,8 @@
-import { Award, Briefcase, Clock, Link, Mail, MapPin, MessageSquare, User, Users } from 'lucide-react';
+import { Award, Briefcase, Clock, Link, MapPin, User, Users } from 'lucide-react';
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useState } from 'react';
 import { findUserById } from '../Account/client';
 
-function ProfessionalProfile() {
+function ProfessionalProfile(currentUser: any) {
     // Tabs for different sections
     const [activeTab, setActiveTab] = useState('overview');
     const [userData, setUserData] = useState<any>(null);
@@ -22,13 +22,92 @@ function ProfessionalProfile() {
             .then(data => {
                 setUserData(data);
                 console.log(data)
+                getSampleConnections(data); // Fetch connections after user data is set
             })
             .catch(error => {
                 console.error("Error fetching user data:", error);
             });
     }, []);
 
+    const addConnection = () => {
+        
+        console.log(currentUser.currentUser._id);
+        const currentUserID = currentUser.currentUser._id;
+        console.log(userID);
 
+        
+        if (!currentUserID || !userID) {
+            console.error("Missing userID or connectionID");
+            return;
+        }
+
+        const requestBody = {
+            userID: currentUserID,
+            connectionID: userID,
+        };
+
+        fetch("http://localhost:4000/api/users/addConnection", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Connection added successfully:", data);
+                // Optionally update UI or state here
+            })
+            .catch((error) => {
+                console.error("Error adding connection:", error);
+            });
+    };
+
+
+    const getSampleConnections = (data: any) => {
+        // Check if data and connections array exist
+        console.log(data);
+        if (!data || !data.connections || !Array.isArray(data.connections)) {
+            console.log("No connections found in data:", data);
+            setSampleConnections([]);
+            return;
+        }
+        
+        console.log("Found connections in data:", data.connections);
+        
+        // Create an array to store promises for all connection fetches
+        const connectionPromises = data.connections.map((connectionId: string) => {
+            console.log("Fetching connection with ID:", connectionId);
+            return findUserById(connectionId)
+                .then(connectionData => {
+                    console.log("Successfully fetched connection data:", connectionData);
+                    return connectionData;
+                })
+                .catch(error => {
+                    console.error(`Error fetching connection ${connectionId}:`, error);
+                    return null; // Return null for failed fetches
+                });
+        });
+        
+        // Wait for all promises to resolve and filter out any null results
+        Promise.all(connectionPromises)
+            .then(results => {
+                console.log("All connection promises resolved:", results);
+                const validConnections = results.filter(connection => connection !== null);
+                console.log("Setting sample connections with valid data:", validConnections);
+                setSampleConnections(validConnections);
+            })
+            .catch(error => {
+                console.error("Error in Promise.all for connections:", error);
+                setSampleConnections([]);
+            });
+    };
+        
 
     // Get user's current role or title (with fallback)
     const getCurrentRole = () => {
@@ -87,34 +166,23 @@ function ProfessionalProfile() {
                             {userData.firstName || ''} {userData.lastName || ''}
                         </h1>
                         <div>
-                            <button style={{
-                                backgroundColor: '#2563eb',
-                                color: 'white',
-                                border: 'none',
-                                padding: '8px 16px',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                marginRight: '8px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px'
-                            }}>
+                            <button 
+                                style={{
+                                    backgroundColor: '#2563eb',
+                                    color: 'white',
+                                    border: 'none',
+                                    padding: '8px 16px',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    marginRight: '8px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px'
+                                }}
+                                onClick={addConnection}
+                            >
                                 <Users size={16} />
                                 Connect
-                            </button>
-                            <button style={{
-                                backgroundColor: 'white',
-                                color: '#2563eb',
-                                border: '1px solid #2563eb',
-                                padding: '8px 16px',
-                                borderRadius: '4px',
-                                cursor: 'pointer',
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px'
-                            }}>
-                                <Mail size={16} />
-                                Message
                             </button>
                         </div>
                     </div>
@@ -477,84 +545,113 @@ function ProfessionalProfile() {
                         gridTemplateColumns: '1fr 1fr',
                         gap: '24px'
                     }}>
-                        {/* Current Connections */}
-                        <div style={{
-                            backgroundColor: 'white',
-                            borderRadius: '8px',
-                            padding: '20px',
-                            boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                        }}>
-                            <h2 style={{ fontSize: '18px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <Users size={20} /> Connections ({userData.connections?.length || 0})
-                            </h2>
+                       {/* Current Connections */}
+<div style={{
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    padding: '20px',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+}}>
+    <h2 style={{ fontSize: '18px', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <Users size={20} /> Connections ({userData?.connections?.length || 0})
+    </h2>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                                {sampleConnections.map(connection => (
-                                    <div key={connection.id} style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        padding: '12px',
-                                        borderRadius: '8px',
-                                        border: '1px solid #e5e7eb',
-                                        backgroundColor: '#f9fafb'
-                                    }}>
-                                        <div style={{
-                                            width: '48px',
-                                            height: '48px',
-                                            borderRadius: '24px',
-                                            backgroundColor: '#2563eb',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            color: 'white',
-                                            fontWeight: 'bold',
-                                            fontSize: '18px',
-                                            marginRight: '12px'
-                                        }}>
-                                            {connection.name.charAt(0)}
-                                        </div>
-                                        <div style={{ flex: 1 }}>
-                                            <div style={{ fontWeight: '500' }}>
-                                                <a href={`/profile/${connection.username}`} style={{
-                                                    color: '#111827',
-                                                    textDecoration: 'none',
-                                                }}>
-                                                    {connection.name}
-                                                </a>
-                                            </div>
-                                            <div style={{ fontSize: '14px', color: '#4b5563' }}>
-                                                {connection.role}
-                                            </div>
-                                            <div style={{ fontSize: '13px', color: '#6b7280' }}>
-                                                {connection.company}
-                                            </div>
-                                        </div>
-                                        <div style={{ display: 'flex', gap: '8px' }}>
-                                            <button style={{
-                                                backgroundColor: 'transparent',
-                                                color: '#2563eb',
-                                                border: 'none',
-                                                padding: '6px',
-                                                borderRadius: '4px',
-                                                cursor: 'pointer',
-                                            }}>
-                                                <MessageSquare size={18} />
-                                            </button>
-                                            <button style={{
-                                                backgroundColor: 'transparent',
-                                                color: '#6b7280',
-                                                border: 'none',
-                                                padding: '6px',
-                                                borderRadius: '4px',
-                                                cursor: 'pointer',
-                                            }}>
-                                                <User size={18} />
-                                            </button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {sampleConnections.length > 0 ? (
+            sampleConnections.map(connection => (
+                <div 
+                    key={connection?._id || connection?.id || Math.random()} 
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        border: '1px solid #e5e7eb',
+                        backgroundColor: '#f9fafb',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                    }}
+                    onClick={() => {
+                        window.location.href = `/portal/profile/${connection?._id || ''}`;
+                    }}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.backgroundColor = '#f3f4f6';
+                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.05)';
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.backgroundColor = '#f9fafb';
+                        e.currentTarget.style.boxShadow = 'none';
+                    }}
+                >
+                    <div style={{
+                        width: '48px',
+                        height: '48px',
+                        borderRadius: '24px',
+                        backgroundColor: '#2563eb',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '18px',
+                        marginRight: '12px'
+                    }}>
+                        {(connection?.firstName || connection?.firstname || 'U').charAt(0)}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: '500' }}>
+                            {connection?.firstName || connection?.firstname || 'Unknown'} {connection?.lastName || connection?.lastname || 'User'}
                         </div>
+                        <div style={{ fontSize: '14px', color: '#4b5563' }}>
+                            {connection?.role || connection?.title || 'Role not specified'}
+                        </div>
+                        <div style={{ fontSize: '13px', color: '#6b7280' }}>
+                            {connection?.currentOrganization || connection?.company || 'Company not specified'}
+                        </div>
+                        {connection?.skills && connection?.skills.length > 0 && (
+                            <div style={{ display: 'flex', gap: '4px', marginTop: '6px', flexWrap: 'wrap' }}>
+                                {connection.skills.slice(0, 2).map((skill: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, idx: Key | null | undefined) => (
+                                    <span key={idx} style={{
+                                        backgroundColor: '#e0f2fe',
+                                        color: '#0369a1',
+                                        padding: '2px 6px',
+                                        borderRadius: '12px',
+                                        fontSize: '11px'
+                                    }}>
+                                        {skill}
+                                    </span>
+                                ))}
+                                {connection.skills.length > 2 && (
+                                    <span style={{
+                                        backgroundColor: '#f3f4f6',
+                                        color: '#6b7280',
+                                        padding: '2px 6px',
+                                        borderRadius: '12px',
+                                        fontSize: '11px'
+                                    }}>
+                                        +{connection.skills.length - 2} more
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            ))
+        ) : (
+            <div style={{ 
+                textAlign: 'center', 
+                color: '#6b7280', 
+                fontSize: '14px',
+                padding: '20px',
+                backgroundColor: '#f9fafb',
+                borderRadius: '8px',
+                border: '1px dashed #d1d5db'
+            }}>
+                No connections available. Connect with other professionals to grow your network.
+            </div>
+        )}
+    </div>
+</div>
                     </div>
                 )}
 

@@ -1,5 +1,7 @@
+import { Clock, MapPin, MessageSquare, Share2, ThumbsUp } from 'lucide-react';
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { updateLikesInPost } from "./Account/client";
 
 export default function Dashboard({
@@ -23,213 +25,416 @@ export default function Dashboard({
     setEnrolling: (enrolling: boolean) => void;
     updateEnrollment: (courseId: string, enrolled: boolean) => void;
 }) {
-
-    //const [count, setCount] = useState(0);
+    const navigate = useNavigate();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const isFacultyOrAdmin = currentUser.role === 'FACULTY' || currentUser.role === 'ADMIN';
+    const isFacultyOrAdmin = currentUser?.role === 'FACULTY' || currentUser?.role === 'ADMIN';
+    
+    // Get current user ID from localStorage
+    const [currentUserId, setCurrentUserId] = useState("");
+    
+    // Track what's being composed in the post form
+    const [isComposing, setIsComposing] = useState(false);
+    
+    // Modified courses with user info
+    const [enhancedCourses, setEnhancedCourses] = useState<any[]>([]);
 
+    useEffect(() => {
+        // Get current user ID from localStorage
+        const userId = localStorage.getItem('userId');
+        setCurrentUserId(userId || "");
+        
+        // If course doesn't have a creatorId, add it
+        if (course && !course.creatorId && userId) {
+            setCourse({ ...course, creatorId: userId });
+        }
+        
+        // Enhance courses with formatted timestamps
+        const enhanced = courses.map(course => {
+            const timestamp = course.timestamp || new Date().toISOString();
+            const date = new Date(timestamp);
+            const now = new Date();
+            
+            // Calculate time difference
+            const diffMs = now.getTime() - date.getTime();
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMins / 60);
+            const diffDays = Math.floor(diffHours / 24);
+            
+            let formattedTime;
+            if (diffMins < 1) {
+                formattedTime = 'Just now';
+            } else if (diffMins < 60) {
+                formattedTime = `${diffMins}m ago`;
+            } else if (diffHours < 24) {
+                formattedTime = `${diffHours}h ago`;
+            } else {
+                formattedTime = `${diffDays}d ago`;
+            }
+            
+            return {
+                ...course,
+                formattedTime
+            };
+        });
+        
+        setEnhancedCourses(enhanced);
+    }, [courses, course, setCourse]);
+    
+    const handleCreatePost = () => {
+        // Make sure the current user ID is associated with the post
+        if (currentUserId && !course.creatorId) {
+            const updatedCourse = { 
+                ...course, 
+                creatorId: currentUserId,
+                timestamp: new Date().toISOString()
+            };
+            setCourse(updatedCourse);
+            addNewCourse();
+        } else {
+            addNewCourse();
+        }
+    };
+    
+    const navigateToProfile = (userId: string) => {
+        if (userId) {
+            navigate(`/portal/profile/${userId}`);
+        }
+    };
 
     return (
-        <div id="wd-dashboard" className="container mt-4" style={{ marginTop: "200px !important" }}>
-            <h1 id="wd-dashboard-title" className="text-center mb-4" style={{ marginTop: "100px" }}>Dashboard</h1>
-            {!isFacultyOrAdmin && (
-                <div className="d-flex justify-content-end mb-3">
-                    <button onClick={() => setEnrolling(!enrolling)} className="btn btn-primary">
-                        {enrolling ? "My Courses" : "All Courses"}
+        <div className="container py-4" style={{ maxWidth: "800px", margin: "0 auto" }}>
+            <div className="d-flex align-items-center justify-content-between mb-4">
+                <h4 className="mb-0 fw-bold" style={{ color: "#0a66c2" }}>My Network Feed</h4>
+                {!isFacultyOrAdmin && (
+                    <button 
+                        onClick={() => setEnrolling(!enrolling)} 
+                        className="btn" 
+                        style={{ 
+                            backgroundColor: "#0a66c2", 
+                            color: "white",
+                            borderRadius: "24px",
+                            padding: "6px 16px",
+                            fontWeight: "600",
+                            fontSize: "14px"
+                        }}
+                    >
+                        {enrolling ? "All Posts" : "My Posts"}
                     </button>
-                </div>
-            )}
+                )}
+            </div>
 
-            <div
-                style={{
-                    border: "2px solid #87CEEB",
-                    borderRadius: "50px",
-                    background: "linear-gradient(to bottom, #87CEEB, #FFFFFF)",
-                    padding: "20px",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                }}
-            >
-                <div className="mb-4">
-                    <h5 className="d-flex align-items-center">
-                        Create a Post
-                        <button
-                            className="btn btn-primary ms-auto"
-                            id="wd-add-new-post-click"
-                            onClick={addNewCourse}
+            {/* Post Creation Card */}
+            <div className="card shadow-sm mb-4">
+                <div className="card-body">
+                    <div className="d-flex align-items-center mb-3">
+                        <div 
+                            style={{ 
+                                width: "48px", 
+                                height: "48px", 
+                                borderRadius: "50%", 
+                                backgroundColor: "#0a66c2", 
+                                color: "white",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontWeight: "bold",
+                                fontSize: "20px",
+                                marginRight: "12px"
+                            }}
                         >
-                            {enrolling ? (
-                                <span
-                                    className="spinner-border spinner-border-sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                ></span>
-                            ) : (
-                                "Post"
-                            )}
-                        </button>
-                        <button
-                            className="btn btn-warning ms-2"
-                            onClick={updateCourse}
-                            id="wd-update-post-click"
+                            {currentUser?.firstName?.charAt(0) || "U"}
+                        </div>
+                        
+                        <div 
+                            onClick={() => setIsComposing(true)}
+                            style={{ 
+                                flex: 1, 
+                                padding: "12px 16px", 
+                                border: "1px solid #e0e0e0", 
+                                borderRadius: "24px", 
+                                cursor: "pointer" 
+                            }}
                         >
-                            Update
-                        </button>
-                    </h5>
-                    <input
-                        value={course.name}
-                        className="form-control mb-2 shadow-sm"
-                        placeholder="Job Title"
-                        onChange={(e) => setCourse({ ...course, name: e.target.value })}
-                        style={{
-                            transition: "box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out",
-                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                            border: "2px solid #87CEEB",
-                            borderRadius: "10px",
-                            padding: "10px",
-                            fontSize: "1rem",
-                        }}
-                        onFocus={(e) => {
-                            e.target.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.2)";
-                            e.target.style.borderColor = "#4682B4";
-                        }}
-                        onBlur={(e) => {
-                            e.target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
-                            e.target.style.borderColor = "#87CEEB";
-                        }}
-                    />
-                    <textarea
-                        value={course.description}
-                        className="form-control shadow-sm"
-                        placeholder="Job Description"
-                        onChange={(e) =>
-                            setCourse({ ...course, description: e.target.value })
-                        }
-                        style={{
-                            transition: "box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out",
-                            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                            border: "2px solid #87CEEB",
-                            borderRadius: "10px",
-                            padding: "10px",
-                            fontSize: "1rem",
-                            minHeight: "100px",
-                        }}
-                        onFocus={(e) => {
-                            e.target.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.2)";
-                            e.target.style.borderColor = "#4682B4";
-                        }}
-                        onBlur={(e) => {
-                            e.target.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
-                            e.target.style.borderColor = "#87CEEB";
-                        }}
-                    />
+                            <span className="text-muted">Start a post...</span>
+                        </div>
+                    </div>
+                    
+                    {isComposing && (
+                        <div className="mt-3">
+                            <input
+                                value={course.name}
+                                className="form-control mb-3"
+                                placeholder="Job Title"
+                                onChange={(e) => setCourse({ ...course, name: e.target.value })}
+                                style={{
+                                    border: "1px solid #e0e0e0",
+                                    borderRadius: "8px",
+                                    padding: "12px",
+                                    fontSize: "16px",
+                                }}
+                            />
+                            
+                            <textarea
+                                value={course.description}
+                                className="form-control mb-3"
+                                placeholder="Job Description"
+                                onChange={(e) => setCourse({ ...course, description: e.target.value })}
+                                style={{
+                                    border: "1px solid #e0e0e0",
+                                    borderRadius: "8px",
+                                    padding: "12px",
+                                    fontSize: "16px",
+                                    minHeight: "120px",
+                                }}
+                            />
+                            
+                            <div className="d-flex justify-content-between">
+                                <button 
+                                    className="btn" 
+                                    style={{ color: "#666" }}
+                                    onClick={() => {
+                                        setIsComposing(false);
+                                        setCourse({ name: "", description: "" });
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                
+                                <div>
+                                    {course._id && (
+                                        <button
+                                            className="btn me-2"
+                                            onClick={updateCourse}
+                                            style={{
+                                                backgroundColor: "#f5f5f5",
+                                                color: "#0a66c2",
+                                                border: "1px solid #0a66c2",
+                                                borderRadius: "24px",
+                                                padding: "6px 16px",
+                                                fontWeight: "600"
+                                            }}
+                                        >
+                                            Update
+                                        </button>
+                                    )}
+                                    
+                                    <button
+                                        className="btn"
+                                        onClick={() => {
+                                            handleCreatePost();
+                                            setIsComposing(false);
+                                        }}
+                                        disabled={!course.name || !course.description}
+                                        style={{
+                                            backgroundColor: course.name && course.description ? "#0a66c2" : "#e0e0e0",
+                                            color: course.name && course.description ? "white" : "#666",
+                                            borderRadius: "24px",
+                                            padding: "6px 16px",
+                                            fontWeight: "600"
+                                        }}
+                                    >
+                                        Post
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            <h2 
-                id="wd-dashboard-published" 
-                className="mb-3" 
-                style={{ marginTop: "20px", marginBottom: "20px" }}
-            >
-                {"News Feeds!"} ({courses.length})
-            </h2>
-            <div id="wd-dashboard-courses" className="row">
-                {courses.map((course: any) => (
-                    <div className="col-12 mb-4" key={course._id}>
-                        <div className="card shadow-sm">
-                            <div className="card-body">
-                                <div className="d-flex align-items-start mb-3">
-                                    <img
-                                        src={course.imgSource}
-                                        alt="Course"
-                                        className="rounded-circle me-3"
-                                        style={{ width: 50, height: 50, float: "left" }}
-                                    />
-                                    <div>
-                                        <h5 className="mb-0">{course.name}</h5>
-                                        <p className="card-text">{course.description}</p>
+            {/* Posts Feed */}
+            <div className="posts-feed">
+                {enhancedCourses.map((course: any) => (
+                    <div className="card shadow-sm mb-3" key={course._id}>
+                        <div className="card-body">
+                            {/* Post Header with User Info */}
+                            <div className="d-flex mb-3">
+                                <div 
+                                    onClick={() => navigateToProfile(course.creatorId || "")}
+                                    style={{ 
+                                        width: "48px", 
+                                        height: "48px", 
+                                        borderRadius: "50%", 
+                                        backgroundColor: "#0a66c2", 
+                                        color: "white",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        fontWeight: "bold",
+                                        fontSize: "20px",
+                                        marginRight: "12px",
+                                        cursor: "pointer"
+                                    }}
+                                >
+                                    {course.creatorFirstName?.charAt(0) || "U"}
+                                </div>
+                                
+                                <div>
+                                    <div 
+                                        className="fw-bold" 
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => navigateToProfile(course.creatorId || "")}
+                                    >
+                                        {course.creatorName || "LinkedIn User"}
+                                    </div>
+                                    
+                                    <div className="text-muted small d-flex align-items-center">
+                                        <span>{course.creatorTitle || "Professional"}</span>
+                                        <span className="mx-1">•</span>
+                                        <span className="d-flex align-items-center">
+                                            <Clock size={12} className="me-1" />
+                                            {course.formattedTime}
+                                        </span>
                                     </div>
                                 </div>
-                                <div className="d-flex align-items-center">
-                                    <button 
-                                        className="btn btn-success d-flex align-items-center me-2"
-                                        onClick={async (e) => {
-                                            e.preventDefault();
-                                            const updatedLikes = (course.likes || 0) + 1;
-                                            // Update local state immediately
-                                            const updatedCourse = { ...course, likes: updatedLikes };
-                                            courses.forEach((c, index) => {
-                                                if (c._id === course._id) {
-                                                    courses[index] = updatedCourse;
-                                                }
-                                            });
-                                            setCourse(updatedCourse);
-                                            // Update backend
-                                            await updateLikesInPost(updatedLikes, course._id);
-                                        }}
-                                        style={{
-                                            transition: 'transform 0.3s ease'
-                                        }}
-                                    >
-                                        <svg 
-                                            xmlns="http://www.w3.org/2000/svg" 
-                                            width="16" 
-                                            height="16" 
-                                            fill="currentColor" 
-                                            className="bi bi-hand-thumbs-up me-2" 
-                                            viewBox="0 0 16 16"
+                                
+                                {/* Admin Actions */}
+                                {(isFacultyOrAdmin || currentUserId === course.creatorId) && (
+                                    <div className="ms-auto dropdown">
+                                        <button 
+                                            className="btn btn-sm" 
+                                            type="button" 
+                                            data-bs-toggle="dropdown"
+                                            style={{ color: "#666" }}
                                         >
-                                            <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
-                                        </svg>
-                                        <span>{course.likes || 0}</span>
-                                    </button>
-                                    <Link
-                                        to={`/Portal/Courses/${course._id}/Apply`}
-                                        className="btn btn-primary d-flex align-items-center"
-                                    >
-                                        Know More!
-                                    </Link>
-                                </div>
-                                {isFacultyOrAdmin && (
-                                    <div className="d-flex justify-content-end">
-                                        <button
-                                            onClick={(event) => {
-                                                event.preventDefault();
-                                                deleteCourse(course._id);
-                                            }}
-                                            className="btn btn-danger me-2"
-                                            id="wd-delete-course-click"
-                                        >
-                                            Delete
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-three-dots" viewBox="0 0 16 16">
+                                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                                            </svg>
                                         </button>
-                                        <button
-                                            id="wd-edit-course-click"
-                                            onClick={(event) => {
-                                                event.preventDefault();
-                                                setCourse(course);
-                                            }}
-                                            className="btn btn-warning"
-                                        >
-                                            Edit
-                                        </button>
+                                        <ul className="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <button
+                                                    className="dropdown-item"
+                                                    onClick={() => {
+                                                        setCourse(course);
+                                                        setIsComposing(true);
+                                                    }}
+                                                >
+                                                    Edit
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    className="dropdown-item text-danger"
+                                                    onClick={() => deleteCourse(course._id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        </ul>
                                     </div>
                                 )}
-                                {!isFacultyOrAdmin && enrolling && (
-                                    <button
-                                        onClick={(event) => {
-                                            event.preventDefault();
-                                            updateEnrollment(course._id, !course.enrolled);
-                                        }}
-                                        className={`btn ${course.enrolled ? "btn-danger" : "btn-success"
-                                            }`}
-                                    >
-                                        {course.enrolled ? "Unenroll" : "Enroll"}
-                                    </button>
-                                )}
+                            </div>
+                            
+                            {/* Post Content */}
+                            <div>
+                                <h5 className="card-title" style={{ fontWeight: "600", color: "#333" }}>
+                                    {course.name}
+                                </h5>
+                                
+                                <p className="card-text" style={{ color: "#444", whiteSpace: "pre-line" }}>
+                                    {course.description}
+                                </p>
+                            </div>
+                            
+                            {/* Job Location and Details if available */}
+                            {(course.location || course.salary) && (
+                                <div className="d-flex flex-wrap mb-3 mt-2">
+                                    {course.location && (
+                                        <div className="me-3 d-flex align-items-center text-muted small">
+                                            <MapPin size={14} className="me-1" />
+                                            {course.location}
+                                        </div>
+                                    )}
+                                    
+                                    {course.salary && (
+                                        <div className="d-flex align-items-center text-muted small">
+                                            <span className="me-1">💰</span>
+                                            {course.salary}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                            
+                            {/* Skills Tags if available */}
+                            {course.skills && course.skills.length > 0 && (
+                                <div className="d-flex flex-wrap mb-3 gap-2">
+                                    {course.skills.map((skill: string, idx: number) => (
+                                        <span 
+                                            key={idx}
+                                            style={{
+                                                backgroundColor: "#f0f7ff",
+                                                color: "#0a66c2",
+                                                borderRadius: "16px",
+                                                padding: "4px 12px",
+                                                fontSize: "13px"
+                                            }}
+                                        >
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+                            
+                            {/* Engagement Metrics */}
+                            <div className="d-flex justify-content-between align-items-center border-top border-bottom py-2 my-3">
+                                <div className="text-muted small d-flex align-items-center">
+                                    <ThumbsUp size={14} className="me-1" style={{ color: "#0a66c2" }} />
+                                    <span>{course.likes || 0}</span>
+                                </div>
+                                
+                                <div className="text-muted small">
+                                    {course.comments ? `${course.comments} comments` : ''}
+                                </div>
+                            </div>
+                            
+                            {/* Action Buttons */}
+                            <div className="d-flex justify-content-between">
+                                <button 
+                                    className="btn btn-light flex-grow-1 d-flex align-items-center justify-content-center"
+                                    onClick={async () => {
+                                        const updatedLikes = (course.likes || 0) + 1;
+                                        // Update local state
+                                        const updatedCourse = { ...course, likes: updatedLikes };
+                                        setEnhancedCourses(enhancedCourses.map(c => 
+                                            c._id === course._id ? updatedCourse : c
+                                        ));
+                                        // Update backend
+                                        await updateLikesInPost(updatedLikes, course._id);
+                                    }}
+                                    style={{ borderRadius: "4px" }}
+                                >
+                                    <ThumbsUp size={18} className="me-2" />
+                                    Like
+                                </button>
+                                
+                                <Link
+                                    to={`/Portal/Courses/${course._id}/Apply`}
+                                    className="btn btn-light flex-grow-1 d-flex align-items-center justify-content-center"
+                                    style={{ borderRadius: "4px" }}
+                                >
+                                    <MessageSquare size={18} className="me-2" />
+                                    Comment
+                                </Link>
+                                
+                                <button 
+                                    className="btn btn-light flex-grow-1 d-flex align-items-center justify-content-center"
+                                    style={{ borderRadius: "4px" }}
+                                >
+                                    <Share2 size={18} className="me-2" />
+                                    Share
+                                </button>
                             </div>
                         </div>
                     </div>
                 ))}
+                
+                {enhancedCourses.length === 0 && (
+                    <div className="text-center p-5 bg-light rounded">
+                        <p className="mb-0 text-muted">No posts yet. Be the first to share something!</p>
+                    </div>
+                )}
+            </div>
         </div>
-        </div >
     );
 }

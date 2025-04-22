@@ -1,22 +1,39 @@
-import { Search } from 'lucide-react';
+import axios from 'axios';
+import { ExternalLink, Search } from 'lucide-react';
 import { FormEvent, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { searchJobs, searchPeople } from '../Account/client';
 
 // Define types for search results and search state
 type SearchState = {
-  searchType: 'posts' | 'people';
+  searchType: 'posts' | 'people' | 'external';
   searchQuery: string;
   searchResults: any[];
   isLoading: boolean;
   error: string | null;
 };
 
+// Type for LinkedIn job listings from external API
+type LinkedInJob = {
+  id: string;
+  title: string;
+  organization: string;
+  locations_derived: string[];
+  url: string;
+  date_posted: string;
+  li_hiring_manager_name: string | null;
+  li_hiring_manager_title: string | null;
+  li_hiring_manager_url: string | null;
+  ai_hiring_manager_name: string | null;
+  ai_hiring_manager_email_address: string | null;
+};
+
 const SearchBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   
   // Initialize state with values from localStorage if available
-  const [searchType, setSearchType] = useState<'posts' | 'people'>(() => {
+  const [searchType, setSearchType] = useState<'posts' | 'people' | 'external'>(() => {
     const savedState = localStorage.getItem('searchState');
     return savedState ? JSON.parse(savedState).searchType : 'posts';
   });
@@ -39,6 +56,17 @@ const SearchBar = () => {
     const savedState = localStorage.getItem('searchState');
     return savedState ? JSON.parse(savedState).error : null;
   });
+
+  // Cached external API data
+  const [externalJobsData, setExternalJobsData] = useState<LinkedInJob[]>([]);
+  const [externalDataLoaded, setExternalDataLoaded] = useState(false);
+
+  // Load external data on component mount
+  useEffect(() => {
+    if (!externalDataLoaded) {
+      fetchExternalData();
+    }
+  }, [externalDataLoaded]);
 
   // Effect to save search state to localStorage whenever relevant state changes
   useEffect(() => {
@@ -69,6 +97,53 @@ const SearchBar = () => {
     }
   }, [location]);
 
+  // Function to fetch external data
+  const fetchExternalData = async () => {
+    setIsLoading(true);
+    
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: 'https://hiring-manager-api.p.rapidapi.com/recruitment-manager-24h',
+        headers: {
+          'x-rapidapi-key': '4fc85a98e0msh159555e3ed61854p1ae096jsn427ed23f2d39',
+          'x-rapidapi-host': 'hiring-manager-api.p.rapidapi.com'
+        }
+      });
+      
+      setExternalJobsData(response.data);
+      setExternalDataLoaded(true);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error fetching external data:', error);
+      setError('Failed to load external job listings. Please try again later.');
+      setIsLoading(false);
+    }
+  };
+
+  // Filter external data based on search query - focusing on hiring managers with matching titles
+  const filterExternalData = (query: string) => {
+    if (!query.trim()) return [];
+    
+    const lowerCaseQuery = query.toLowerCase().trim();
+    
+    return externalJobsData.filter(job => {
+      // Focus primarily on matching hiring manager titles
+      const managerTitleMatch = job.li_hiring_manager_title && 
+        job.li_hiring_manager_title.toLowerCase().includes(lowerCaseQuery);
+      
+      // Secondary match on job title if it matches professional titles
+      const jobTitleMatch = job.title.toLowerCase().includes(lowerCaseQuery);
+      
+      // Match on hiring manager names
+      const managerNameMatch = 
+        (job.li_hiring_manager_name && job.li_hiring_manager_name.toLowerCase().includes(lowerCaseQuery)) ||
+        (job.ai_hiring_manager_name && job.ai_hiring_manager_name.toLowerCase().includes(lowerCaseQuery));
+        
+      return managerTitleMatch || jobTitleMatch || managerNameMatch;
+    });
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(`Searching for ${searchType}: "${searchQuery}"`);
@@ -79,27 +154,44 @@ const SearchBar = () => {
 
     setIsLoading(true);
     setError(null);
-    // Don't clear search results here to maintain previous results until new ones arrive
-    // setSearchResults([]);
 
-    const fetchResults = async () => {
+    if (searchType === 'external') {
+      if (!externalDataLoaded) {
+        fetchExternalData().then(() => {
+          const filteredResults = filterExternalData(searchQuery);
+          setSearchResults(filteredResults);
+          setIsLoading(false);
+        });
+      } else {
+        const filteredResults = filterExternalData(searchQuery);
+        setSearchResults(filteredResults);
+        setIsLoading(false);
+      }
+    } else {
+      const fetchResults = async () => {
         let results = [];
         if (searchType === 'people') {
-            results = await searchPeople(searchQuery);
+          results = await searchPeople(searchQuery);
         } else {    
-            results = await searchJobs(searchQuery);
+          results = await searchJobs(searchQuery);
         }
         return results;
-    };
+      };
 
-    fetchResults().then((results) => {
+      fetchResults().then((results) => {
         setSearchResults(results);
         setIsLoading(false);
-    }).catch((error) => {
+      }).catch((error) => {
         console.log('Error fetching results:', error);
         setError('Failed to perform search. Please try again.');
         setIsLoading(false);
-    });
+      });
+    }
+  };
+
+  // Function to open LinkedIn URL in a new tab
+  const openExternalLink = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   // Clear search function
@@ -108,6 +200,18 @@ const SearchBar = () => {
     setSearchResults([]);
     setError(null);
     localStorage.removeItem('searchState');
+  };
+
+  // Format date to a more readable format
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   };
 
   return (
@@ -159,6 +263,7 @@ const SearchBar = () => {
         <div style={{
           display: 'flex',
           gap: '16px',
+          flexWrap: 'wrap',
           marginBottom: '12px'
         }}>
           <div style={{
@@ -210,6 +315,34 @@ const SearchBar = () => {
               People
             </label>
           </div>
+          
+          <div style={{
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <input
+              type="radio"
+              id="search-external"
+              name="searchType"
+              value="external"
+              checked={searchType === 'external'}
+              onChange={() => setSearchType('external')}
+              style={{
+                marginRight: '8px',
+                height: '16px',
+                width: '16px'
+              }}
+            />
+            <label htmlFor="search-external" style={{
+              color: '#1E40AF',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}>
+              LinkedIn Jobs <ExternalLink size={14} />
+            </label>
+          </div>
         </div>
         
         <div style={{
@@ -224,7 +357,13 @@ const SearchBar = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={`Search for ${searchType === 'posts' ? 'job posts' : 'people'}...`}
+              placeholder={
+                searchType === 'posts' 
+                  ? 'Search for job posts...' 
+                  : searchType === 'people' 
+                    ? 'Search for people...' 
+                    : 'Search LinkedIn jobs...'
+              }
               style={{
                 width: '100%',
                 padding: '12px',
@@ -290,6 +429,16 @@ const SearchBar = () => {
           </div>
         )}
         
+        {searchType === 'external' && (
+          <div style={{
+            marginTop: '12px',
+            fontSize: '14px',
+            color: '#2563EB'
+          }}>
+            Search for hiring managers by professional title or name
+          </div>
+        )}
+        
         {error && (
           <div style={{
             marginTop: '12px',
@@ -317,7 +466,11 @@ const SearchBar = () => {
               color: '#1E3A8A',
               marginBottom: '12px'
             }}>
-              {searchType === 'posts' ? 'Job Posts' : 'People'} Results ({searchResults.length})
+              {searchType === 'posts' 
+                ? 'Job Posts' 
+                : searchType === 'people' 
+                  ? 'People' 
+                  : 'LinkedIn Jobs'} Results ({searchResults.length})
             </h3>
             
             <div style={{
@@ -393,7 +546,7 @@ const SearchBar = () => {
                         </Link>
                       </div>
                     </div>
-                  ) : (
+                  ) : searchType === 'people' ? (
                     // Person result card
                     <div>
                       <h4 style={{
@@ -461,6 +614,143 @@ const SearchBar = () => {
                         </Link>
                       </div>
                     </div>
+                  ) : (
+                    // External LinkedIn hiring manager result card
+                    <div>
+                      {/* Hiring manager info as primary content */}
+                      <div style={{
+                        marginBottom: '12px',
+                        padding: '10px',
+                        backgroundColor: '#F3F4F6',
+                        borderRadius: '6px',
+                        border: '1px solid #E5E7EB'
+                      }}>
+                        <h4 style={{
+                          fontSize: '16px',
+                          fontWeight: '600',
+                          color: '#111827',
+                          marginBottom: '4px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px'
+                        }}>
+                          {result.li_hiring_manager_name || result.ai_hiring_manager_name || 'Hiring Manager'}
+                          <span style={{
+                            fontSize: '12px',
+                            padding: '2px 6px',
+                            backgroundColor: '#EBF5FF',
+                            color: '#2563EB',
+                            borderRadius: '4px',
+                            fontWeight: 'normal'
+                          }}>
+                            LinkedIn
+                          </span>
+                        </h4>
+                        
+                        {result.li_hiring_manager_title && (
+                          <p style={{
+                            fontSize: '14px',
+                            color: '#4B5563',
+                            margin: '0 0 6px 0',
+                            fontWeight: '500'
+                          }}>
+                            {result.li_hiring_manager_title}
+                          </p>
+                        )}
+                        
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          marginTop: '6px'
+                        }}>
+                          <span style={{
+                            padding: '3px 8px',
+                            backgroundColor: '#DBEAFE',
+                            color: '#1E40AF',
+                            borderRadius: '4px',
+                            fontSize: '12px'
+                          }}>
+                            Recruiting
+                          </span>
+                          
+                          {result.li_hiring_manager_url && (
+                            <a 
+                              href={result.li_hiring_manager_url} 
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                fontSize: '12px',
+                                color: '#2563EB',
+                                textDecoration: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '2px'
+                              }}
+                            >
+                              LinkedIn Profile <ExternalLink size={12} />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {/* Job info as secondary content */}
+                      <div>
+                        <p style={{
+                          fontSize: '15px',
+                          fontWeight: '600',
+                          color: '#111827',
+                          marginBottom: '4px'
+                        }}>
+                          Hiring for: {result.title}
+                        </p>
+                        <p style={{
+                          fontSize: '14px',
+                          color: '#4B5563',
+                          marginBottom: '2px'
+                        }}>
+                          {result.organization}
+                        </p>
+                        <p style={{
+                          fontSize: '13px',
+                          color: '#6B7280',
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexWrap: 'wrap',
+                          gap: '8px'
+                        }}>
+                          <span>📍 {result.locations_derived?.[0] || 'Remote'}</span>
+                          <span>•</span>
+                          <span>📅 Posted: {formatDate(result.date_posted)}</span>
+                        </p>
+                      </div>
+                      
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        marginTop: '12px'
+                      }}>
+                        <button
+                          onClick={() => openExternalLink(result.url)}
+                          style={{
+                            padding: '6px 12px',
+                            backgroundColor: '#0A66C2', // LinkedIn blue
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px'
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#084A8E'}
+                          onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#0A66C2'}
+                        >
+                          View on LinkedIn <ExternalLink size={14} />
+                        </button>
+                      </div>
+                    </div>
                   )}
                 </div>
               ))}
@@ -479,6 +769,23 @@ const SearchBar = () => {
             color: '#6B7280'
           }}>
             <p>No results found for "{searchQuery}"</p>
+            {searchType === 'external' && !externalDataLoaded && (
+              <button
+                onClick={fetchExternalData}
+                style={{
+                  marginTop: '8px',
+                  padding: '6px 12px',
+                  backgroundColor: 'transparent',
+                  color: '#2563EB',
+                  border: '1px solid #2563EB',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontSize: '14px'
+                }}
+              >
+                Refresh External Data
+              </button>
+            )}
           </div>
         )}
       </div>

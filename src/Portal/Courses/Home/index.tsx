@@ -1,6 +1,7 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react';
-import JobMarketTrends from './Trends'
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import JobMarketTrends from './Trends';
 
 // Mock data to use until real API is implemented
 const mockJobListings = [
@@ -61,294 +62,508 @@ const mockJobListings = [
   }
 ];
 
+// Sample user profile for when logged in
+const sampleUserProfile = {
+  name: "Alex Johnson",
+  title: "Senior Software Developer",
+  connections: 412,
+  viewedProfile: 38,
+  impressions: 143
+};
+
 // Inline styles
 const styles = {
+  // Main container
   container: {
-    width: '100%',
-    margin: '0',
-    padding: '0',
-    backgroundColor: '#FFF8F1' // Match the background color from screenshot
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '20px',
+    backgroundColor: '#f3f2ef',
+    minHeight: '100vh',
+    fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
   },
-  title: {
-    fontSize: '2rem',
-    fontWeight: 'bold',
-    marginBottom: '1.5rem',
-    textAlign: 'center',
-    color: '#333',
-    padding: '1rem'
-  },
-  carouselContainer: {
-    position: 'relative',
-    height: '100vh', // Full viewport height
-    overflow: 'hidden',
-    backgroundColor: '#f8f9fa',
-    width: '100%',
-    maxWidth: '100%', // Full width
-    borderRadius: '0',
-    boxShadow: 'none',
-    paddingBottom: '3rem' // Add padding at the bottom for dots
-  },
-  expandedCarouselContainer: {
-    height: '100vh', // Keep full height when expanded
-  },
-  cardContainer: {
-    position: 'absolute',
-    inset: '0',
-    display: 'flex',
-    alignItems: 'center'
-  },
-  card: {
-    position: 'absolute',
-    inset: '0',
-    width: '100%',
-    height: 'calc(100% - 3rem)', // Adjust height to account for dots
-    padding: '1.5rem',
-    transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out',
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  cardActive: {
-    transform: 'translateX(0)',
-    opacity: 1,
-    zIndex: 10
-  },
-  cardBefore: {
-    transform: 'translateX(-100%)',
-    opacity: 0,
-    zIndex: 0
-  },
-  cardAfter: {
-    transform: 'translateX(100%)',
-    opacity: 0,
-    zIndex: 0
-  },
-  cardContent: {
-    backgroundColor: 'white',
-    borderRadius: '0',
-    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12)',
-    padding: '2rem',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'auto'
-  },
-  cardHeader: {
+  
+  // Header section
+  header: {
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: '1rem'
-  },
-  jobTitle: {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    color: '#212529'
-  },
-  jobType: {
-    padding: '0.25rem 0.75rem',
-    fontSize: '0.875rem',
-    borderRadius: '9999px',
-    backgroundColor: '#e9f2ff',
-    color: '#0d6efd'
-  },
-  companyInfo: {
-    display: 'flex',
     alignItems: 'center',
-    marginBottom: '1rem'
+    marginBottom: '24px',
+    backgroundColor: 'white',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)'
   },
-  logoContainer: {
-    width: '3.5rem',
-    height: '3.5rem',
-    backgroundColor: '#dc3545', // Solid red color
-    borderRadius: '9999px',
+  
+  headerTitle: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    color: '#0a66c2'
+  },
+  
+  loginSignupButtons: {
+    display: 'flex',
+    gap: '12px'
+  },
+  
+  loginButton: {
+    padding: '8px 16px',
+    backgroundColor: 'transparent',
+    color: '#0a66c2',
+    border: '1px solid #0a66c2',
+    borderRadius: '24px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    transition: 'background-color 0.2s'
+  },
+  
+  signupButton: {
+    padding: '8px 16px',
+    backgroundColor: '#0a66c2',
+    color: 'white',
+    border: 'none',
+    borderRadius: '24px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    transition: 'background-color 0.2s'
+  },
+
+  // Main content grid
+  mainGrid: {
+    display: 'grid',
+    gridTemplateColumns: '3fr 7fr',
+    gap: '24px'
+  },
+
+  fullWidthGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+  },
+  
+  // Profile card
+  profileCard: {
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)',
+    height: 'fit-content'
+  },
+  
+  profileCardBanner: {
+    height: '60px',
+    backgroundColor: '#0a66c2',
+    position: 'relative'
+  },
+  
+  profileCardAvatar: {
+    width: '72px',
+    height: '72px',
+    borderRadius: '50%',
+    border: '3px solid white',
+    backgroundColor: '#f3f2ef',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    overflow: 'hidden'
-  },
-  logoInitial: {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-    color: 'white'
-  },
-  companyDetails: {
-    marginLeft: '0.75rem'
-  },
-  companyName: {
-    fontWeight: '500',
-    color: '#212529'
-  },
-  location: {
-    color: '#6c757d'
-  },
-  description: {
-    color: '#495057',
-    marginBottom: '1rem',
-    flexGrow: 1,
-    overflow: 'hidden'
-  },
-  expandedSection: {
-    marginTop: '1rem',
-    padding: '1rem',
-    backgroundColor: '#f8f9fa',
-    borderRadius: '0.375rem',
-    transition: 'all 0.3s ease-in-out'
-  },
-  expandedTitle: {
-    fontSize: '1.125rem',
-    fontWeight: 'bold',
-    color: '#343a40',
-    marginBottom: '0.5rem'
-  },
-  expandedContent: {
-    color: '#495057',
-    lineHeight: '1.5'
-  },
-  skillsContainer: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '0.5rem',
-    marginBottom: '1.5rem',
-    marginTop: '1.5rem'
-  },
-  skill: {
-    padding: '0.25rem 0.75rem',
-    fontSize: '0.875rem',
-    backgroundColor: '#f8f9fa',
-    color: '#495057',
-    borderRadius: '0.25rem',
-    display: 'inline-block'
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 'auto'
-  },
-  salary: {
-    color: '#198754',
+    position: 'absolute',
+    top: '24px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    color: '#0a66c2',
+    fontSize: '32px',
     fontWeight: 'bold'
   },
-  learnMoreButton: {
-    padding: '1rem',
-    backgroundColor: '#0d6efd',
-    color: 'white',
-    textAlign: 'center',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'background-color 0.15s ease-in-out',
-    borderRadius: '0',
-    width: '100%',
-    fontSize: '1.25rem',
-    fontWeight: 'bold',
-    marginTop: '2rem'
+  
+  profileCardBody: {
+    padding: '48px 12px 12px',
+    textAlign: 'center'
   },
-  closeButton: {
-    padding: '1rem',
-    backgroundColor: '#6c757d',
-    color: 'white',
-    textAlign: 'center',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'background-color 0.15s ease-in-out',
-    borderRadius: '0',
-    width: '100%',
-    fontSize: '1.25rem',
+  
+  profileName: {
+    fontSize: '16px',
     fontWeight: 'bold',
-    marginTop: '2rem'
+    margin: '0',
+    marginBottom: '4px'
   },
-  dots: {
-    position: 'absolute',
-    bottom: '1.5rem',
-    left: '0',
-    right: '0',
+  
+  profileTitle: {
+    fontSize: '14px',
+    color: '#666',
+    margin: '0',
+    marginBottom: '16px'
+  },
+  
+  profileStats: {
+    borderTop: '1px solid #eee',
+    borderBottom: '1px solid #eee',
+    padding: '12px 0',
+    margin: '0 -12px',
+    marginBottom: '12px'
+  },
+  
+  profileStatItem: {
     display: 'flex',
-    justifyContent: 'center',
-    zIndex: 20 // Ensure dots are above cards
+    justifyContent: 'space-between',
+    padding: '4px 12px',
+    fontSize: '12px',
+    color: '#666'
   },
-  dot: {
-    width: '1rem',
-    height: '1rem',
-    margin: '0 0.5rem',
-    borderRadius: '9999px',
-    backgroundColor: '#dee2e6',
-    transition: 'background-color 0.15s ease-in-out',
+  
+  profileStatValue: {
+    color: '#0a66c2',
+    fontWeight: 'bold'
+  },
+  
+  viewProfileButton: {
+    width: '100%',
+    padding: '8px',
+    backgroundColor: 'transparent',
+    color: '#0a66c2',
+    border: '1px solid #0a66c2',
+    borderRadius: '24px',
     cursor: 'pointer',
-    border: 'none'
+    fontWeight: 'bold',
+    fontSize: '14px',
+    transition: 'background-color 0.2s'
   },
-  activeDot: {
-    backgroundColor: '#0d6efd'
+
+  // Analytics section
+  analyticsSection: {
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    padding: '16px',
+    marginBottom: '24px',
+    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)'
   },
+  
+  analyticsSectionTitle: {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginBottom: '16px',
+    color: '#333'
+  },
+
+  // Job section
+  jobSection: {
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    padding: '16px',
+    marginBottom: '24px',
+    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)'
+  },
+
+  jobSectionTitle: {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginBottom: '16px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+
+  viewAllJobsLink: {
+    fontSize: '14px',
+    color: '#0a66c2',
+    textDecoration: 'none',
+    fontWeight: 'normal'
+  },
+
+  // Job list and cards
+  jobList: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+    gap: '16px'
+  },
+
+  jobCard: {
+    border: '1px solid #eee',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    transition: 'box-shadow 0.2s, transform 0.2s',
+  },
+
+  jobCardInteractive: {
+    cursor: 'pointer',
+    '&:hover': {
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+      transform: 'translateY(-2px)'
+    }
+  },
+
+  jobCardHeader: {
+    padding: '16px',
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '12px'
+  },
+
+  companyLogo: {
+    width: '48px',
+    height: '48px',
+    borderRadius: '4px',
+    backgroundColor: '#0a66c2',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: '18px'
+  },
+
+  jobCardTitle: {
+    fontSize: '16px',
+    fontWeight: 'bold',
+    margin: '0',
+    marginBottom: '4px',
+    color: '#333'
+  },
+
+  jobCardCompany: {
+    fontSize: '14px',
+    margin: '0',
+    marginBottom: '4px',
+    color: '#666'
+  },
+
+  jobCardLocation: {
+    fontSize: '12px',
+    margin: '0',
+    color: '#666',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px'
+  },
+
+  jobCardBody: {
+    padding: '0 16px 16px',
+  },
+
+  jobCardDescription: {
+    fontSize: '14px',
+    color: '#333',
+    margin: '0',
+    marginBottom: '12px',
+    display: '-webkit-box',
+    WebkitLineClamp: '3',
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  },
+
+  jobSkillsList: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px',
+    marginBottom: '16px'
+  },
+
+  jobSkill: {
+    fontSize: '12px',
+    color: '#0a66c2',
+    backgroundColor: '#e2f0fe',
+    padding: '4px 8px',
+    borderRadius: '16px'
+  },
+
+  jobCardFooter: {
+    padding: '12px 16px',
+    borderTop: '1px solid #eee',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+
+  jobSalary: {
+    fontSize: '14px',
+    fontWeight: 'bold',
+    color: '#0a66c2'
+  },
+
+  jobType: {
+    fontSize: '12px',
+    color: '#666',
+    padding: '4px 8px',
+    backgroundColor: '#f3f2ef',
+    borderRadius: '12px'
+  },
+
+  applyButton: {
+    width: '100%',
+    padding: '8px 0',
+    backgroundColor: '#0a66c2',
+    color: 'white',
+    border: 'none',
+    borderRadius: '24px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '14px',
+    marginTop: '12px'
+  },
+
+  // Expanded job view
+  expandedJobContainer: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    zIndex: 1000,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '24px'
+  },
+
+  expandedJobCard: {
+    width: '100%',
+    maxWidth: '600px',
+    maxHeight: '90vh',
+    overflow: 'auto',
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    padding: '24px',
+    position: 'relative'
+  },
+
+  closeButton: {
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    backgroundColor: '#f3f2ef',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '16px'
+  },
+
+  expandedJobTitle: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '8px',
+    color: '#333'
+  },
+
+  expandedJobCompany: {
+    fontSize: '18px',
+    marginBottom: '8px',
+    color: '#333'
+  },
+
+  expandedJobLocation: {
+    fontSize: '16px',
+    marginBottom: '16px',
+    color: '#666',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px'
+  },
+
+  expandedJobSection: {
+    marginBottom: '24px'
+  },
+
+  expandedJobSectionTitle: {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginBottom: '12px',
+    color: '#333'
+  },
+
+  expandedJobSectionContent: {
+    fontSize: '16px',
+    lineHeight: '1.6',
+    color: '#333'
+  },
+
+  expandedJobApplyButton: {
+    width: '100%',
+    padding: '12px',
+    backgroundColor: '#0a66c2',
+    color: 'white',
+    border: 'none',
+    borderRadius: '24px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    marginTop: '24px'
+  },
+
+  // Welcome banner for non-logged in users
+  welcomeBanner: {
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    padding: '24px',
+    marginBottom: '24px',
+    boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.08)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  
+  welcomeTitle: {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '12px',
+    color: '#333'
+  },
+  
+  welcomeSubtitle: {
+    fontSize: '16px',
+    marginBottom: '24px',
+    color: '#666',
+    maxWidth: '600px'
+  },
+  
+  welcomeButtons: {
+    display: 'flex',
+    gap: '16px'
+  },
+  
+  // Loading and error states
   loading: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '16rem',
-    backgroundColor: '#f8f9fa',
-    borderRadius: '0.5rem'
+    flexDirection: 'column',
+    height: '200px'
   },
+  
   loadingSpinner: {
-    display: 'inline-block',
-    width: '2rem',
-    height: '2rem',
-    border: '4px solid #dee2e6',
+    width: '40px',
+    height: '40px',
+    border: '4px solid #f3f2ef',
     borderRadius: '50%',
-    borderTopColor: '#0d6efd',
+    borderTop: '4px solid #0a66c2',
     animation: 'spin 1s linear infinite'
   },
+  
   loadingText: {
-    marginTop: '0.5rem',
-    color: '#6c757d'
+    marginTop: '16px',
+    color: '#666'
   },
+  
   error: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '16rem',
-    backgroundColor: '#f8d7da',
-    borderRadius: '0.5rem',
-    padding: '1rem'
-  },
-  errorIcon: {
-    color: '#dc3545',
-    fontSize: '3rem',
-    marginBottom: '0.5rem'
-  },
-  errorTitle: {
-    marginTop: '0.5rem',
-    fontSize: '1.25rem',
-    fontWeight: '500',
-    color: '#842029'
-  },
-  errorMessage: {
-    marginTop: '0.25rem',
-    color: '#842029'
-  },
-  empty: {
-    backgroundColor: '#fff3cd',
-    padding: '1rem',
-    borderRadius: '0.5rem'
-  },
-  emptyText: {
-    color: '#856404',
-    textAlign: 'center'
+    backgroundColor: '#fde8e8',
+    color: '#e53e3e',
+    padding: '16px',
+    borderRadius: '8px',
+    marginBottom: '24px'
   }
 };
 
-// Keyframe animation for spinner
-const spinnerKeyframes = `
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`;
-
 const Home = () => {
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [courses, setCourses] = useState([]);
+  const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [expandedCard, setExpandedCard] = useState(null);
+  const [expandedJobId, setExpandedJobId] = useState(null);
   
   // Check if user is logged in
   useEffect(() => {
@@ -365,7 +580,12 @@ const Home = () => {
   // Add spinner animation to document head
   useEffect(() => {
     const styleElement = document.createElement('style');
-    styleElement.innerHTML = spinnerKeyframes;
+    styleElement.innerHTML = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
     document.head.appendChild(styleElement);
     
     return () => {
@@ -377,172 +597,270 @@ const Home = () => {
   useEffect(() => {
     // Simulate API delay for realistic testing
     const timer = setTimeout(() => {
-      setCourses(mockJobListings);
+      setJobs(mockJobListings);
       setIsLoading(false);
     }, 1000);
     
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-rotate through job cards (only when no card is expanded)
-  useEffect(() => {
-    if (courses.length === 0 || expandedCard !== null) return;
-    
-    const interval = setInterval(() => {
-      setActiveIndex(prevIndex => (prevIndex + 1) % courses.length);
-    }, 3000);
-    
-    return () => clearInterval(interval);
-  }, [courses.length, expandedCard]);
+  // Function to expand job details
+  const expandJob = (jobId) => {
+    setExpandedJobId(jobId);
+  };
+
+  // Function to close expanded job view
+  const closeExpandedJob = () => {
+    setExpandedJobId(null);
+  };
+
+  // Function to handle login navigation
+  const handleLogin = () => {
+    navigate('/Portal/Account/Signin');
+  };
+
+  // Function to handle signup navigation
+  const handleSignup = () => {
+    navigate('/Portal/Account/Signup');
+  };
+
+  // Function to handle profile navigation
+  const handleViewProfile = () => {
+    navigate('/portal/profile');
+  };
 
   if (isLoading) {
     return (
-      <div style={styles.loading}>
-        <div style={styles.loadingSpinner}></div>
-        <p style={styles.loadingText}>Loading job listings...</p>
+      <div style={styles.container}>
+        <div style={styles.loading}>
+          <div style={styles.loadingSpinner}></div>
+          <p style={styles.loadingText}>Loading content...</p>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div style={styles.error}>
-        <div style={styles.errorIcon}>⚠️</div>
-        <h3 style={styles.errorTitle}>Failed to load job listings</h3>
-        <p style={styles.errorMessage}>{error}</p>
+      <div style={styles.container}>
+        <div style={styles.error}>
+          <p>There was an error loading the content. Please try again later.</p>
+        </div>
       </div>
     );
   }
 
-  if (courses.length === 0) {
-    return (
-      <div style={styles.empty}>
-        <p style={styles.emptyText}>No job listings available at the moment.</p>
-      </div>
-    );
-  }
+  // Find expanded job details
+  const expandedJob = jobs.find(job => job.id === expandedJobId);
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Latest Job Opportunities</h1>
-      
-      <div style={{
-        ...styles.carouselContainer,
-        ...(expandedCard !== null ? styles.expandedCarouselContainer : {})
-      }}>
-        {/* Card container */}
-        <div style={styles.cardContainer}>
-          {courses.map((job, index) => {
-        let cardStyle = { ...styles.card };
-
-        if (index === activeIndex) {
-          cardStyle = { ...cardStyle, ...styles.cardActive };
-        } else if (index < activeIndex) {
-          cardStyle = { ...cardStyle, ...styles.cardBefore };
-        } else {
-          cardStyle = { ...cardStyle, ...styles.cardAfter };
-        }
-
-        const isExpanded = expandedCard === job.id;
-
-        return (
-          <div key={job.id || index} style={cardStyle}>
-            <div style={styles.cardContent}>
-          <div style={styles.cardHeader}>
-            <h2 style={styles.jobTitle}>{job.title}</h2>
-            <span style={styles.jobType}>
-              {job.type || 'Full-time'}
-            </span>
-          </div>
-
-          <div style={styles.companyInfo}>
-            <div style={styles.logoContainer}>
-              <span style={styles.logoInitial}>
-            {job.company ? job.company.charAt(0) : 'J'}
-              </span>
-            </div>
-            <div style={styles.companyDetails}>
-              <h3 style={styles.companyName}>{job.company || 'Company Name'}</h3>
-              <p style={styles.location}>{job.location || 'Remote'}</p>
-            </div>
-          </div>
-
-          <p style={styles.description}>
-            {job.description || 'No description available for this position.'}
-          </p>
-
-          {isExpanded && (
-            <div style={styles.expandedSection}>
-              <h4 style={styles.expandedTitle}>Ideal Candidate</h4>
-              <p style={styles.expandedContent}>
-            {job.idealCandidate || 'Information about the ideal candidate will be available soon.'}
-              </p>
-            </div>
-          )}
-
-          <div style={styles.skillsContainer}>
-            {(job.skills || ['JavaScript', 'React']).map((skill, i) => (
-              <span key={i} style={styles.skill}>
-            {skill}
-              </span>
-            ))}
-          </div>
-
-          <div style={styles.footer}>
-            <p style={styles.salary}>
-              {job.salary || '$70K - $100K'}
-            </p>
-          </div>
-
-          {isLoggedIn && (
-            isExpanded ? (
-              <button
-            style={styles.closeButton}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#5a6268'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#6c757d'}
-            onClick={() => setExpandedCard(null)}
-              >
-            Close
-              </button>
-            ) : (
-              <button
-            style={styles.learnMoreButton}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#0b5ed7'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#0d6efd'}
-            onClick={() => setExpandedCard(job.id)}
-              >
-            Learn More
-              </button>
-            )
-          )}
-            </div>
-          </div>
-        );
-          })}
-        </div>
-
-        {/* Navigation dots (only show when not expanded) */}
-        {expandedCard === null && (
-          <div style={styles.dots}>
-        {courses.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            style={{
-          ...styles.dot,
-          ...(index === activeIndex ? styles.activeDot : {})
-            }}
-            aria-label={`View job listing ${index + 1}`}
-          />
-        ))}
+      {/* Header Section */}
+      <div style={styles.header}>
+        <h1 style={styles.headerTitle}>CareerConnect</h1>
+        {!isLoggedIn && (
+          <div style={styles.loginSignupButtons}>
+            <button 
+              style={styles.loginButton}
+              onClick={handleLogin}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#f3f2ef'}
+              onMouseOut={(e) => e.target.style.backgroundColor = 'transparent'}
+            >
+              Sign In
+            </button>
+            <button 
+              style={styles.signupButton}
+              onClick={handleSignup}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#084b8e'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#0a66c2'}
+            >
+              Join Now
+            </button>
           </div>
         )}
       </div>
 
-      {/* Additional section below the cards */}
-      {isLoggedIn && (
+      {/* Main Content Section */}
+      {isLoggedIn ? (
+        // Logged in experience
         <div>
-          <JobMarketTrends />
+          {/* Analytics Section */}
+          <div style={styles.analyticsSection}>
+            <h2 style={styles.analyticsSectionTitle}>Job Market Trends</h2>
+            <JobMarketTrends />
+          </div>
+          
+          {/* Jobs Section */}
+          <div style={styles.jobSection}>
+            <div style={styles.jobSectionTitle}>
+              <span>Recommended Jobs</span>
+              <a href="#" style={styles.viewAllJobsLink}>View all</a>
+            </div>
+            
+            <div style={styles.jobList}>
+              {jobs.map(job => (
+                <div 
+                  key={job.id} 
+                  style={{...styles.jobCard, ...styles.jobCardInteractive}}
+                  onClick={() => expandJob(job.id)}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  <div style={styles.jobCardHeader}>
+                    <div style={styles.companyLogo}>
+                      {job.company.charAt(0)}
+                    </div>
+                    <div>
+                      <h3 style={styles.jobCardTitle}>{job.title}</h3>
+                      <p style={styles.jobCardCompany}>{job.company}</p>
+                      <p style={styles.jobCardLocation}>
+                        <span>📍</span> {job.location}
+                      </p>
+                    </div>
+                  </div>
+                  <div style={styles.jobCardBody}>
+                    <p style={styles.jobCardDescription}>{job.description}</p>
+                    <div style={styles.jobSkillsList}>
+                      {job.skills.slice(0, 3).map((skill, index) => (
+                        <span key={index} style={styles.jobSkill}>{skill}</span>
+                      ))}
+                      {job.skills.length > 3 && (
+                        <span style={styles.jobSkill}>+{job.skills.length - 3} more</span>
+                      )}
+                    </div>
+                  </div>
+                  <div style={styles.jobCardFooter}>
+                    <span style={styles.jobSalary}>{job.salary}</span>
+                    <span style={styles.jobType}>{job.type}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        // Non-logged in experience
+        <div style={styles.fullWidthGrid}>
+          {/* Welcome Banner */}
+          <div style={styles.welcomeBanner}>
+            <h2 style={styles.welcomeTitle}>Welcome to CareerConnect</h2>
+            <p style={styles.welcomeSubtitle}>
+              Your professional community. Find jobs, connect with industry experts, and build your career.
+            </p>
+            <div style={styles.welcomeButtons}>
+              <button 
+                style={styles.loginButton}
+                onClick={handleLogin}
+                onMouseOver={(e) => e.target.style.backgroundColor = '#f3f2ef'}
+                onMouseOut={(e) => e.target.style.backgroundColor = 'transparent'}
+              >
+                Sign In
+              </button>
+              <button 
+                style={styles.signupButton}
+                onClick={handleSignup}
+                onMouseOver={(e) => e.target.style.backgroundColor = '#084b8e'}
+                onMouseOut={(e) => e.target.style.backgroundColor = '#0a66c2'}
+              >
+                Join Now
+              </button>
+            </div>
+          </div>
+          
+          {/* Featured Jobs Section */}
+          <div style={styles.jobSection}>
+            <h2 style={styles.jobSectionTitle}>Featured Jobs</h2>
+            <div style={styles.jobList}>
+              {jobs.map(job => (
+                <div key={job.id} style={styles.jobCard}>
+                  <div style={styles.jobCardHeader}>
+                    <div style={styles.companyLogo}>
+                      {job.company.charAt(0)}
+                    </div>
+                    <div>
+                      <h3 style={styles.jobCardTitle}>{job.title}</h3>
+                      <p style={styles.jobCardCompany}>{job.company}</p>
+                      <p style={styles.jobCardLocation}>
+                        <span>📍</span> {job.location}
+                      </p>
+                    </div>
+                  </div>
+                  <div style={styles.jobCardBody}>
+                    <p style={styles.jobCardDescription}>{job.description}</p>
+                    <div style={styles.jobSkillsList}>
+                      {job.skills.slice(0, 3).map((skill, index) => (
+                        <span key={index} style={styles.jobSkill}>{skill}</span>
+                      ))}
+                      {job.skills.length > 3 && (
+                        <span style={styles.jobSkill}>+{job.skills.length - 3} more</span>
+                      )}
+                    </div>
+                    <button 
+                      style={styles.applyButton}
+                      onClick={handleLogin}
+                      onMouseOver={(e) => e.target.style.backgroundColor = '#084b8e'}
+                      onMouseOut={(e) => e.target.style.backgroundColor = '#0a66c2'}
+                    >
+                      Sign in to apply
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Expanded Job View Modal */}
+      {expandedJobId && expandedJob && (
+        <div style={styles.expandedJobContainer} onClick={closeExpandedJob}>
+          <div style={styles.expandedJobCard} onClick={(e) => e.stopPropagation()}>
+            <button style={styles.closeButton} onClick={closeExpandedJob}>✕</button>
+            
+            <h2 style={styles.expandedJobTitle}>{expandedJob.title}</h2>
+            <h3 style={styles.expandedJobCompany}>{expandedJob.company}</h3>
+            <p style={styles.expandedJobLocation}>
+              <span>📍</span> {expandedJob.location} • {expandedJob.type}
+            </p>
+            
+            <div style={styles.expandedJobSection}>
+              <h4 style={styles.expandedJobSectionTitle}>Job Description</h4>
+              <p style={styles.expandedJobSectionContent}>{expandedJob.description}</p>
+            </div>
+            
+            <div style={styles.expandedJobSection}>
+              <h4 style={styles.expandedJobSectionTitle}>Ideal Candidate</h4>
+              <p style={styles.expandedJobSectionContent}>{expandedJob.idealCandidate}</p>
+            </div>
+            
+            <div style={styles.expandedJobSection}>
+              <h4 style={styles.expandedJobSectionTitle}>Skills</h4>
+              <div style={styles.jobSkillsList}>
+                {expandedJob.skills.map((skill, index) => (
+                  <span key={index} style={styles.jobSkill}>{skill}</span>
+                ))}
+              </div>
+            </div>
+            
+            <div style={styles.expandedJobSection}>
+              <h4 style={styles.expandedJobSectionTitle}>Compensation</h4>
+              <p style={styles.expandedJobSectionContent}>{expandedJob.salary}</p>
+            </div>
+            
+            <button 
+              style={styles.expandedJobApplyButton}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#084b8e'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#0a66c2'}
+            >
+              Apply Now
+            </button>
+          </div>
         </div>
       )}
     </div>

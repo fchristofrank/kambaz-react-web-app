@@ -11,6 +11,7 @@ export default function Signin() {
     try {
       const user = await client.signin(credentials);
       localStorage.setItem('userToken', user.token);
+      localStorage.setItem('userId', user._id);
       dispatch(setCurrentUser(user));
       navigate("/Portal/home");
     } catch (error: any) {

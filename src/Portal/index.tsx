@@ -130,7 +130,7 @@ export default function Portal() {
             <Route path="/Dashboard" element={<ProtectedRoute><Dashboard courses={courses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} enrolling={enrolling} setEnrolling={setEnrolling} updateEnrollment={updateEnrollment}/></ProtectedRoute>} />
             <Route path="/Courses" element={<ProtectedRoute><Dashboard courses={courses} course={course} setCourse={setCourse} addNewCourse={addNewCourse} deleteCourse={deleteCourse} updateCourse={updateCourse} enrolling={enrolling} setEnrolling={setEnrolling} updateEnrollment={updateEnrollment}/></ProtectedRoute>} />
             <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
-            <Route path="/search" element={<ProtectedRoute>< SearchBar /></ProtectedRoute>} />
+            <Route path="/search" element={< SearchBar />} />
             <Route path="/home" element={< Home />} />
             <Route path="/profile/:userID" element={< ProfessionalProfile currentUser={currentUser} />} /> 
           </Routes>

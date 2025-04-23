@@ -6,89 +6,103 @@ export default function KambazNavigation() {
   const { pathname } = useLocation();
   const links = [
     { label: "Home", path: "/Portal/home", icon: FaInbox },
-    { label: "Dashboard", path: "/Portal/Dashboard", icon: ImNewspaper },
+    { label: "Feeds", path: "/Portal/Dashboard", icon: ImNewspaper },
     { label: "Search", path: "/Portal/Search", icon: FaInbox }
   ];
 
   return (
     <header
       id="wd-portal-navigation"
-      className="position-fixed w-100 top-0 z-3"
       style={{
-        boxShadow: '0 0 0.5rem rgba(0, 0, 0, 0.15)',
-        backgroundColor: 'white',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.08)'
+        position: "fixed",
+        width: "100%",
+        top: 0,
+        zIndex: 3,
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+        backgroundColor: "white",
+        borderBottom: "2px solid #0a66c2",
+        padding: "10px 0",
+        marginTop: "140px !important"
       }}
     >
-      <div className="container d-flex align-items-center justify-content-between py-2">
-        {/* Logo Section */}
-        <div className="d-flex align-items-center">
-          <Link 
-            to="/Portal/home"
-            className="text-decoration-none"
-          >
-            <div 
-              className="d-flex align-items-center justify-content-center rounded-circle" 
-              style={{ 
-                width: '34px', 
-                height: '34px', 
-                backgroundColor: '#0a66c2',
-                marginRight: '8px'
-              }}
-            >
-              <span 
-                className="fw-bold" 
-                style={{ 
-                  color: 'white', 
-                  fontSize: '18px',
-                  lineHeight: 1
-                }}
-              >
-                K
-              </span>
-            </div>
-          </Link>
-
-          {/* Search Bar (static, non-functional) */}
-          <div
-            className="d-none d-md-flex align-items-center rounded px-3 py-1"
-            style={{
-              backgroundColor: '#eef3f8',
-              width: '280px'
-            }}
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="16" 
-              height="16" 
-              fill="#666"
-              className="bi bi-search me-2" 
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg>
-            <span className="text-muted" style={{ fontSize: '14px' }}>Search</span>
+      <div style={{
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "0 15px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingTop: "12px",
+        paddingBottom: "12px"
+      }}>
+        {/* Logo and Brand Name */}
+        <div style={{
+          display: "flex",
+          alignItems: "center"
+        }}>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "50%",
+            width: "40px",
+            height: "40px",
+            backgroundColor: "#0a66c2",
+            boxShadow: "0 3px 6px rgba(0, 0, 0, 0.2)"
+          }}>
+            <span style={{
+              fontWeight: "bold",
+              color: "white",
+              fontSize: "22px",
+              lineHeight: 1
+            }}>
+              C
+            </span>
           </div>
+          <span style={{
+            marginLeft: "12px",
+            fontSize: "24px",
+            fontWeight: "bold",
+            color: "#0a66c2"
+          }}>
+            CareerConnect
+          </span>
         </div>
 
-        {/* Navigation Links */}
-        <nav className="d-flex">
-          <div className="d-flex">
+        {/* Navigation Links - Centered with larger icons */}
+        <nav style={{
+          paddingTop: "8px",
+          paddingBottom: "8px"
+        }}>
+          <div style={{
+            display: "flex",
+            justifyContent: "center"
+          }}>
             {/* Account Link */}
             <Link
               to="/Portal/Account"
-              className={`nav-item d-flex flex-column align-items-center px-3 text-decoration-none ${
-                pathname.includes("Account") ? "active" : ""
-              }`}
               style={{
                 color: pathname.includes("Account") ? "#0a66c2" : "#666",
-                borderBottom: pathname.includes("Account") ? "2px solid #0a66c2" : "2px solid transparent",
+                borderBottom: pathname.includes("Account") ? "4px solid #0a66c2" : "4px solid transparent",
+                filter: pathname.includes("Account") ? "drop-shadow(0 2px 4px rgba(10, 102, 194, 0.3))" : "none",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                paddingLeft: "16px",
+                paddingRight: "16px",
+                textDecoration: "none"
               }}
             >
               <FaClipboardUser
-                className="fs-5 mb-1"
+                style={{ 
+                  fontSize: "30px",
+                  marginBottom: "8px"
+                }} 
               />
-              <span style={{ fontSize: '12px', fontWeight: pathname.includes("Account") ? "600" : "400" }}>
+              <span style={{ 
+                fontSize: "14px", 
+                fontWeight: pathname.includes("Account") ? "600" : "400" 
+              }}>
                 Account
               </span>
             </Link>
@@ -98,16 +112,28 @@ export default function KambazNavigation() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`nav-item d-flex flex-column align-items-center px-3 text-decoration-none ${
-                  pathname.includes(link.label) ? "active" : ""
-                }`}
                 style={{
                   color: pathname.includes(link.label) ? "#0a66c2" : "#666",
-                  borderBottom: pathname.includes(link.label) ? "2px solid #0a66c2" : "2px solid transparent",
+                  borderBottom: pathname.includes(link.label) ? "4px solid #0a66c2" : "4px solid transparent",
+                  filter: pathname.includes(link.label) ? "drop-shadow(0 2px 4px rgba(10, 102, 194, 0.3))" : "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  paddingLeft: "16px",
+                  paddingRight: "16px",
+                  textDecoration: "none"
                 }}
               >
-                <link.icon className="fs-5 mb-1" />
-                <span style={{ fontSize: '12px', fontWeight: pathname.includes(link.label) ? "600" : "400" }}>
+                <link.icon 
+                  style={{ 
+                    fontSize: "30px",
+                    marginBottom: "8px"
+                  }} 
+                />
+                <span style={{ 
+                  fontSize: "14px", 
+                  fontWeight: pathname.includes(link.label) ? "600" : "400" 
+                }}>
                   {link.label}
                 </span>
               </Link>
@@ -115,32 +141,8 @@ export default function KambazNavigation() {
           </div>
         </nav>
 
-        {/* Profile Section */}
-        <div className="d-flex align-items-center">
-          <div 
-            className="d-flex flex-column align-items-center px-3"
-            style={{ color: "#666" }}
-          >
-            <div 
-              className="rounded-circle" 
-              style={{ 
-                width: "24px", 
-                height: "24px", 
-                backgroundColor: "#0a66c2",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "12px",
-                fontWeight: "bold",
-                marginBottom: "4px"
-              }}
-            >
-              U
-            </div>
-            <span style={{ fontSize: '12px' }}>Me</span>
-          </div>
-        </div>
+        {/* Empty div to maintain space balance */}
+        <div style={{ width: "240px" }}></div>
       </div>
     </header>
   );

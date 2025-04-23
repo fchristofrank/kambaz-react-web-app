@@ -218,7 +218,7 @@ const SearchBar = () => {
     <div style={{
       width: '100%',
       maxWidth: '768px',
-      margin: '0 auto',
+      margin: '140px auto',
       padding: '16px',
       backgroundColor: '#EBF5FF',
       borderRadius: '8px',
@@ -527,7 +527,7 @@ const SearchBar = () => {
                         marginTop: '12px'
                       }}>
                         <Link
-                          to={`/Portal/Courses/${result._id}/Apply`}
+                          to={`/Portal/Courses/${result._id}/Comments`}
                           style={{
                             padding: '6px 12px',
                             backgroundColor: '#2563EB',

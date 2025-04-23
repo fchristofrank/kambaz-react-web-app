@@ -76,7 +76,7 @@ const styles = {
   // Main container
   container: {
     maxWidth: '1200px',
-    margin: '0 auto',
+    margin: '140px auto',
     padding: '20px',
     backgroundColor: '#f3f2ef',
     minHeight: '100vh',
@@ -657,7 +657,44 @@ const Home = () => {
     <div style={styles.container}>
       {/* Header Section */}
       <div style={styles.header}>
-        <h1 style={styles.headerTitle}>CareerConnect</h1>
+        <div style={{ width: '100%', overflow: 'hidden', position: 'relative', height: '60px', marginBottom: '16px' }}>
+          {['Upgrade your skills with online courses and certifications to stay ahead in your career!', 
+            'Connect with top industry professionals and expand your network today!', 
+            'Find your dream job and take the next big step in your professional journey!'].map((ad, index) => (
+            <div
+              key={index}
+              style={{
+          position: 'absolute',
+          top: 0,
+          left: `${index * 100}%`,
+          width: '100%',
+          height: '100%',
+          backgroundColor: index % 2 === 0 ? '#0a66c2' : '#f3f2ef',
+          color: index % 2 === 0 ? 'white' : '#0a66c2',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontWeight: 'bold',
+          fontSize: '16px',
+          borderRadius: '8px',
+          animation: 'flash 9s infinite',
+          animationDelay: `${index * 3}s`,
+          padding: '0 16px',
+          boxSizing: 'border-box',
+              }}
+            >
+              {ad}
+            </div>
+          ))}
+        </div>
+        <style>
+          {`
+            @keyframes flash {
+              0%, 33% { opacity: 1; transform: translateX(0); }
+              66%, 100% { opacity: 0; transform: translateX(-100%); }
+            }
+          `}
+        </style>
         {!isLoggedIn && (
           <div style={styles.loginSignupButtons}>
             <button 

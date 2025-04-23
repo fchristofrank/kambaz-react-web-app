@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updateLikesInPost } from "./Account/client";
 
+
 export default function Dashboard({
     courses,
     course,
@@ -12,8 +13,7 @@ export default function Dashboard({
     deleteCourse,
     updateCourse,
     enrolling,
-    setEnrolling,
-    updateEnrollment
+    setEnrolling
 }: {
     courses: any[];
     course: any;
@@ -102,7 +102,7 @@ export default function Dashboard({
     };
 
     return (
-        <div className="container py-4" style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <div className="container py-4" style={{ maxWidth: "800px", margin: "140px auto" }}>
             <div className="d-flex align-items-center justify-content-between mb-4">
                 <h4 className="mb-0 fw-bold" style={{ color: "#0a66c2" }}>My Network Feed</h4>
                 {!isFacultyOrAdmin && (
@@ -275,7 +275,7 @@ export default function Dashboard({
                                         style={{ cursor: "pointer" }}
                                         onClick={() => navigateToProfile(course.creatorId || "")}
                                     >
-                                        {course.creatorName || "LinkedIn User"}
+                                        {course.creatorName || "You"}
                                     </div>
                                     
                                     <div className="text-muted small d-flex align-items-center">

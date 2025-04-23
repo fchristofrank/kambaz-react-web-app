@@ -243,7 +243,7 @@ function ProfessionalProfile(currentUser: any) {
     };
 
     return (
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
+        <div style={{ maxWidth: '1200px', margin: '140px auto', padding: '20px', fontFamily: 'Arial, sans-serif' }}>
             {/* Connection Animation Overlay */}
             {showConnectionAnimation && (
                 <div style={{

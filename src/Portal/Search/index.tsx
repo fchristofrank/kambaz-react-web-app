@@ -6,7 +6,7 @@ import { searchJobs, searchPeople } from '../Account/client';
 
 // Define types for search results and search state
 type SearchState = {
-  searchType: 'posts' | 'people' | 'external';
+  searchType: 'posts' | 'people' | 'external' | 'recommended';
   searchQuery: string;
   searchResults: any[];
   isLoading: boolean;
@@ -28,12 +28,190 @@ type LinkedInJob = {
   ai_hiring_manager_email_address: string | null;
 };
 
+// Type for recommended job listings
+type RecommendedJob = {
+  id: string;
+  title: string;
+  location: string;
+  description: string;
+  company: string;
+  salary: string;
+  postedDate: string;
+  skills: string[];
+};
+
+// Job modal component
+const JobModal = ({ job, onClose }) => {
+  const [appliedStatus, setAppliedStatus] = useState(false);
+  
+  const handleApply = async () => {
+    try {
+      // Generate a random CID
+      const randomCID = Math.floor(10000000 + Math.random() * 90000000);
+      const response = await axios.get(`https://ca4f7389560e801e64ac.free.beeceptor.com/api/jobs/${randomCID}`);
+      console.log('Application submitted:', response.data);
+      setAppliedStatus(true);
+    } catch (error) {
+      console.error('Error submitting application:', error);
+    }
+  };
+  
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 1000
+    }}>
+      <div style={{
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        width: '90%',
+        maxWidth: '600px',
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        padding: '24px',
+        position: 'relative'
+      }}>
+        <button 
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            background: 'none',
+            border: 'none',
+            fontSize: '20px',
+            cursor: 'pointer'
+          }}
+        >
+          ✕
+        </button>
+        
+        <h2 style={{
+          fontSize: '20px',
+          fontWeight: 'bold',
+          color: '#1E3A8A',
+          marginBottom: '12px'
+        }}>
+          {job.title}
+        </h2>
+        
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            color: '#4B5563'
+          }}>
+            <span style={{ fontWeight: 'bold' }}>{job.company}</span>
+            <span>•</span>
+            <span>{job.location}</span>
+          </div>
+          
+          {job.salary && (
+            <div style={{
+              backgroundColor: '#F0FDF4',
+              color: '#15803D',
+              padding: '8px 12px',
+              borderRadius: '6px',
+              fontWeight: '500'
+            }}>
+              {job.salary}
+            </div>
+          )}
+          
+          <div style={{
+            marginTop: '8px',
+            padding: '16px',
+            backgroundColor: '#F9FAFB',
+            borderRadius: '6px',
+            border: '1px solid #E5E7EB'
+          }}>
+            <h3 style={{ 
+              fontSize: '16px', 
+              fontWeight: 'bold',
+              marginBottom: '8px' 
+            }}>
+              Job Description
+            </h3>
+            <p style={{ lineHeight: '1.6' }}>
+              {job.description}
+            </p>
+          </div>
+          
+          {job.skills && job.skills.length > 0 && (
+            <div style={{ marginTop: '16px' }}>
+              <h3 style={{ 
+                fontSize: '16px', 
+                fontWeight: 'bold',
+                marginBottom: '8px' 
+              }}>
+                Skills
+              </h3>
+              <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '8px'
+              }}>
+                {job.skills.map((skill, index) => (
+                  <span key={index} style={{
+                    padding: '4px 10px',
+                    backgroundColor: '#DBEAFE',
+                    color: '#2563EB',
+                    borderRadius: '4px',
+                    fontSize: '14px'
+                  }}>
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          <div style={{
+            marginTop: '24px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '12px'
+          }}>
+          </div>
+          
+          {appliedStatus && (
+            <div style={{
+              marginTop: '16px',
+              padding: '12px',
+              backgroundColor: '#F0FDF4',
+              borderRadius: '6px',
+              color: '#166534',
+              fontWeight: '500',
+              textAlign: 'center'
+            }}>
+              Your application has been submitted successfully!
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const SearchBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   
   // Initialize state with values from localStorage if available
-  const [searchType, setSearchType] = useState<'posts' | 'people' | 'external'>(() => {
+  const [searchType, setSearchType] = useState<'posts' | 'people' | 'external' | 'recommended'>(() => {
     const savedState = localStorage.getItem('searchState');
     return savedState ? JSON.parse(savedState).searchType : 'posts';
   });
@@ -60,6 +238,9 @@ const SearchBar = () => {
   // Cached external API data
   const [externalJobsData, setExternalJobsData] = useState<LinkedInJob[]>([]);
   const [externalDataLoaded, setExternalDataLoaded] = useState(false);
+  
+  // Selected job for modal
+  const [selectedJob, setSelectedJob] = useState(null);
 
   // Load external data on component mount
   useEffect(() => {
@@ -121,7 +302,84 @@ const SearchBar = () => {
     }
   };
 
-  // Filter external data based on search query - focusing on hiring managers with matching titles
+  // Function to fetch recommended jobs from Gemini API
+  const fetchRecommendedJobs = async (query: string) => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      // Your Gemini API key
+      const API_KEY = 'AIzaSyBA97jvUkUXjby2J8QqUoPv4K6qA0aCmWE';
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+      
+      // Build a context-aware prompt
+      const prompt = `
+        IMPORTANT: Respond with valid JSON _only_.
+        Do NOT include any markdown, code fences, or commentary.
+        Output a JSON array of 5 job objects related to "${query}" with these fields:
+        "id" (string), "title" (string), "company" (string), "location" (string), 
+        "description" (string, minimum 100 words), "salary" (string, formatted like "$80,000 - $100,000"),
+        "postedDate" (string, recent dates), "skills" (array of strings, at least 3 skills)
+      `;
+      
+      const payload = {
+        contents: [{
+          parts: [{
+            text: prompt
+          }]
+        }]
+      };
+      
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+      
+      const body = await response.json();
+      const rawText = body?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      
+      // Extract JSON from response
+      let jsonText = extractJSON(rawText);
+      
+      if (jsonText) {
+        try {
+          const data = JSON.parse(jsonText);
+          setSearchResults(data);
+        } catch (e) {
+          console.error('JSON parse error:', e);
+          setError('Error parsing job recommendations. Please try again.');
+        }
+      } else {
+        setError('No valid job data found. Please try a different search term.');
+      }
+    } catch (error) {
+      console.error('Error fetching recommended jobs:', error);
+      setError('Failed to fetch job recommendations. Please try again later.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Helper function to extract JSON from Gemini response
+  function extractJSON(text) {
+    // Remove any ``` or ```json fences
+    const noFences = text.replace(/```(?:json)?\n?/g, '').replace(/```/g, '');
+    
+    // Match either a top-level object or an array (greedy)
+    const match = noFences.match(/(\[[\s\S]*\]|\{[\s\S]*\})/);
+    if (match) {
+      return match[1];
+    } else {
+      return null;
+    }
+  }
+
+  // Filter external data based on search query
   const filterExternalData = (query: string) => {
     if (!query.trim()) return [];
     
@@ -155,7 +413,9 @@ const SearchBar = () => {
     setIsLoading(true);
     setError(null);
 
-    if (searchType === 'external') {
+    if (searchType === 'recommended') {
+      fetchRecommendedJobs(searchQuery);
+    } else if (searchType === 'external') {
       if (!externalDataLoaded) {
         fetchExternalData().then(() => {
           const filteredResults = filterExternalData(searchQuery);
@@ -193,6 +453,21 @@ const SearchBar = () => {
   const openExternalLink = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
+  
+  // Function to call the mock API
+  const callMockAPI = async () => {
+    try {
+      // Generate a random CID
+      const randomCID = Math.floor(10000000 + Math.random() * 90000000);
+      // Call the mock API
+      const response = await axios.get(`https://ca4f7389560e801e64ac.free.beeceptor.com/api/jobs/${randomCID}`);
+      console.log('Mock API response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error calling mock API:', error);
+      return null;
+    }
+  };
 
   // Clear search function
   const clearSearch = () => {
@@ -212,6 +487,16 @@ const SearchBar = () => {
       month: 'short',
       day: 'numeric'
     });
+  };
+
+  // Open job details in modal
+  const openJobDetails = (job) => {
+    setSelectedJob(job);
+  };
+
+  // Close job details modal
+  const closeJobDetails = () => {
+    setSelectedJob(null);
   };
 
   return (
@@ -343,6 +628,41 @@ const SearchBar = () => {
               LinkedIn Jobs <ExternalLink size={14} />
             </label>
           </div>
+          
+          <div style={{
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <input
+              type="radio"
+              id="search-recommended"
+              name="searchType"
+              value="recommended"
+              checked={searchType === 'recommended'}
+              onChange={() => setSearchType('recommended')}
+              style={{
+                marginRight: '8px',
+                height: '16px',
+                width: '16px'
+              }}
+            />
+            <label htmlFor="search-recommended" style={{
+              color: '#1E40AF',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px'
+            }}>
+              Recommended Jobs <span style={{
+                fontSize: '11px',
+                padding: '2px 6px',
+                backgroundColor: '#DBEAFE',
+                color: '#1E40AF',
+                borderRadius: '10px',
+                fontWeight: 'bold'
+              }}>AI</span>
+            </label>
+          </div>
         </div>
         
         <div style={{
@@ -362,7 +682,9 @@ const SearchBar = () => {
                   ? 'Search for job posts...' 
                   : searchType === 'people' 
                     ? 'Search for people...' 
-                    : 'Search LinkedIn jobs...'
+                    : searchType === 'external'
+                      ? 'Search LinkedIn jobs...'
+                      : 'Describe your ideal job...'
               }
               style={{
                 width: '100%',
@@ -439,6 +761,16 @@ const SearchBar = () => {
           </div>
         )}
         
+        {searchType === 'recommended' && (
+          <div style={{
+            marginTop: '12px',
+            fontSize: '14px',
+            color: '#2563EB'
+          }}>
+            Describe your ideal job or skills (e.g., "remote software developer with React experience")
+          </div>
+        )}
+        
         {error && (
           <div style={{
             marginTop: '12px',
@@ -470,7 +802,9 @@ const SearchBar = () => {
                 ? 'Job Posts' 
                 : searchType === 'people' 
                   ? 'People' 
-                  : 'LinkedIn Jobs'} Results ({searchResults.length})
+                  : searchType === 'external'
+                    ? 'LinkedIn Jobs'
+                    : 'Recommended Jobs'} Results ({searchResults.length})
             </h3>
             
             <div style={{
@@ -614,7 +948,7 @@ const SearchBar = () => {
                         </Link>
                       </div>
                     </div>
-                  ) : (
+                  ) : searchType === 'external' ? (
                     // External LinkedIn hiring manager result card
                     <div>
                       {/* Hiring manager info as primary content */}
@@ -751,6 +1085,145 @@ const SearchBar = () => {
                         </button>
                       </div>
                     </div>
+                  ) : (
+                    // Recommended jobs result card
+                    <div>
+                      <h4 style={{
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        color: '#111827',
+                        marginBottom: '4px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                      }}>
+                        {result.title}
+                        <span style={{
+                          fontSize: '12px',
+                          padding: '2px 6px',
+                          backgroundColor: '#F0FDF4',
+                          color: '#15803D',
+                          borderRadius: '4px',
+                          fontWeight: 'normal'
+                        }}>
+                          AI Matched
+                        </span>
+                      </h4>
+                      
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        marginTop: '4px'
+                      }}>
+                        <div>
+                          <p style={{
+                            fontSize: '14px',
+                            color: '#4B5563',
+                            fontWeight: '500'
+                          }}>
+                            {result.company}
+                          </p>
+                          <p style={{
+                            fontSize: '13px',
+                            color: '#6B7280',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            marginTop: '2px'
+                          }}>
+                            <span>📍 {result.location}</span>
+                            <span>•</span>
+                            <span>📅 {result.postedDate || 'Recent'}</span>
+                          </p>
+                        </div>
+                        
+                        {result.salary && (
+                          <div style={{
+                            padding: '3px 8px',
+                            backgroundColor: '#ECFDF5',
+                            color: '#059669',
+                            borderRadius: '4px',
+                            fontSize: '13px',
+                            fontWeight: '500'
+                          }}>
+                            {result.salary}
+                          </div>
+                        )}
+                      </div>
+                      
+                      <p style={{
+                        fontSize: '14px',
+                        color: '#4B5563',
+                        marginTop: '8px',
+                        marginBottom: '8px',
+                        lineHeight: '1.5'
+                      }}>
+                        {result.description?.substring(0, 150)}
+                        {result.description?.length > 150 ? '...' : ''}
+                      </p>
+                      
+                      <div style={{
+                        display: 'flex',
+                        gap: '8px',
+                        marginTop: '8px',
+                        flexWrap: 'wrap'
+                      }}>
+                        {result.skills?.slice(0, 3).map((skill, i) => (
+                          <span key={i} style={{
+                            padding: '3px 8px',
+                            backgroundColor: '#EEF2FF',
+                            color: '#4F46E5',
+                            borderRadius: '4px',
+                            fontSize: '12px'
+                          }}>
+                            {skill}
+                          </span>
+                        ))}
+                        {result.skills?.length > 3 && (
+                          <span style={{
+                            padding: '3px 8px',
+                            backgroundColor: '#F3F4F6',
+                            color: '#6B7280',
+                            borderRadius: '4px',
+                            fontSize: '12px'
+                          }}>
+                            +{result.skills.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                      
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        marginTop: '12px'
+                      }}>
+                        <button
+                          onClick={async () => {
+                            // Call the mock API using the extracted function
+                            await callMockAPI();
+                            // Open job details after API call
+                            openJobDetails(result);
+                          }}
+                          style={{
+                            padding: '6px 12px',
+                            backgroundColor: '#2563EB',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px'
+                          }}
+                          onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#1D4ED8'}
+                          onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#2563EB'}
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    </div>
                   )}
                 </div>
               ))}
@@ -789,6 +1262,11 @@ const SearchBar = () => {
           </div>
         )}
       </div>
+      
+      {/* Job Details Modal */}
+      {selectedJob && (
+        <JobModal job={selectedJob} onClose={closeJobDetails} />
+      )}
     </div>
   );
 };

@@ -319,7 +319,7 @@ export default function Profile() {
                           {connection.firstName ? connection.firstName.charAt(0).toUpperCase() : '?'}
                         </div>
                         <h6 className="mb-0">{connection.firstName || 'Unknown'}</h6>
-                        <p className="text-muted small mb-0">{connection.title || 'No title'}</p>
+                        <p className="text-muted small mb-0">{connection.title || 'Developer'}</p>
                       </div>
                     </div>
                   ))

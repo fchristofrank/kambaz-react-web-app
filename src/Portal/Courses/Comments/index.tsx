@@ -10,18 +10,24 @@ import { addModule, deleteModule, editModule, setModules, updateModule } from ".
 export default function Comments() {
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
-  const { modules } = useSelector((state: any) => state.modulesReducer);
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const { modules } = useSelector((state) => state.modulesReducer);
+  const { currentUser } = useSelector((state) => state.accountReducer);
   const dispatch = useDispatch();
 
   // Track likes in localStorage
-  const [likes, setLikes] = useState<Record<string, boolean>>({});
-  const [bookmarks, setBookmarks] = useState<Record<string, boolean>>({});
+  const [likes, setLikes] = useState({});
+  const [bookmarks, setBookmarks] = useState({});
+  
+  // New state for replies
+  const [replies, setReplies] = useState({});
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText] = useState("");
 
-  // Load likes and bookmarks from localStorage on initial render
+  // Load likes, bookmarks, and replies from localStorage on initial render
   useEffect(() => {
     const storedLikes = localStorage.getItem('comment-likes');
     const storedBookmarks = localStorage.getItem('comment-bookmarks');
+    const storedReplies = localStorage.getItem('comment-replies');
     
     if (storedLikes) {
       setLikes(JSON.parse(storedLikes));
@@ -30,24 +36,59 @@ export default function Comments() {
     if (storedBookmarks) {
       setBookmarks(JSON.parse(storedBookmarks));
     }
+    
+    if (storedReplies) {
+      setReplies(JSON.parse(storedReplies));
+    }
   }, []);
 
   // Handle liking a comment
-  const handleLike = (moduleId: string) => {
+  const handleLike = (moduleId) => {
     const newLikes = { ...likes, [moduleId]: !likes[moduleId] };
     setLikes(newLikes);
     localStorage.setItem('comment-likes', JSON.stringify(newLikes));
   };
 
   // Handle bookmarking a comment
-  const handleBookmark = (moduleId: string) => {
+  const handleBookmark = (moduleId) => {
     const newBookmarks = { ...bookmarks, [moduleId]: !bookmarks[moduleId] };
     setBookmarks(newBookmarks);
     localStorage.setItem('comment-bookmarks', JSON.stringify(newBookmarks));
   };
+  
+  // Handle clicking reply button
+  const handleReplyClick = (moduleId) => {
+    setReplyingTo(replyingTo === moduleId ? null : moduleId);
+    setReplyText("");
+  };
+  
+  // Handle submitting a reply
+  const handleSubmitReply = (moduleId) => {
+    if (!replyText.trim()) return;
+    
+    const newReply = {
+      id: Date.now().toString(),
+      moduleId,
+      text: replyText,
+      author: currentUser?.name || "Anonymous User",
+      authorInitial: currentUser?.name?.charAt(0).toUpperCase() || "U",
+      createdAt: new Date().toISOString()
+    };
+    
+    const moduleReplies = replies[moduleId] || [];
+    const newReplies = {
+      ...replies,
+      [moduleId]: [...moduleReplies, newReply]
+    };
+    
+    setReplies(newReplies);
+    localStorage.setItem('comment-replies', JSON.stringify(newReplies));
+    setReplyingTo(null);
+    setReplyText("");
+  };
 
   // Format date for display
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString) => {
     if (!dateString) return "Just now";
     
     const date = new Date(dateString);
@@ -66,7 +107,7 @@ export default function Comments() {
     }
   };
 
-  const saveModule = async (module: any) => {
+  const saveModule = async (module) => {
     await modulesClient.updateModule(module);
     dispatch(updateModule(module));
   };
@@ -83,13 +124,19 @@ export default function Comments() {
     setModuleName(""); // Clear the input field after posting
   };
 
-  const removeModule = async (moduleId: string) => {
+  const removeModule = async (moduleId) => {
     await modulesClient.deleteModule(moduleId);
     dispatch(deleteModule(moduleId));
+    
+    // Remove replies for the deleted module
+    const newReplies = { ...replies };
+    delete newReplies[moduleId];
+    setReplies(newReplies);
+    localStorage.setItem('comment-replies', JSON.stringify(newReplies));
   };
 
   const fetchModules = async () => {
-    const modules = await coursesClient.findModulesForCourse(cid as string);
+    const modules = await coursesClient.findModulesForCourse(cid);
     dispatch(setModules(modules));
   };
 
@@ -174,7 +221,7 @@ export default function Comments() {
             </p>
           </div>
         ) : (
-          modules.map((module: any) => (
+          modules.map((module) => (
             <div 
               key={module._id} 
               style={{
@@ -342,10 +389,12 @@ export default function Comments() {
                   </button>
                   
                   <button
+                    onClick={() => handleReplyClick(module._id)}
                     style={{
                       backgroundColor: "transparent",
                       border: "none",
-                      color: "#666",
+                      color: replyingTo === module._id ? "#0a66c2" : "#666",
+                      fontWeight: replyingTo === module._id ? "600" : "normal",
                       display: "flex",
                       alignItems: "center",
                       marginRight: "16px",
@@ -377,10 +426,85 @@ export default function Comments() {
                     {bookmarks[module._id] ? "Saved" : "Save"}
                   </button>
                 </div>
+                
+                {/* Reply input field when replying to this comment */}
+                {replyingTo === module._id && (
+                  <div style={{ 
+                    marginTop: "16px",
+                    borderTop: "1px solid #f0f0f0",
+                    paddingTop: "16px"
+                  }}>
+                    <div style={{ display: "flex", marginBottom: "12px" }}>
+                      <div style={{ 
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "50%",
+                        backgroundColor: "#0a66c2",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "14px",
+                        marginRight: "12px"
+                      }}>
+                        {currentUser?.name?.charAt(0).toUpperCase() || "U"}
+                      </div>
+                      <textarea
+                        placeholder="Write a reply..."
+                        value={replyText}
+                        onChange={(e) => setReplyText(e.target.value)}
+                        style={{
+                          flex: 1,
+                          padding: "8px 12px",
+                          borderRadius: "4px",
+                          border: "1px solid #e0e0e0",
+                          fontSize: "14px",
+                          outline: "none",
+                          resize: "vertical",
+                          minHeight: "60px"
+                        }}
+                      />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                      <button
+                        onClick={() => setReplyingTo(null)}
+                        style={{
+                          backgroundColor: "transparent",
+                          border: "1px solid #e0e0e0",
+                          borderRadius: "16px",
+                          padding: "6px 14px",
+                          marginRight: "8px",
+                          fontSize: "14px",
+                          cursor: "pointer"
+                        }}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => handleSubmitReply(module._id)}
+                        disabled={!replyText.trim()}
+                        style={{
+                          backgroundColor: replyText.trim() ? "#0a66c2" : "#e0e0e0",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "16px",
+                          padding: "6px 14px",
+                          fontWeight: "600",
+                          fontSize: "14px",
+                          cursor: replyText.trim() ? "pointer" : "not-allowed"
+                        }}
+                      >
+                        Reply
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
               
-              {/* Replies Section - if module has lessons */}
-              {module.lessons && module.lessons.length > 0 && (
+              {/* Replies Section */}
+              {((replies[module._id] && replies[module._id].length > 0) || 
+                (module.lessons && module.lessons.length > 0)) && (
                 <div style={{ 
                   borderTop: "1px solid #f0f0f0", 
                   padding: "12px 20px", 
@@ -392,11 +516,12 @@ export default function Comments() {
                     marginBottom: "12px", 
                     color: "#666" 
                   }}>
-                    Replies ({module.lessons.length})
+                    Replies ({(replies[module._id]?.length || 0) + (module.lessons?.length || 0)})
                   </h5>
                   
                   <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                    {module.lessons.map((lesson: any) => (
+                    {/* Display original lessons if they exist */}
+                    {module.lessons && module.lessons.map((lesson) => (
                       <div 
                         key={lesson._id} 
                         style={{
@@ -427,6 +552,96 @@ export default function Comments() {
                           <p style={{ fontSize: "13px", margin: "4px 0 0 0", color: "#333" }}>
                             {lesson.name}
                           </p>
+                        </div>
+                      </div>
+                    ))}
+                    
+                    {/* Display new replies from localStorage */}
+                    {replies[module._id] && replies[module._id].map((reply) => (
+                      <div 
+                        key={reply.id} 
+                        style={{
+                          display: "flex",
+                          paddingLeft: "20px",
+                          borderLeft: "2px solid #e0e0e0"
+                        }}
+                      >
+                        <div style={{ 
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "50%",
+                          backgroundColor: "#0a66c2",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          fontWeight: "bold",
+                          fontSize: "12px",
+                          marginRight: "12px"
+                        }}>
+                          {reply.authorInitial}
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <div style={{ 
+                            display: "flex", 
+                            justifyContent: "space-between", 
+                            alignItems: "baseline" 
+                          }}>
+                            <div style={{ fontWeight: "600", fontSize: "13px", color: "#333" }}>
+                              {reply.author}
+                            </div>
+                            <div style={{ 
+                              fontSize: "11px", 
+                              color: "#666" 
+                            }}>
+                              {formatDate(reply.createdAt)}
+                            </div>
+                          </div>
+                          <p style={{ 
+                            fontSize: "13px", 
+                            margin: "4px 0 0 0", 
+                            color: "#333",
+                            lineHeight: "1.4",
+                            whiteSpace: "pre-wrap"
+                          }}>
+                            {reply.text}
+                          </p>
+                          <div style={{ 
+                            display: "flex", 
+                            marginTop: "8px",
+                            gap: "12px"
+                          }}>
+                            <button
+                              style={{
+                                backgroundColor: "transparent",
+                                border: "none",
+                                color: "#666",
+                                padding: "0",
+                                fontSize: "12px",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px"
+                              }}
+                            >
+                              <BiLike size={12} /> Like
+                            </button>
+                            <button
+                              style={{
+                                backgroundColor: "transparent",
+                                border: "none",
+                                color: "#666",
+                                padding: "0",
+                                fontSize: "12px",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px"
+                              }}
+                            >
+                              <FaReply size={10} /> Reply
+                            </button>
+                          </div>
                         </div>
                       </div>
                     ))}

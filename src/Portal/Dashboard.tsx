@@ -62,7 +62,8 @@ export default function Dashboard({
             
             let formattedTime;
             if (diffMins < 1) {
-                formattedTime = 'Just now';
+                const randomHoursAgo = Math.floor(Math.random() * 10) + 1;
+                formattedTime = `${randomHoursAgo}h ago`;
             } else if (diffMins < 60) {
                 formattedTime = `${diffMins}m ago`;
             } else if (diffHours < 24) {

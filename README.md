@@ -26,7 +26,7 @@ The project follows an iterative development process, with each major revision b
 
 ## Get Involved
 
-Kanbas is an evolving project, and contributions are welcome! If you're interested in collaborating, feel free to:
+Kambaz is an evolving project, and contributions are welcome! If you're interested in collaborating, feel free to:
 
 - Fork the repository and submit pull requests.
 - Report bugs or suggest features via the issue tracker.

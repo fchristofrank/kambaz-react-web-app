@@ -1,10 +1,10 @@
-# Kanbas - Learning Management System
+# Kambaz - Learning Management System
 
-Kanbas is a Learning Management System (LMS) inspired by [Canvas](w), the platform used at [Northeastern University](w). This project aims to replicate and enhance the core functionalities of Canvas, providing a seamless experience for students, faculty, and administrators.
+Kambaz is a Learning Management System (LMS) inspired by [Canvas](w), the platform used at [Northeastern University](w). This project aims to replicate and enhance the core functionalities of Canvas, providing a seamless experience for students, faculty, and administrators.
 
 ## Project Overview
 
-Kanbas is being developed through six major revisions, with the goal of mirroring the full range of features offered by Canvas. By the final iteration, Kanbas will provide a comprehensive LMS experience, supporting:
+Kambaz is being developed through six major revisions, with the goal of mirroring the full range of features offered by Canvas. By the final iteration, Kanbas will provide a comprehensive LMS experience, supporting:
 
 - **User Authentication & Roles:** Secure login for students, faculty, and administrators.
 - **Course Management:** Faculty can create, update, and manage courses, including syllabi and schedules.

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ExternalLink, Search } from 'lucide-react';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, SetStateAction, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { searchJobs, searchPeople } from '../Account/client';
 
@@ -41,7 +41,7 @@ type RecommendedJob = {
 };
 
 // Job modal component
-const JobModal = ({ job, onClose }) => {
+const JobModal = ({ job, onClose }: { job: any; onClose: () => void }) => {
   const [appliedStatus, setAppliedStatus] = useState(false);
   
   const handleApply = async () => {
@@ -164,7 +164,7 @@ const JobModal = ({ job, onClose }) => {
                 flexWrap: 'wrap',
                 gap: '8px'
               }}>
-                {job.skills.map((skill, index) => (
+                {job.skills.map((skill: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, index: Key | null | undefined) => (
                   <span key={index} style={{
                     padding: '4px 10px',
                     backgroundColor: '#DBEAFE',
@@ -366,7 +366,7 @@ const SearchBar = () => {
   };
   
   // Helper function to extract JSON from Gemini response
-  function extractJSON(text) {
+  function extractJSON(text: string) {
     // Remove any ``` or ```json fences
     const noFences = text.replace(/```(?:json)?\n?/g, '').replace(/```/g, '');
     
@@ -490,7 +490,7 @@ const SearchBar = () => {
   };
 
   // Open job details in modal
-  const openJobDetails = (job) => {
+  const openJobDetails = (job: SetStateAction<null>) => {
     setSelectedJob(job);
   };
 

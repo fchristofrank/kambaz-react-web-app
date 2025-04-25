@@ -7,7 +7,7 @@ import { setCurrentUser } from "./reducer";
 export default function Signup() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -26,7 +26,7 @@ export default function Signup() {
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { id: any; value: any; }; }) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };

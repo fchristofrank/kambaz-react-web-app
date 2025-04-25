@@ -5,6 +5,7 @@ export default function ModulesControls(
     { moduleName, setModuleName, addModule }:
         { moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
+    console.log("ModulesControls", currentUser);
     return (
         <div id="wd-modules-controls" className="d-flex justify-content-end align-items-end mt-4 ms-5">
 

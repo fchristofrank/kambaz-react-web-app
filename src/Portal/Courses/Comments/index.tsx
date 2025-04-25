@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, SetStateAction, useEffect, useState } from "react";
 import { BiBookmark, BiLike } from "react-icons/bi";
 import { FaPen, FaReply, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,16 +10,16 @@ import { addModule, deleteModule, editModule, setModules, updateModule } from ".
 export default function Comments() {
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
-  const { modules } = useSelector((state) => state.modulesReducer);
-  const { currentUser } = useSelector((state) => state.accountReducer);
+  const { modules } = useSelector((state: { modulesReducer: { modules: any[] } }) => state.modulesReducer);
+  const { currentUser } = useSelector((state: { accountReducer: { currentUser: any } }) => state.accountReducer);
   const dispatch = useDispatch();
 
   // Track likes in localStorage
-  const [likes, setLikes] = useState({});
-  const [bookmarks, setBookmarks] = useState({});
+  const [likes, setLikes] = useState<Record<string | number, boolean>>({});
+  const [bookmarks, setBookmarks] = useState<Record<string | number, boolean>>({});
   
   // New state for replies
-  const [replies, setReplies] = useState({});
+  const [replies, setReplies] = useState<Record<string | number, { id: string; moduleId: string | number; text: string; author: string; authorInitial: string; createdAt: string }[]>>({});
   const [replyingTo, setReplyingTo] = useState(null);
   const [replyText, setReplyText] = useState("");
 
@@ -43,27 +43,27 @@ export default function Comments() {
   }, []);
 
   // Handle liking a comment
-  const handleLike = (moduleId) => {
+  const handleLike = (moduleId: string | number) => {
     const newLikes = { ...likes, [moduleId]: !likes[moduleId] };
     setLikes(newLikes);
     localStorage.setItem('comment-likes', JSON.stringify(newLikes));
   };
 
   // Handle bookmarking a comment
-  const handleBookmark = (moduleId) => {
+  const handleBookmark = (moduleId: string | number) => {
     const newBookmarks = { ...bookmarks, [moduleId]: !bookmarks[moduleId] };
     setBookmarks(newBookmarks);
     localStorage.setItem('comment-bookmarks', JSON.stringify(newBookmarks));
   };
   
   // Handle clicking reply button
-  const handleReplyClick = (moduleId) => {
+  const handleReplyClick = (moduleId: SetStateAction<null>) => {
     setReplyingTo(replyingTo === moduleId ? null : moduleId);
     setReplyText("");
   };
   
   // Handle submitting a reply
-  const handleSubmitReply = (moduleId) => {
+  const handleSubmitReply = (moduleId: string | number) => {
     if (!replyText.trim()) return;
     
     const newReply = {
@@ -88,7 +88,7 @@ export default function Comments() {
   };
 
   // Format date for display
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: string | number | Date) => {
     if (!dateString) return "Just now";
     
     const date = new Date(dateString);
@@ -107,7 +107,7 @@ export default function Comments() {
     }
   };
 
-  const saveModule = async (module) => {
+  const saveModule = async (module: any) => {
     await modulesClient.updateModule(module);
     dispatch(updateModule(module));
   };
@@ -124,7 +124,7 @@ export default function Comments() {
     setModuleName(""); // Clear the input field after posting
   };
 
-  const removeModule = async (moduleId) => {
+  const removeModule = async (moduleId: string) => {
     await modulesClient.deleteModule(moduleId);
     dispatch(deleteModule(moduleId));
     
@@ -136,6 +136,10 @@ export default function Comments() {
   };
 
   const fetchModules = async () => {
+    if (!cid) {
+      console.error("Course ID is undefined.");
+      return;
+    }
     const modules = await coursesClient.findModulesForCourse(cid);
     dispatch(setModules(modules));
   };
@@ -521,7 +525,7 @@ export default function Comments() {
                   
                   <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                     {/* Display original lessons if they exist */}
-                    {module.lessons && module.lessons.map((lesson) => (
+                    {module.lessons && module.lessons.map((lesson: { _id: Key | null | undefined; name: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; }) => (
                       <div 
                         key={lesson._id} 
                         style={{

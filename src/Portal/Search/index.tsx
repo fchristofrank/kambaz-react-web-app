@@ -28,33 +28,11 @@ type LinkedInJob = {
   ai_hiring_manager_email_address: string | null;
 };
 
-// Type for recommended job listings
-type RecommendedJob = {
-  id: string;
-  title: string;
-  location: string;
-  description: string;
-  company: string;
-  salary: string;
-  postedDate: string;
-  skills: string[];
-};
 
 // Job modal component
 const JobModal = ({ job, onClose }: { job: any; onClose: () => void }) => {
-  const [appliedStatus, setAppliedStatus] = useState(false);
+  const [appliedStatus] = useState(false);
   
-  const handleApply = async () => {
-    try {
-      // Generate a random CID
-      const randomCID = Math.floor(10000000 + Math.random() * 90000000);
-      const response = await axios.get(`https://ca4f7389560e801e64ac.free.beeceptor.com/api/jobs/${randomCID}`);
-      console.log('Application submitted:', response.data);
-      setAppliedStatus(true);
-    } catch (error) {
-      console.error('Error submitting application:', error);
-    }
-  };
   
   return (
     <div style={{

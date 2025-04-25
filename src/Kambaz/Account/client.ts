@@ -83,8 +83,36 @@ export const createUser = async (user: any) => {
 
 
 export const findCoursesForUser = async (userId: string) => {
-    const response = await axiosWithCredentials.get(`${USERS_API}/${userId}/courses`);
-    return response.data;
+    console.log("User API", userId);
+    return [
+        {
+            "_id": "67f7ff62672bea90d9685327",
+            "name": "Aerodynamics Engineer",
+            "number": "RS4560",
+            "credits": 3,
+            "description": "Job Description: We’re seeking an Aerodynamics Engineer to design, analyze and optimize airflow systems for next-generation aircraft. You’ll apply computational fluid dynamics (CFD) techniques, develop airfoil geometries, and collaborate with structural and systems teams to enhance lift, minimize drag, and ensure overall flight stability.",
+            "imgSource": "/images/aerodynamics.jpg",
+            "__v": 0,
+            "likes": 5,
+            "creatorId": "674910e555bec5e3517ee479",
+            "creatorName": "Strider",
+            "demands": [],
+            "skills": []
+        },
+        {
+            "_id": "674e3bae6697f727d82038cb",
+            "name": "Web Developer",
+            "number": "New Number",
+            "description": "Job Description: Looking for a Web Developer to build and maintain modern, responsive web applications. You will work closely with designers and backend engineers to deliver seamless user experiences, write clean, well-tested code, and optimize front-end performance.",
+            "imgSource": "/images/reactjs.png",
+            "__v": 0,
+            "likes": 4,
+            "creatorId": "674e9c2f75f220b7216cda14",
+            "creatorName": "Danny",
+            "demands": [],
+            "skills": []
+        }
+    ];
 };
 
 export const enrollIntoCourse = async (userId: string, courseId: string) => {

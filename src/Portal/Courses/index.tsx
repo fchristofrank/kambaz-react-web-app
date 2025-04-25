@@ -5,7 +5,6 @@ import Assignments from "./Assignments";
 import Editor from "./Assignments/Editor";
 import * as courseClient from "./client";
 import Comments from "./Comments";
-import JobDescriptionPage from "./Descriptions";
 import Home from "./Home";
 import CoursesNavigation from "./Navigation";
 import PeopleTable from "./People/Table";
@@ -122,7 +121,6 @@ export default function Courses({ courses }: { courses: any[]; }) {
             <Route path="Apply" element={<Comments />} />
             <Route path="Home" element={<Home />} />
             <Route path="Comments" element={<Comments />} />
-            <Route path="Description" element={<JobDescriptionPage />} />
             <Route path="Assignments" element={<Assignments />} />
             <Route path="Assignments/:aid" element={<Editor />} />
             <Route path="People" element={<PeopleTable users={users} />} />

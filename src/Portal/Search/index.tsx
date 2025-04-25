@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ExternalLink, Search } from 'lucide-react';
 import { FormEvent, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, SetStateAction, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { searchJobs, searchPeople } from '../Account/client';
 
 // Define types for search results and search state
@@ -186,7 +186,6 @@ const JobModal = ({ job, onClose }: { job: any; onClose: () => void }) => {
 
 const SearchBar = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   
   // Initialize state with values from localStorage if available
   const [searchType, setSearchType] = useState<'posts' | 'people' | 'external' | 'recommended'>(() => {
@@ -1147,7 +1146,7 @@ const SearchBar = () => {
                         marginTop: '8px',
                         flexWrap: 'wrap'
                       }}>
-                        {result.skills?.slice(0, 3).map((skill, i) => (
+                        {result.skills?.slice(0, 3).map((skill: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined, i: Key | null | undefined) => (
                           <span key={i} style={{
                             padding: '3px 8px',
                             backgroundColor: '#EEF2FF',

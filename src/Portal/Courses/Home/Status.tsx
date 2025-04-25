@@ -1,17 +1,17 @@
-import { MdDoNotDisturbAlt } from "react-icons/md";
-import { FaCheckCircle } from "react-icons/fa";
 import { BiImport } from "react-icons/bi";
-import { LiaFileImportSolid } from "react-icons/lia";
-import { TiHomeOutline } from "react-icons/ti";
-import { TfiAnnouncement } from "react-icons/tfi";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { SiGoogleanalytics } from "react-icons/si";
 import { CiCalendarDate } from "react-icons/ci";
+import { FaCheckCircle } from "react-icons/fa";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { LiaFileImportSolid } from "react-icons/lia";
+import { MdDoNotDisturbAlt } from "react-icons/md";
+import { SiGoogleanalytics } from "react-icons/si";
+import { TfiAnnouncement } from "react-icons/tfi";
+import { TiHomeOutline } from "react-icons/ti";
 {/* Find more icons */ }
 export default function CourseStatus() {
     return (
         <div id="wd-course-status">
-            <h2>Course Status</h2>
+            <h2>Job Status</h2>
             <div className="d-flex">
                 <div className="w-50 pe-1">
                     <button className="btn btn-md btn-secondary w-100 text-nowrap ">

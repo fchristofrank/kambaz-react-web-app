@@ -28,7 +28,7 @@ export default function CoursesNavigation() {
           color: "#333",
           margin: 0
         }}>
-          Course Navigation
+          Comment Navigation
         </h3>
       </div>
       

@@ -90,7 +90,7 @@ export default function Courses({ courses }: { courses: any[]; }) {
                 fontSize: "14px",
                 color: "#666666"
               }}>
-                Course • {currentSection}
+                Job Posting • {currentSection}
               </span>
             </div>
           </div>
